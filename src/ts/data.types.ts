@@ -268,6 +268,11 @@ export interface ContactPageData {
 // 6. LINKS.JSON
 // ============================================
 
+export interface LinksIntro {
+  title: string;
+  subtitle: string;
+}
+
 export interface LinkItem {
   label: string;
   url: string;
@@ -283,6 +288,7 @@ export interface LinksCategory {
 }
 
 export interface LinksData {
+  intro?: LinksIntro;
   categories: LinksCategory[];
 }
 

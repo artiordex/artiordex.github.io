@@ -1,5 +1,5 @@
 /**
- * links.ts
+ * links.ts (JSON 데이터 기반 버전)
  * Links Hub 섹션 렌더링 + 애니메이션 통합 모듈
  */
 
@@ -14,10 +14,29 @@ const linksData = linksJson as LinksData;
  * Links 섹션 렌더링 함수
  */
 export function renderLinks(): void {
+  const root = document.getElementById("links");
+  if (!root) return;
+
+  // intro가 JSON에 있다면 사용, 없다면 기본값 사용
+  const title = linksData.intro?.title || "Links Hub";
+  const subtitle = linksData.intro?.subtitle || "모든 소셜, 작업 공간, Notion 기록을 한 곳에서 확인하세요.";
+
+  // 전체 HTML 구조 생성
+  root.innerHTML = `
+    <div class="section__inner">
+      <!-- Intro -->
+      <header class="section__header">
+        <h1 class="section__title animate-fade-in animate-delay-1">${title}</h1>
+        <p class="section__subtitle animate-fade-in animate-delay-2">${subtitle}</p>
+      </header>
+
+      <div id="links-container"></div>
+    </div>
+  `;
+
+  // 나머지 코드는 동일...
   const container = document.getElementById("links-container");
   if (!container) return;
-
-  container.innerHTML = ""; // 초기화
 
   linksData.categories.forEach((category: LinksCategory, catIndex: number) => {
     const section = document.createElement("section");
@@ -56,6 +75,5 @@ export function renderLinks(): void {
     });
   });
 
-  // Scroll reveal + fade animations
   attachRevealObserver();
 }
