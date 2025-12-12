@@ -3,13 +3,8 @@ import { resolve } from "path";
 
 export default defineConfig(({ command }) => {
   const isProd = command === "build";
-
-  // GitHub Pages (repo-name 방식)
-  const base = isProd ? "/artiordex.github.io/" : "/";
-
   return {
-    base,
-
+    base: "/",
     root: ".",
     publicDir: "assets",
 
