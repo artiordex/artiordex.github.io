@@ -6,7 +6,8 @@ export default defineConfig(({ command }) => {
 
   return {
     // GitHub Pages: https://username.github.io/artiordex/
-    base: isProd ? "/artiordex/" : "/",
+    // base: isProd ? "/artiordex/" : "/",
+    base : "/",
 
     root: ".",
     publicDir: "assets",
