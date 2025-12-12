@@ -1,9 +1,12 @@
 // main.ts
 import "@/ts/components/header";
-import "@/ts/components/footer";
+import "@/ts/components/scrollActive";
 import "@/ts/components/anchorNav";
 import "@/ts/components/carousel";
 import "@/ts/components/modal";
+
+// styles
+import "@/scss/main.scss"
 
 // sections
 import { renderAbout } from "@/ts/sections/about";
@@ -24,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderConsulting();
   renderLinks();
   renderContact();
-
   attachRevealObserver();
   updateActiveNav();
 });

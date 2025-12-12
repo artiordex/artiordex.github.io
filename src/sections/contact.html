@@ -30,7 +30,6 @@
       <!-- Contact Info -->
       <div class="contact-info animate-slide-up animate-delay-1">
         <h3 class="contact-info__title">연락 정보</h3>
-
         <div class="contact-list">
 
           <!-- Phone -->
@@ -65,45 +64,37 @@
               <div class="contact-item__value">서울특별시 강남구 테헤란로</div>
             </div>
           </div>
-
         </div>
       </div>
 
       <!-- Contact Form -->
       <div class="contact-form animate-slide-up animate-delay-2">
         <form id="contact-form">
-
           <div class="form-group">
             <label for="name">이름</label>
             <input id="name" type="text" placeholder="성함을 입력해주세요">
             <div id="name-error" class="error-message">이름을 입력해주세요.</div>
           </div>
-
           <div class="form-group">
             <label for="email">이메일</label>
             <input id="email" type="email" placeholder="이메일을 입력해주세요">
             <div id="email-error" class="error-message">올바른 이메일을 입력해주세요.</div>
           </div>
-
           <div class="form-group">
             <label for="subject">제목</label>
             <input id="subject" type="text" placeholder="문의 제목을 입력해주세요">
             <div id="subject-error" class="error-message">제목을 입력해주세요.</div>
           </div>
-
           <div class="form-group">
             <label for="message">메시지</label>
             <textarea id="message" placeholder="상세한 내용을 입력해주세요"></textarea>
             <div id="message-error" class="error-message">메시지를 입력해주세요.</div>
           </div>
-
           <button type="submit" class="btn-submit">
             메시지 보내기
           </button>
-
         </form>
       </div>
-
     </div>
   </div>
 </section>
@@ -112,61 +103,5 @@
 <div id="toast" class="toast">
   <i class="ri-check-line"></i> 메시지가 전송되었습니다!
 </div>
-
-<!-- Form Script -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const fields = ["name", "email", "subject", "message"];
-  const toast = document.getElementById("toast");
-
-  function showError(id, message) {
-    const el = document.getElementById(id + "-error");
-    el.textContent = message;
-    el.classList.add("show");
-  }
-
-  function hideError(id) {
-    document.getElementById(id + "-error").classList.remove("show");
-  }
-
-  function validateField(id) {
-    const value = document.getElementById(id).value.trim();
-    hideError(id);
-
-    if (!value) {
-      showError(id, "필수 입력 항목입니다.");
-      return false;
-    }
-
-    if (id === "email") {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!re.test(value)) {
-        showError(id, "올바른 이메일 형식을 입력해주세요.");
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  fields.forEach(id => {
-    document.getElementById(id).addEventListener("blur", () => validateField(id));
-  });
-
-  document.getElementById("contact-form").addEventListener("submit", e => {
-    e.preventDefault();
-
-    let valid = true;
-    fields.forEach(id => { if (!validateField(id)) valid = false; });
-
-    if (valid) {
-      document.getElementById("contact-form").reset();
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3000);
-    }
-  });
-});
-</script>
-
 </body>
 </html>

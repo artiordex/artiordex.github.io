@@ -5,11 +5,19 @@
 
 import companyJson from "@/data/company.json";
 import type { CompanyData, CompanyProject } from "@ts/data.types";
-import { openModal } from "@ts/components/modal";
 import { attachRevealObserver } from "@ts/utils/reveal";
 
 // JSON → 타입 적용
 const companyData = companyJson as CompanyData;
+
+// 모달 요소들
+let modal: HTMLElement | null;
+let modalTitleEl: HTMLElement | null;
+let modalImageEl: HTMLImageElement | null;
+let modalDescEl: HTMLElement | null;
+let modalFeaturesEl: HTMLElement | null;
+let modalTechEl: HTMLElement | null;
+let modalCloseBtn: HTMLElement | null;
 
 /**
  * 회사 프로젝트 렌더링
@@ -17,92 +25,197 @@ const companyData = companyJson as CompanyData;
 export function renderCompany(): void {
   const data = companyData;
 
-  const titleEl = document.getElementById("company-intro-title");
-  const subtitleEl = document.getElementById("company-intro-subtitle");
-  const filterEl = document.getElementById("company-filter-buttons");
-  const gridEl = document.getElementById("company-grid");
+  // 기본값 설정 (방어코드)
+  const intro = data.intro || {};
+  const filters = data.filters || [];
+  const projects = data.projects || [];
 
-  if (titleEl) titleEl.textContent = data.intro.title;
-  if (subtitleEl) subtitleEl.textContent = data.intro.subtitle;
+  // Intro 설정
+  const introTitleEl = document.getElementById("intro-title");
+  const introSubtitleEl = document.getElementById("intro-subtitle");
 
-  /** 필터 버튼 렌더링 */
-  if (filterEl) {
-    filterEl.innerHTML = "";
+  if (introTitleEl) introTitleEl.textContent = intro.title || "";
+  if (introSubtitleEl) introSubtitleEl.textContent = intro.subtitle || "";
 
-    data.filters.forEach((f) => {
+  // 필터 버튼 렌더링
+  const filterContainer = document.getElementById("filter-buttons");
+  const tagColors = ["primary", "secondary", "purple", "green"];
+
+  if (filterContainer) {
+    filterContainer.innerHTML = "";
+    
+    filters.forEach(filter => {
       const btn = document.createElement("button");
-      btn.textContent = f.label;
-      btn.dataset.filter = f.id;
+      btn.type = "button";
+      btn.textContent = filter.label;
+      btn.dataset.filter = filter.id;
       btn.className = "filter-btn";
 
-      if (f.id === "all") btn.classList.add("active");
+      if (filter.id === "all") btn.classList.add("active");
 
-      btn.addEventListener("click", () => {
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach((b) => b.classList.remove("active"));
-
-        btn.classList.add("active");
-        renderCompanyProjects(f.id);
-      });
-
-      filterEl.appendChild(btn);
+      filterContainer.appendChild(btn);
     });
   }
 
-  /** 기본: 전체(all) 렌더링 */
-  renderCompanyProjects("all");
+  // 포트폴리오 프로젝트 렌더링
+  const grid = document.getElementById("portfolio-grid");
+  
+  if (grid) {
+    projects.forEach((project: CompanyProject, index: number) => {
+      const card = document.createElement("div");
+      card.className = `portfolio-item animate-scale-in animate-delay-${((index % 6) + 1)}`;
+      card.dataset.category = project.category;
 
-  /** 애니메이션 attach */
+      card.innerHTML = `
+        <div class="portfolio-item__image"
+             style="background-image: url('${project.thumbnail}')"></div>
+        <div class="portfolio-item__body">
+          <h3 class="portfolio-item__title">${project.title}</h3>
+          <p class="portfolio-item__desc">${project.summary}</p>
+
+          <div class="portfolio-item__tags">
+            ${(project.tags || [])
+              .map((tag: string, i: number) => {
+                const color = tagColors[i % tagColors.length];
+                return `<span class="portfolio-item__tag portfolio-item__tag--${color}">${tag}</span>`;
+              })
+              .join("")}
+          </div>
+
+          <button class="portfolio-item__link"
+                  type="button"
+                  data-project-id="${project.id}"
+                  aria-label="${project.title} 상세 보기">
+            자세히 보기 →
+          </button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  }
+
+  // 필터 로직
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const items = document.querySelectorAll<HTMLElement>(".portfolio-item");
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      items.forEach(item => {
+        if (filter === "all" || item.dataset.category === filter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });
+
+  // 모달 초기화
+  initModal();
+
+  // 카드 내부 "자세히 보기" 버튼 클릭 이벤트
+  if (grid) {
+    grid.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLElement;
+      const btn = target.closest(".portfolio-item__link") as HTMLButtonElement;
+      if (!btn) return;
+      
+      const id = btn.dataset.projectId;
+      if (id) openModalById(id);
+    });
+  }
+
+  // Intersection Observer 적용
   attachRevealObserver();
 }
 
 /**
- * 프로젝트 카드 리스트 렌더링
+ * 모달 초기화
  */
-function renderCompanyProjects(filter: string): void {
-  const gridEl = document.getElementById("company-grid");
-  if (!gridEl) return;
+function initModal(): void {
+  modal = document.getElementById("modal");
+  modalTitleEl = document.getElementById("modal-title");
+  modalImageEl = document.getElementById("modal-image") as HTMLImageElement;
+  modalDescEl = document.getElementById("modal-description");
+  modalFeaturesEl = document.getElementById("modal-features");
+  modalTechEl = document.getElementById("modal-techstack");
+  modalCloseBtn = document.getElementById("modal-close");
 
-  const tagColors = ["primary", "secondary", "purple", "green"];
+  // 닫기 버튼
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeModal);
+  }
 
-  gridEl.innerHTML = "";
+  // 오버레이 클릭으로 닫기
+  if (modal) {
+    modal.addEventListener("click", (e: Event) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
 
-  const list = companyData.projects.filter(
-    (p) => filter === "all" || p.category === filter
-  );
-
-  list.forEach((project: CompanyProject, i: number) => {
-    const card = document.createElement("article");
-    card.className = `portfolio-item animate-scale-in animate-delay-${(i % 6) + 1}`;
-
-    card.innerHTML = `
-      <div class="portfolio-item__image" style="background-image:url('${project.thumbnail}')"></div>
-      <div class="portfolio-item__body">
-        <h3>${project.title}</h3>
-        <p>${project.summary}</p>
-
-        <div class="portfolio-item__tags">
-          ${project.tags
-            .map(
-              (t: string, ti: number) =>
-                `<span class="portfolio-item__tag portfolio-item__tag--${tagColors[ti % 4]}">${t}</span>`
-            )
-            .join("")}
-        </div>
-
-        <button type="button" class="portfolio-item__link">자세히 보기 →</button>
-      </div>
-    `;
-
-    const btn = card.querySelector("button");
-    if (btn) {
-      btn.addEventListener("click", () => openModal(project));
+  // ESC key로 모달 닫기
+  document.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Escape" && modal?.classList.contains("active")) {
+      closeModal();
     }
-
-    gridEl.appendChild(card);
   });
+}
 
-  // 애니메이션 오브저버 적용
-  attachRevealObserver();
+/**
+ * 모달 열기
+ */
+function openModalById(id: string): void {
+  const project = companyData.projects.find(p => p.id === id);
+  if (!project || !modal) return;
+
+  if (modalTitleEl) modalTitleEl.textContent = project.title || "";
+  if (modalImageEl) {
+    modalImageEl.src = project.modalImage || project.thumbnail || "";
+    modalImageEl.alt = project.title || "프로젝트 상세 이미지";
+  }
+  if (modalDescEl) modalDescEl.textContent = project.description || "";
+
+  // Features
+  if (modalFeaturesEl) {
+    modalFeaturesEl.innerHTML = (project.features || [])
+      .map((f: string) => `<li>${f}</li>`)
+      .join("");
+  }
+
+  // Tech Stack
+  if (modalTechEl) {
+    modalTechEl.innerHTML = (project.techStack || [])
+      .map((t: string) => `<span class="modal-tech-tag">${t}</span>`)
+      .join("");
+  }
+
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+/**
+ * 모달 닫기
+ */
+function closeModal(): void {
+  if (!modal) return;
+  
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+/**
+ * 외부에서 사용할 수 있는 모달 오픈 함수
+ */
+export function openModal(project: CompanyProject): void {
+  openModalById(project.id);
 }

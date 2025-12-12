@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/favicon/favicon_io/favicon.ico" />
+  <link rel="icon" href="/favicon/favicon_io/favicon.ico" />
   <title>민시우 - 디지털 전환 개발자</title>
 
   <!-- Fonts -->
@@ -14,35 +14,34 @@
   <!-- External Libraries (CDN) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="/dist/css/main.css">
 </head>
-<body>
+  <!-- Header -->
+  <div id="layout-header"></div>
+
   <!-- Navigation -->
   <div id="layout-nav"></div>
 
-  <!-- Main Content -->
+  <!-- Content Sections -->
   <main id="app">
+    <!-- 자기소개 -->
     <section id="about"></section>
+    <!-- 포트폴리오 -->
     <section id="portfolio"></section>
+    <!-- 컨설팅 및 기업 고객 -->
     <section id="consulting"></section>
+    <!-- 나의 창업 -->
     <section id="company"></section>
+    <!-- 나의 기술 블로그 링크 -->
     <section id="links"></section>
+    <!-- 연락하기 -->
     <section id="contact"></section>
-  </main>
+  </main> 
 
   <!-- Footer -->
   <div id="layout-footer"></div>
 
   <!-- Modal Area -->
   <div id="modal-area"></div>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="toast">
-    <i class="ri-check-line"></i>
-    <span>메시지가 성공적으로 전송되었습니다!</span>
-  </div>
 
   <!-- Scripts -->
   <script type="module" src="/src/ts/main.ts"></script>

@@ -144,6 +144,28 @@ export interface CompanyData {
 // ============================================
 // 4. CONSULTING.JSON (창업가 신념)
 // ============================================
+export interface ConsultingServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: "primary" | "secondary" | "purple" | "green";
+  delay?: number;
+  items: string[];
+}
+
+export interface ConsultingProcessStep {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  delay?: number;
+}
+
+export interface ConsultingProcess {
+  title: string;
+  steps: ConsultingProcessStep[];
+}
 
 export interface VisionCard {
   id: string;
@@ -173,6 +195,8 @@ export interface ConsultingData {
     title: string;
     subtitle: string;
   };
+  serviceCategories: ConsultingServiceCategory[];
+  process: ConsultingProcess;                    
   visionCards: VisionCard[];
   principles: PrinciplesBlock;
 }
