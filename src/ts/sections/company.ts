@@ -133,7 +133,7 @@ function renderProjects(projects: CompanyProject[]): void {
 
     card.innerHTML = `
       <div class="portfolio-item__image"
-           style="background-image: url('${project.thumbnail}')"></div>
+          style="background-image: url('${project.thumbnail}')"></div>
       <div class="portfolio-item__body">
         <h3 class="portfolio-item__title">${project.title}</h3>
         <p class="portfolio-item__desc">${project.summary}</p>
