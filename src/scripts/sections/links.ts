@@ -4,8 +4,8 @@
  */
 
 import linksJson from "@/data/links.json";
-import type { LinksData, LinksCategory, LinkItem } from "@/ts/data.types";
-import { attachRevealObserver } from "@/ts/utils/reveal";
+import type { LinksData, LinksCategory, LinkItem } from "@/scripts/data.types";
+import { attachRevealObserver } from "@/scripts/utils/reveal";
 
 /* JSON 타입 변환 */
 const linksData = linksJson as LinksData;

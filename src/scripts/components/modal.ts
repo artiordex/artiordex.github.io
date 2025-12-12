@@ -6,7 +6,7 @@
  * - ESC / 오버레이 클릭 닫기
  */
 
-import type { CompanyProject } from "@/ts/data.types";
+import type { CompanyProject } from "@/scripts/data.types";
 
 const MODAL_ACTIVE_CLASS = "active";
 

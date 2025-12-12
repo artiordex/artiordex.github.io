@@ -4,8 +4,8 @@
  */
 
 import companyJson from "@/data/company.json";
-import type { CompanyData, CompanyProject } from "@ts/data.types";
-import { attachRevealObserver } from "@ts/utils/reveal";
+import type { CompanyData, CompanyProject } from "@scripts/data.types";
+import { attachRevealObserver } from "@scripts/utils/reveal";
 
 // JSON → 타입 적용
 const companyData = companyJson as CompanyData;

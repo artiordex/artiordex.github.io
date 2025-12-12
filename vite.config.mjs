@@ -4,18 +4,22 @@ import { resolve } from "path";
 export default defineConfig(({ command }) => {
   const isProd = command === "build";
   return {
-    base: "/",
+    base: isProd ? "/artiordex.github.io/" : "/",
     root: ".",
     publicDir: "assets",
 
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
-        "@ts": resolve(__dirname, "src/ts"),
-        "@scss": resolve(__dirname, "src/scss"),
-        "@sections": resolve(__dirname, "src/sections"),
+        "@scripts": resolve(__dirname, "src/scripts"),
         "@data": resolve(__dirname, "src/data"),
+        "@components": resolve(__dirname, "src/scripts/components"),
+        "@sections": resolve(__dirname, "src/scripts/sections"),
+        "@utils": resolve(__dirname, "src/scripts/utils"),
+        "@animations": resolve(__dirname, "src/scripts/animations"),
+        "@scss": resolve(__dirname, "src/scss"),
       },
+      extensions: ['.mjs', '.js', '.ts', '.json', '.jsx']
     },
 
     css: {
@@ -24,6 +28,10 @@ export default defineConfig(({ command }) => {
           additionalData: `@use "@/scss/abstracts/variables" as *;`
         },
       },
+    },
+
+    json: {
+      stringify: false
     },
 
     build: {
@@ -35,11 +43,16 @@ export default defineConfig(({ command }) => {
           main: resolve(__dirname, "index.html"),
         },
         output: {
-          entryFileNames: "js/[name].js",
-          chunkFileNames: "js/[name].js",
+          // scripts 
+          entryFileNames: "scripts/[name].js", 
+          chunkFileNames: "scripts/[name].js", 
           assetFileNames: (assetInfo) => {
-            if (assetInfo.name.endsWith(".css")) {
+            if (assetInfo.name?.endsWith(".css")) {
               return "css/[name][extname]";
+            }
+            // JS 모듈도 scripts 폴더로
+            if (assetInfo.name?.endsWith(".js")) {
+              return "scripts/[name][extname]";
             }
             return "assets/[name]-[hash][extname]";
           },

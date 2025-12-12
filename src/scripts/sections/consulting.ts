@@ -4,8 +4,8 @@
  */
 
 import consultingJson from "@/data/consulting.json";
-import type { ConsultingData } from "@/ts/data.types";
-import { attachRevealObserver } from "@/ts/utils/reveal";
+import type { ConsultingData } from "@/scripts/data.types";
+import { attachRevealObserver } from "@/scripts/utils/reveal";
 
 const consultingData = consultingJson as ConsultingData;
 

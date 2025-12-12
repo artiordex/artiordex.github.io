@@ -9,9 +9,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@ts/*": ["src/ts/*"],
+      "@scripts/*": ["src/scripts/*"],
       "@data/*": ["src/data/*"],
-      "@sections/*": ["src/ts/sections/*"],
+      "@components/*": ["src/scripts/components/*"],
+      "@sections/*": ["src/scripts/sections/*"],
+      "@utils/*": ["src/scripts/utils/*"],
+      "@animations/*": ["src/scripts/animations/*"],
       "@scss/*": ["src/scss/*"]
     },
 
@@ -25,5 +28,9 @@
 
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/ts/**/*.ts", "src/data/**/*.json"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/data/**/*.json"
+  ]
 }

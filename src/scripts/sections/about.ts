@@ -4,7 +4,7 @@
  */
 
 import aboutDataJson from "@/data/about.json";
-import type { AboutData } from "@/ts/data.types";
+import type { AboutData } from "@/scripts/data.types";
 
 const aboutData = aboutDataJson as AboutData;
 

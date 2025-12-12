@@ -3,11 +3,10 @@
  * Contact(연락처 및 문의 폼) 섹션 렌더링 + 폼 검증 통합 모듈
  */
 import contactJson from "@/data/contact.json";
-import type { ContactPageData } from "@/ts/data.types";
-import { attachRevealObserver } from "@/ts/utils/reveal";
+import type { ContactPageData, ContactInfoBlock } from "@/scripts/data.types";
+import { attachRevealObserver } from "@/scripts/utils/reveal";
 
 const contactData = contactJson as ContactPageData;
-
 export function renderContact(): void {
   const data = contactData;
   const el = document.getElementById("contact");
@@ -15,7 +14,7 @@ export function renderContact(): void {
 
   /* contactInfo → 배열화 */
   const contactItems: { icon: string; label: string; value: string; color: string }[] = [];
-  const colorMap = {
+  const colorMap: Record<keyof ContactInfoBlock, string> = {
     email: "primary",
     phone: "secondary",
     location: "purple",
@@ -24,11 +23,13 @@ export function renderContact(): void {
 
   if (data.contactInfo) {
     Object.entries(data.contactInfo).forEach(([key, item]) => {
+      const typedKey = key as keyof ContactInfoBlock;
+
       contactItems.push({
         icon: item.icon,
         label: item.label,
         value: item.value,
-        color: colorMap[key] || "primary",
+        color: colorMap[typedKey],
       });
     });
   }

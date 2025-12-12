@@ -4,8 +4,8 @@
  */
 
 import portfolioJson from "@data/portfolio.json";
-import type { PortfolioData, PortfolioProject } from "@ts/data.types";
-import { attachRevealObserver } from "@ts/utils/reveal";
+import type { PortfolioData, PortfolioProject } from "@scripts/data.types";
+import { attachRevealObserver } from "@scripts/utils/reveal";
 
 const portfolioData = portfolioJson as PortfolioData;
 
