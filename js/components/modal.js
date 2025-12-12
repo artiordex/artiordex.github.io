@@ -1,83 +1,93 @@
 /**
  * modal.ts
- * 최소 기능 모달 컴포넌트
- * - 열기 / 닫기
- * - ESC 닫기
- * - 배경 클릭 닫기
+ * 프로젝트 상세 모달 전용 컴포넌트
+ * - openModal(project)
+ * - closeModal()
+ * - ESC / 오버레이 클릭 닫기
  */
-const DEFAULT_CONFIG = {
-    activeClass: "open"
-};
-class Modal {
-    config;
-    modalEl = null;
-    overlayEl = null;
-    constructor(config = {}) {
-        this.config = { ...DEFAULT_CONFIG, ...config };
-    }
-    // 초기화
-    init() {
-        this.modalEl = document.getElementById("modal");
-        this.overlayEl = document.getElementById("modal-overlay");
-        if (!this.modalEl || !this.overlayEl) {
-            console.warn("모달 요소를 찾을 수 없습니다.");
-            return;
-        }
-        this.bindEvents();
-    }
-    // 이벤트 설정
-    bindEvents() {
-        // ESC 버튼으로 모달 닫기
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape")
-                this.close();
-        });
-        // 오버레이 클릭 시 닫기
-        this.overlayEl?.addEventListener("click", () => this.close());
-        // data-modal-open="modal" 클릭 시 모달 열기
-        document.querySelectorAll("[data-modal-open]").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const id = btn.dataset.modalOpen;
-                if (id === "modal")
-                    this.open();
-            });
-        });
-        // data-modal-close 클릭 시 닫기
-        document.querySelectorAll("[data-modal-close]").forEach((btn) => {
-            btn.addEventListener("click", () => this.close());
-        });
-    }
-    // 모달 열기
-    open() {
-        this.modalEl?.classList.add(this.config.activeClass);
-        this.overlayEl?.classList.add(this.config.activeClass);
-    }
-    // 모달 닫기
-    close() {
-        this.modalEl?.classList.remove(this.config.activeClass);
-        this.overlayEl?.classList.remove(this.config.activeClass);
-    }
-    // 상태 확인
-    isOpen() {
-        return this.modalEl?.classList.contains(this.config.activeClass) ?? false;
+const MODAL_ACTIVE_CLASS = "active";
+let modalEl = null;
+let overlayEl = null;
+let closeBtn = null;
+/**
+ * 모달 내부 요소 캐싱
+ */
+function cacheModalElements() {
+    modalEl = document.getElementById("modal");
+    overlayEl = document.getElementById("modal-overlay");
+    closeBtn = document.getElementById("modal-close");
+    if (!modalEl || !overlayEl) {
+        console.warn("modal 요소를 찾을 수 없습니다.");
     }
 }
-// 싱글톤 인스턴스
-let modalInstance = null;
-// 초기화 함수
-export function initModal(config) {
-    if (!modalInstance) {
-        modalInstance = new Modal(config);
-        modalInstance.init();
+/**
+ * 모달 열기
+ */
+export function openModal(project) {
+    if (!modalEl)
+        cacheModalElements();
+    if (!modalEl)
+        return;
+    // 각 요소 찾기
+    const modalTitle = document.getElementById("modal-title");
+    const modalDescription = document.getElementById("modal-description");
+    const modalImage = document.getElementById("modal-image");
+    const modalFeatures = document.getElementById("modal-features");
+    const modalTechstack = document.getElementById("modal-techstack");
+    // 값 삽입
+    if (modalTitle)
+        modalTitle.textContent = project.title;
+    if (modalDescription)
+        modalDescription.textContent = project.description ?? "";
+    if (modalImage) {
+        modalImage.src = project.modalImage || project.thumbnail;
+        modalImage.alt = project.title;
     }
-    return modalInstance;
+    if (modalFeatures) {
+        modalFeatures.innerHTML = (project.features ?? [])
+            .map((f) => `<li>${f}</li>`)
+            .join("");
+    }
+    if (modalTechstack) {
+        modalTechstack.innerHTML = (project.techStack ?? [])
+            .map((t) => `<span class="modal-tech-tag">${t}</span>`)
+            .join("");
+    }
+    // 보여주기
+    modalEl.classList.add(MODAL_ACTIVE_CLASS);
+    overlayEl?.classList.add(MODAL_ACTIVE_CLASS);
+    document.body.style.overflow = "hidden";
 }
-// 인스턴스 가져오기
-export function getModal() {
-    return modalInstance;
+/**
+ * 모달 닫기
+ */
+export function closeModal() {
+    modalEl?.classList.remove(MODAL_ACTIVE_CLASS);
+    overlayEl?.classList.remove(MODAL_ACTIVE_CLASS);
+    document.body.style.overflow = "";
 }
-// DOMContentLoaded 자동 초기화
+/**
+ * 초기 이벤트 바인딩
+ */
+function bindModalEvents() {
+    // ESC 닫기
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape")
+            closeModal();
+    });
+    // 오버레이 클릭 닫기
+    overlayEl?.addEventListener("click", () => closeModal());
+    // 닫기 버튼
+    closeBtn?.addEventListener("click", () => closeModal());
+}
+/**
+ * DOM 로딩 후 자동 초기화
+ */
 document.addEventListener("DOMContentLoaded", () => {
-    initModal();
+    cacheModalElements();
+    bindModalEvents();
 });
-export { Modal };
+export default {
+    openModal,
+    closeModal,
+};
