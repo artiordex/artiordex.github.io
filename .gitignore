@@ -6,4 +6,5 @@ _site/
 .bundle/
 vendor/
 
+dist/
 node_modules/
