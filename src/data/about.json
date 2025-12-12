@@ -1,0 +1,75 @@
+{
+  "profile": {
+    "name": "민시우",
+    "title": "Full-Stack · DevOps · AI · Cloud Automation 전문가",
+    "description": "AI와 자동화를 중심으로 디지털 전환을 선도하는 풀스택·클라우드 엔지니어입니다. 비즈니스 목표에 맞춘 기술 전략, 안정적인 시스템 구축, 자동화 기반 운영 최적화를 통해 기업의 성장을 돕습니다.",
+    "profileImage": "/assets/images/profile.jpg",
+    "backgroundImage": "/assets/images/hero-bg.jpg"
+  },
+
+  "highlights": [
+    "AI 기반 자동화 시스템 구축 경험",
+    "대규모 클라우드 인프라 설계 및 운영",
+    "React · Node.js 중심의 Full-Stack 개발",
+    "DevOps 파이프라인 구축 및 운영 자동화",
+    "대기업·스타트업 DX 컨설팅 프로젝트 다수 수행"
+  ],
+
+  "skills": {
+    "core": [
+      { "name": "AI/ML", "level": 92 },
+      { "name": "Full-Stack Development", "level": 90 },
+      { "name": "DevOps & Automation", "level": 94 },
+      { "name": "Cloud Architecture", "level": 88 },
+      { "name": "System Design", "level": 86 }
+    ],
+    "techStack": {
+      "frontend": ["React", "Next.js", "TypeScript", "TailwindCSS", "Vite"],
+      "backend": ["Node.js", "Express", "NestJS", "FastAPI", "PostgreSQL", "Redis"],
+      "ai": ["GPT 모델 활용", "LangChain", "HuggingFace", "RAG 시스템 구축"],
+      "cloud": ["AWS", "GCP", "Docker", "Kubernetes", "Terraform", "CI/CD"],
+      "tools": ["GitHub", "Notion", "Slack", "Figma", "Jira"]
+    }
+  },
+
+  "certifications": [
+    {
+      "name": "AWS Solutions Architect – Associate",
+      "issuer": "Amazon Web Services",
+      "year": 2023
+    },
+    {
+      "name": "Google Cloud Professional Cloud Architect",
+      "issuer": "Google Cloud",
+      "year": 2023
+    },
+    {
+      "name": "Kubernetes CKA",
+      "issuer": "Linux Foundation",
+      "year": 2022
+    }
+  ],
+
+  "socialLinks": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/artiordex",
+      "icon": "ri-github-fill"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/artiordex",
+      "icon": "ri-linkedin-box-fill"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com",
+      "icon": "ri-instagram-line"
+    },
+    {
+      "platform": "Blog",
+      "url": "https://artiordex.dev",
+      "icon": "ri-book-open-line"
+    }
+  ]
+}

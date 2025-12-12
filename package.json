@@ -1,0 +1,24 @@
+{
+  "name": "artiordex.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio website built with HTML, SCSS, TypeScript, and GitHub Pages",
+  "scripts": {
+    "dev:sass": "sass src/scss/main.scss dist/css/main.css --watch",
+    "dev:ts": "tsc --watch",
+    "dev": "npm-run-all --parallel dev:*",
+    "build:sass": "sass src/scss/main.scss dist/css/main.css --style=compressed",
+    "build:ts": "tsc",
+    "build": "npm-run-all build:*"
+  },
+  "author": "SHIWOO MIN",
+  "license": "MIT",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.70.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "vite": "^7.2.7"
+  }
+}

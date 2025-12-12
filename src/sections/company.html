@@ -1,0 +1,224 @@
+<!-- COMPANY / PORTFOLIO SECTION (SPA VERSION) -->
+<section id="company" class="section section--light">
+  <div class="section__inner">
+
+    <!-- Header Section (중앙 인트로 블록) -->
+    <header class="section__header">
+      <div class="animate-fade-in animate-delay-1">
+        <h1 id="intro-title" class="section__title">창업가로서의 신념</h1>
+        <p id="intro-subtitle" class="section__subtitle">15년간의 기술 여정에서 얻은 통찰과 경험을 바탕으로, 기술이 가져올 미래를 현실로 만들고자 합니다. 단순한 서비스 제공이 아닌, 진정한 디지털 혁신의 파트너가 되고자 하는 저의 철학을 소개합니다.</p>
+      </div>
+    </header>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons animate-fade-in animate-delay-2" id="filter-buttons"></div>
+
+    <!-- Portfolio Grid -->
+    <div id="portfolio-grid"></div>
+
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title">회사소개</h2>
+      <button
+        id="modal-close"
+        class="modal-close"
+        type="button"
+        aria-label="프로젝트 상세 닫기"
+      >
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <img id="modal-image" class="modal-image" alt="">
+      <p id="modal-description" class="modal-description"></p>
+
+      <h3 class="modal-section-title">주요 기능</h3>
+      <ul id="modal-features" class="modal-features"></ul>
+
+      <h3 class="modal-section-title">기술 스택</h3>
+      <div id="modal-techstack" class="modal-techstack"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPANY SECTION SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  // JSON Load
+  const res  = await fetch("/src/data/company.json");
+  const data = await res.json();
+
+  // 방어코드용 기본값
+  const intro    = data.intro    || {};
+  const filters  = data.filters  || [];
+  const projects = data.projects || [];
+
+  // Set Intro
+  const introTitleEl    = document.getElementById("intro-title");
+  const introSubtitleEl = document.getElementById("intro-subtitle");
+
+  if (introTitleEl)    introTitleEl.textContent    = intro.title    || "";
+  if (introSubtitleEl) introSubtitleEl.textContent = intro.subtitle || "";
+
+  // Render Filter Buttons
+  const filterContainer = document.getElementById("filter-buttons");
+  const tagColors       = ["primary", "secondary", "purple", "green"];
+
+  filters.forEach(filter => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = filter.label;
+    btn.dataset.filter = filter.id;
+    btn.className = "filter-btn";
+
+    if (filter.id === "all") btn.classList.add("active");
+
+    filterContainer.appendChild(btn);
+  });
+
+  // Render Portfolio Projects
+  const grid = document.getElementById("portfolio-grid");
+
+  projects.forEach((project, index) => {
+    const card = document.createElement("div");
+    card.className =
+      "portfolio-item animate-scale-in animate-delay-" + ((index % 6) + 1);
+    card.dataset.category = project.category;
+
+    card.innerHTML = `
+      <div class="portfolio-item__image"
+           style="background-image: url('${project.thumbnail}')"></div>
+      <div class="portfolio-item__body">
+        <h3 class="portfolio-item__title">${project.title}</h3>
+        <p class="portfolio-item__desc">${project.summary}</p>
+
+        <div class="portfolio-item__tags">
+          ${
+            (project.tags || [])
+              .map((tag, i) => {
+                const color = tagColors[i % tagColors.length];
+                return `<span class="portfolio-item__tag portfolio-item__tag--${color}">${tag}</span>`;
+              })
+              .join("")
+          }
+        </div>
+
+        <button class="portfolio-item__link"
+                type="button"
+                data-project-id="${project.id}"
+                aria-label="${project.title} 상세 보기">
+          자세히 보기 →
+        </button>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  // Filter Logic
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const items         = document.querySelectorAll(".portfolio-item");
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      items.forEach(item => {
+        if (filter === "all" || item.dataset.category === filter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });
+
+  // 모달 관련
+  const modal           = document.getElementById("modal");
+  const modalTitleEl    = document.getElementById("modal-title");
+  const modalImageEl    = document.getElementById("modal-image");
+  const modalDescEl     = document.getElementById("modal-description");
+  const modalFeaturesEl = document.getElementById("modal-features");
+  const modalTechEl     = document.getElementById("modal-techstack");
+  const modalCloseBtn   = document.getElementById("modal-close");
+
+  function openModalById(id) {
+    const project = projects.find(p => p.id === id);
+    if (!project) return;
+
+    modalTitleEl.textContent = project.title || "";
+    modalImageEl.src         = project.modalImage || project.thumbnail || "";
+    modalImageEl.alt         = project.title || "프로젝트 상세 이미지";
+
+    modalDescEl.textContent  = project.description || "";
+
+    // Features
+    modalFeaturesEl.innerHTML = (project.features || [])
+      .map(f => `<li>${f}</li>`)
+      .join("");
+
+    // Tech Stack
+    modalTechEl.innerHTML = (project.techStack || [])
+      .map(t => `<span class="modal-tech-tag">${t}</span>`)
+      .join("");
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  // 카드 내부 "자세히 보기" 버튼 클릭 → 모달 오픈
+  grid.addEventListener("click", (e) => {
+    const btn = e.target.closest(".portfolio-item__link");
+    if (!btn) return;
+    const id = btn.dataset.projectId;
+    if (id) openModalById(id);
+  });
+
+  // 닫기 버튼
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeModal);
+  }
+
+  // 오버레이 클릭으로 닫기
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // ESC key로 모달 닫기
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible", "revealed");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document
+    .querySelectorAll(".animate-fade-in, .animate-slide-up, .animate-scale-in, .scroll-reveal")
+    .forEach(el => observer.observe(el));
+});
+</script>

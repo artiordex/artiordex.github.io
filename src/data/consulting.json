@@ -1,0 +1,69 @@
+{
+  "pageTitle": "창업가로서의 신념",
+  "intro": {
+    "title": "창업가로서의 신념",
+    "subtitle": "기술의 본질은 사람을 돕는 것이며, 혁신은 본질을 더 명확하게 드러낼 뿐입니다. 저는 기술 중심의 창업가로서 문제를 해결하고, 더 나은 방향으로 움직이는 변화를 만들어갑니다."
+  },
+
+  "visionCards": [
+    {
+      "id": "innovation",
+      "title": "기술로 변화 만들기",
+      "description": "기술은 단순한 도구가 아니라 문제를 해결하는 사고 방식입니다. 복잡한 비즈니스 문제를 기술적 관점에서 재정의하고, 가장 효율적인 해결책을 찾는 데 집중합니다.",
+      "icon": "ri-lightbulb-flash-line",
+      "color": "primary",
+      "delay": 1
+    },
+    {
+      "id": "future",
+      "title": "AI 혁신의 선도",
+      "description": "AI는 지금 이 순간에도 비즈니스의 형태를 재창조하고 있습니다. 저는 AI 기술을 단순한 자동화가 아니라 '새로운 가능성의 확장'으로 바라보고, 실질적인 비즈니스 가치로 연결합니다.",
+      "icon": "ri-brain-line",
+      "color": "purple",
+      "delay": 2
+    },
+    {
+      "id": "experience",
+      "title": "15년의 현장 경험",
+      "description": "제조, 물류, 금융, 스타트업 등 다양한 산업에서 쌓아온 경험은 문제의 본질을 이해하는 데 큰 자산이 됩니다. 기술은 산업을 이해할 때 가장 강력해집니다.",
+      "icon": "ri-timer-2-line",
+      "color": "secondary",
+      "delay": 3
+    },
+    {
+      "id": "collaboration",
+      "title": "함께 성장하는 협업",
+      "description": "좋은 팀은 함께 성장하며, 좋은 협업은 서로의 전문성을 더욱 명확하게 만듭니다. 저는 기술과 비즈니스의 간극을 잇는 다리 역할을 합니다.",
+      "icon": "ri-team-line",
+      "color": "green",
+      "delay": 4
+    }
+  ],
+
+  "principles": {
+    "title": "창업가의 세 가지 원칙",
+    "items": [
+      {
+        "id": "innovationMindset",
+        "title": "혁신적 사고",
+        "description": "혁신은 거창한 기술에서 시작되지 않습니다. 작은 관찰과 날카로운 질문에서 출발하며, 저는 이를 반복적으로 실천합니다.",
+        "icon": "ri-focus-2-line",
+        "color": "primary"
+      },
+      {
+        "id": "qualityAssurance",
+        "title": "품질 중심의 실행",
+        "description": "빠른 개발이 목표가 아닙니다. 유지보수할 수 있고, 확장 가능하며, 신뢰할 수 있는 시스템을 만드는 것이 진짜 품질입니다.",
+        "icon": "ri-shield-check-line",
+        "color": "secondary"
+      },
+      {
+        "id": "continuousGrowth",
+        "title": "지속 가능한 성장",
+        "description": "기술 성장과 비즈니스 성장은 함께 가야 합니다. 장기적인 관점에서 의미 있는 성장을 설계합니다.",
+        "icon": "ri-line-chart-line",
+        "color": "purple"
+      }
+    ]
+  }
+}

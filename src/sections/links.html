@@ -1,0 +1,71 @@
+<section id="links" class="section section--white">
+  <div class="section__inner">
+
+    <!-- Intro -->
+    <header class="section__header">
+      <h1 class="section__title animate-fade-in animate-delay-1">Links Hub</h1>
+      <p class="section__subtitle animate-fade-in animate-delay-2">
+        모든 소셜, 작업 공간, Notion 기록을 한 곳에서 확인하세요.
+      </p>
+    </header>
+
+    <div id="links-container"></div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const res = await fetch("/src/js/data/links.json");
+  const data = await res.json();
+
+  const container = document.getElementById("links-container");
+
+  (data.categories || []).forEach((category, idx) => {
+    const section = document.createElement("section");
+    section.className = `links-section animate-fade-in animate-delay-${idx + 1}`;
+
+    section.innerHTML = `
+      <h2 class="links-section__title">${category.title || ""}</h2>
+      <div class="links-grid links-grid--triple" id="cat-${category.id}"></div>
+    `;
+
+    container.appendChild(section);
+    const grid = section.querySelector(`#cat-${category.id}`);
+
+    (category.links || []).forEach((link, i) => {
+      const card = document.createElement("a");
+      card.href = link.url;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.className = `link-card link-card--large animate-scale-in animate-delay-${i + 1}`;
+
+      const bg = link.color || "#4B5563";
+
+      card.innerHTML = `
+        <div class="link-card__icon" style="background:${bg}">
+          <i class="${link.icon}"></i>
+        </div>
+        <div>
+          <div class="link-card__title">${link.label || ""}</div>
+          ${link.description ? `<div class="link-card__desc">${link.description}</div>` : ""}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  });
+
+  // Scroll / Fade animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible", "revealed");
+      }
+    });
+  });
+
+  document.querySelectorAll(".animate-fade-in, .animate-slide-up, .animate-scale-in, .scroll-reveal")
+    .forEach((el) => observer.observe(el));
+});
+</script>

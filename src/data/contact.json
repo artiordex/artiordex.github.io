@@ -1,0 +1,97 @@
+{
+  "pageTitle": "연락하기",
+  "intro": {
+    "title": "연락처",
+    "subtitle": "프로젝트 문의, 협업 제안, 컨설팅 요청 등 어떤 내용이든 편하게 연락해주세요."
+  },
+
+  "contactInfo": {
+    "email": {
+      "label": "이메일",
+      "value": "artiordex@gmail.com",
+      "icon": "ri-mail-line"
+    },
+    "phone": {
+      "label": "전화번호",
+      "value": "+82-10-1234-5678",
+      "icon": "ri-phone-line"
+    },
+    "location": {
+      "label": "위치",
+      "value": "Seoul, South Korea",
+      "icon": "ri-map-pin-line"
+    },
+    "hours": {
+      "label": "업무 시간",
+      "value": "월–금 · 09:00–18:00",
+      "icon": "ri-time-line"
+    }
+  },
+
+  "socialLinks": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/artiordex",
+      "icon": "ri-github-fill"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/artiordex",
+      "icon": "ri-linkedin-box-fill"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com",
+      "icon": "ri-instagram-line"
+    },
+    {
+      "platform": "YouTube",
+      "url": "https://youtube.com",
+      "icon": "ri-youtube-fill"
+    }
+  ],
+
+  "form": {
+    "title": "문의하기",
+    "description": "아래 양식을 작성해주시면 빠르게 회신드리겠습니다.",
+
+    "fields": [
+      {
+        "id": "name",
+        "label": "이름",
+        "placeholder": "이름을 입력하세요",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "email",
+        "label": "이메일",
+        "placeholder": "메일 주소를 입력하세요",
+        "type": "email",
+        "required": true
+      },
+      {
+        "id": "subject",
+        "label": "제목",
+        "placeholder": "문의 제목을 입력하세요",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "message",
+        "label": "내용",
+        "placeholder": "문의 내용을 상세히 작성해주세요",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+
+    "submit": {
+      "label": "문의 보내기",
+      "icon": "ri-send-plane-2-line"
+    },
+
+    "successMessage": "문의가 성공적으로 제출되었습니다. 빠른 시일 내에 답변드리겠습니다.",
+    "errorMessage": "전송 중 오류가 발생했습니다. 다시 시도해주세요."
+  }
+}

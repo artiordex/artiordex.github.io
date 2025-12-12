@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "moduleResolution": "node",
+    "rootDir": "src/ts",
+    "outDir": "dist/js",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/ts/**/*.ts"]
+}

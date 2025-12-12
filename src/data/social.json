@@ -1,0 +1,24 @@
+{
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/artiordex",
+      "icon": "ri-github-fill"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://instagram.com/artiordex",
+      "icon": "ri-instagram-line"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/shiwoo-min-a493aa263/",
+      "icon": "ri-linkedin-fill"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://youtube.com/@artiordex",
+      "icon": "ri-youtube-fill"
+    }
+  ]
+}

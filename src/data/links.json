@@ -1,0 +1,162 @@
+{
+  "categories": [
+    {
+      "id": "social",
+      "title": "Connect with Me",
+      "links": [
+        {
+          "label": "Gmail",
+          "url": "mailto:artiordex@gmail.com",
+          "icon": "ri-mail-line",
+          "color": "#D14836"
+        },
+        {
+          "label": "LinkedIn",
+          "url": "https://www.linkedin.com/in/shiwoo-min-a493aa263/",
+          "icon": "ri-linkedin-fill",
+          "color": "#0A66C2"
+        },
+        {
+          "label": "Instagram",
+          "url": "https://instagram.com/artiordex",
+          "icon": "ri-instagram-line",
+          "color": "#E4405F"
+        },
+        {
+          "label": "Threads",
+          "url": "https://www.threads.net/@artiordex",
+          "icon": "ri-threads-fill",
+          "color": "#000000"
+        },
+        {
+          "label": "Strava",
+          "url": "https://www.strava.com/athletes/artiordex",
+          "icon": "ri-run-line",
+          "color": "#FC4C02"
+        },
+        {
+          "label": "YouTube",
+          "url": "https://youtube.com/@artiordex",
+          "icon": "ri-youtube-fill",
+          "color": "#FF0000"
+        },
+        {
+          "label": "Slack",
+          "url": "https://slack.com/artiordex-invite",
+          "icon": "ri-slack-fill",
+          "color": "#4A154B"
+        },
+        {
+          "label": "Discord",
+          "url": "https://discord.gg/artiordex",
+          "icon": "ri-discord-fill",
+          "color": "#5865F2"
+        }
+      ]
+    },
+
+    {
+      "id": "artiordex",
+      "title": "My Work @Artiordex",
+      "links": [
+        {
+          "label": "Artiordex Home (WordPress)",
+          "url": "https://www.artiordex.com/",
+          "icon": "ri-building-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Artiordex GitHub Pages",
+          "url": "https://www.artiordex.github.io/",
+          "icon": "ri-github-fill",
+          "color": "#000000"
+        },
+        {
+          "label": "Artiordex Blog (Naver)",
+          "url": "https://blog.naver.com/artiordex",
+          "icon": "ri-book-line",
+          "color": "#03C75A"
+        },
+        {
+          "label": "Artiordex Store (Naver Smart Store)",
+          "url": "https://smartstore.naver.com/artiordex",
+          "icon": "ri-store-2-line",
+          "color": "#03C75A"
+        },
+        {
+          "label": "Artiordex Official Notion",
+          "url": "https://www.notion.so/artiordex/Artiordex-Official-Notion-20892a86c03b80acb32bccc3be49bc64?pvs=21",
+          "icon": "ri-notion-fill",
+          "color": "#000000"
+        },
+        {
+          "label": "Artiordex Consulting",
+          "url": "https://www.notion.so/artiordex/Artiordex-Consulting-22792a86c03b808786d5dcbc1054e508?pvs=21",
+          "icon": "ri-lightbulb-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Artiordex Tech Insights",
+          "url": "https://www.notion.so/artiordex/Artiordex-Tech-Insights-22792a86c03b80d68445e2a7ba53fefb?pvs=21",
+          "icon": "ri-magic-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Artiordex Project Space",
+          "url": "https://www.notion.so/artiordex/Artiordex-Project-20692a86c03b80e290e7f570db3f8024?pvs=21",
+          "icon": "ri-apps-line",
+          "color": "#000000"
+        }
+      ]
+    },
+
+    {
+      "id": "notes",
+      "title": "Life & Work Notes",
+      "links": [
+        {
+          "label": "Reference",
+          "url": "https://www.notion.so/Reference-23392a86c03b803b97d3c95409c5093c?pvs=21",
+          "icon": "ri-bookmark-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Dev & Worklog",
+          "url": "https://www.notion.so/Dev-Worklog-22792a86c03b8031b989c3639c91dae7?pvs=21",
+          "icon": "ri-code-s-slash-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Study & Reading Log",
+          "url": "https://www.notion.so/Study-Reading-Log-22792a86c03b8078bcffdf1d39055072?pvs=21",
+          "icon": "ri-book-open-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Insights Log",
+          "url": "https://www.notion.so/Insights-Log-20892a86c03b8002bef6fbdfdb74e626?pvs=21",
+          "icon": "ri-lightbulb-flash-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Creative Log",
+          "url": "https://www.notion.so/Creative-Log-22792a86c03b80d38f2fedb73a1cc421?pvs=21",
+          "icon": "ri-brush-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Life Journal",
+          "url": "https://www.notion.so/Life-Journal-Log-20892a86c03b803ead65c1c2b281eeb6?pvs=21",
+          "icon": "ri-emotion-happy-line",
+          "color": "#000000"
+        },
+        {
+          "label": "Archive Log",
+          "url": "https://www.notion.so/Archive-Log-23192a86c03b807e9185da0b5d57e2d9?pvs=21",
+          "icon": "ri-archive-line",
+          "color": "#000000"
+        }
+      ]
+    }
+  ]
+}

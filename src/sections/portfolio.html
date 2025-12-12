@@ -1,0 +1,235 @@
+<!-- PORTFOLIO SECTION (SPA VERSION, _home.scss 기반) -->
+<section id="portfolio" class="section section--light">
+  <div class="section__inner">
+
+    <!-- Intro -->
+    <header class="section__header">
+      <h1 id="portfolio-intro-title"
+          class="section__title animate-fade-in animate-delay-1"></h1>
+      <p id="portfolio-intro-subtitle" class="section__subtitle animate-fade-in animate-delay-2"></p>
+    </header>
+
+    <!-- Filters -->
+    <div id="portfolio-filter-buttons" class="filter-buttons animate-fade-in animate-delay-3"></div>
+
+    <!-- Portfolio Grid -->
+    <div id="portfolio-grid"></div>
+
+  </div>
+</section>
+
+
+<!-- Modal -->
+<div id="modal" class="modal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title"></h2>
+
+      <button
+        id="modal-close"
+        class="modal-close"
+        type="button"
+        aria-label="포트폴리오 상세 닫기"
+      >
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <img id="modal-image" class="modal-image" alt="">
+
+      <p id="modal-description" class="modal-description"></p>
+
+      <h3 class="modal-section-title">주요 기능</h3>
+      <ul id="modal-features" class="modal-features"></ul>
+
+      <h3 class="modal-section-title">기술 스택</h3>
+      <div id="modal-techstack" class="modal-techstack"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  /* JSON Load */
+  const response = await fetch("/src/js/data/portfolio.json");
+  const data = await response.json();
+
+  const intro = data.intro || {};
+  const filters = data.filters || [];
+  const projects = data.projects || [];
+
+
+
+  /* INTRO RENDER */
+  document.getElementById("portfolio-intro-title").textContent =
+    intro.title || "";
+
+  document.getElementById("portfolio-intro-subtitle").textContent =
+    intro.subtitle || "";
+
+
+
+  /* RENDER FILTER BUTTONS */
+  const filterContainer = document.getElementById("portfolio-filter-buttons");
+
+  filters.forEach(filter => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = filter.label;
+    btn.dataset.filter = filter.id;
+    btn.className = "filter-btn";
+
+    if (filter.id === "all") btn.classList.add("active");
+
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll("#portfolio-filter-buttons .filter-btn")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+      renderProjects(filter.id);
+    });
+
+    filterContainer.appendChild(btn);
+  });
+
+
+
+  /* PORTFOLIO GRID RENDER */
+  const grid = document.getElementById("portfolio-grid");
+  const tagColors = ["primary", "secondary", "purple", "green"];
+
+  function renderProjects(filterId = "all") {
+    grid.innerHTML = "";
+
+    const list = projects.filter(p =>
+      filterId === "all" ? true : p.category === filterId
+    );
+
+    list.forEach((project, index) => {
+      const card = document.createElement("article");
+      card.className =
+        "portfolio-item animate-scale-in animate-delay-" + ((index % 6) + 1);
+
+      card.dataset.category = project.category;
+
+      card.innerHTML = `
+        <div class="portfolio-item__image"
+            style="background-image:url('${project.thumbnail}')"></div>
+
+        <div class="portfolio-item__body">
+          <h3 class="portfolio-item__title">${project.title}</h3>
+
+          <p class="portfolio-item__desc">${project.summary}</p>
+
+          <div class="portfolio-item__tags">
+            ${
+              (project.tags || [])
+                .map((tag, i) =>
+                  `<span class="portfolio-item__tag portfolio-item__tag--${
+                    tagColors[i % tagColors.length]
+                  }">${tag}</span>`
+                )
+                .join("")
+            }
+          </div>
+
+          <button type="button"
+                  class="portfolio-item__link"
+                  aria-label="${project.title} 상세 보기">
+            자세히 보기 →
+          </button>
+        </div>
+      `;
+
+      card.querySelector(".portfolio-item__link")
+          .addEventListener("click", () => openModal(project));
+
+      grid.appendChild(card);
+    });
+
+    attachObserver();
+  }
+
+  renderProjects("all");
+
+
+
+  /* MODAL LOGIC */
+  const modal = document.getElementById("modal");
+  const modalCloseBtn = document.getElementById("modal-close");
+
+  function openModal(project) {
+    if (!project) return;
+
+    document.getElementById("modal-title").textContent =
+      project.title || "";
+
+    document.getElementById("modal-image").src =
+      project.modalImage || project.thumbnail || "";
+
+    document.getElementById("modal-image").alt =
+      project.title || "포트폴리오 상세 이미지";
+
+    document.getElementById("modal-description").textContent =
+      project.description || "";
+
+    document.getElementById("modal-features").innerHTML =
+      (project.features || []).map(f => `<li>${f}</li>`).join("");
+
+    document.getElementById("modal-techstack").innerHTML =
+      (project.techStack || [])
+        .map(t => `<span class="modal-tech-tag">${t}</span>`)
+        .join("");
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  modalCloseBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", e => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
+
+
+
+  /* ANIMATION OBSERVER */
+  function attachObserver() {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible", "revealed");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document
+      .querySelectorAll(
+        ".animate-fade-in, .animate-slide-up, .animate-scale-in, .scroll-reveal"
+      )
+      .forEach(el => observer.observe(el));
+  }
+
+  attachObserver();
+});
+</script>

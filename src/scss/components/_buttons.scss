@@ -1,0 +1,100 @@
+@use "../abstracts/variables" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.7rem 1.6rem;
+  border-radius: $radius-md;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  border: none;
+
+  &--primary {
+    background: $primary;
+    color: #fff;
+
+    &:hover {
+      background: $primary-dark;
+      box-shadow: $shadow-primary;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  &--secondary {
+    background: #06B6D4;
+    color: #fff;
+
+    &:hover {
+      background: #0891B2;
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.25);
+    }
+  }
+
+  &--outline {
+    border: 2px solid $primary;
+    background: transparent;
+    color: $primary;
+
+    &:hover {
+      background: $primary;
+      color: #fff;
+      box-shadow: $shadow-primary;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $gray-700;
+
+    &:hover {
+      background: rgba($primary, 0.06);
+      color: $primary;
+    }
+  }
+
+  &--rounded {
+    border-radius: $radius-full;
+  }
+}
+
+/* ICON BUTTON */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  background: rgba($primary, 0.1);
+  border-radius: $radius-md;
+  color: $primary;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  &:hover {
+    background: $primary;
+    color: #fff;
+    box-shadow: $shadow-primary;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}

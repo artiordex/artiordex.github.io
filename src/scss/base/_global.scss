@@ -1,0 +1,124 @@
+@use "../abstracts/variables" as *;
+
+/* 전체 문서 기본값 (Typography, Box-Sizing 등) */
+html {
+  scroll-behavior: smooth; // 섹션 이동 부드럽게
+}
+
+body {
+  font-family: $font-main;
+  color: $gray-800;
+  background-color: $gray-100;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 공통 레이아웃 규칙 */
+section {
+  padding: 80px 0; // 모든 섹션에 기본 여백
+  position: relative;
+}
+
+.container {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+}
+
+/* Glass UI 공통 클래스 */
+.glass {
+  background: $glass-bg;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-radius: $radius-lg;
+}
+
+/* 타이포그래피 기본 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: $gray-900;
+}
+
+h1 { font-size: $font-size-4xl; }
+h2 { font-size: $font-size-3xl; }
+h3 { font-size: $font-size-2xl; }
+
+/* 링크 스타일 */
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: 0.25s ease;
+
+  &:hover {
+    color: $primary-dark;
+  }
+}
+
+/* Utility Classes (자주 쓰이는 기능들) */
+
+// 숨김 처리
+.hidden {
+  display: none !important;
+}
+
+// 페이드 인 애니메이션
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.8s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 텍스트 중앙 정렬
+.text-center {
+  text-align: center;
+}
+
+// 기본 섀도우
+.shadow {
+  box-shadow: $shadow-md;
+}
+
+// 원형
+.rounded-full {
+  border-radius: $radius-full;
+}
+
+/* 버튼, 카드 등 UI 요소가 기본적으로 필요로 하는 공통 클래스 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3 $space-5;
+  border-radius: $radius-md;
+  background: $primary;
+  color: $white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.25s;
+
+  &:hover {
+    background: $primary-dark;
+  }
+}
+
+.card {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  box-shadow: $shadow-md;
+  transition: 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-primary;
+    transform: translateY(-4px);
+  }
+}

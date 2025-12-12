@@ -1,0 +1,22 @@
+// npx sass src/scss/main.scss dist/css/main.css --watch
+
+// abstracts
+@use "./abstracts/variables";
+
+// base
+@use "./base/reset";
+@use "./base/global";
+
+// layout
+@use "./layout/header";
+@use "./layout/footer";
+@use "./layout/anchorNav";
+
+// components
+@use "./components/animations";
+@use "./components/buttons";
+@use "./components/cards";
+@use "./components/modal";
+
+// pages
+@use "./pages/home";

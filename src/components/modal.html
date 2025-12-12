@@ -1,0 +1,49 @@
+<div class="modal" id="global-modal" aria-hidden="true">
+  <div class="modal__overlay" data-close="true"></div>
+
+  <div class="modal__content">
+    <button class="modal__close" data-close="true">&times;</button>
+
+    <div class="modal__header">
+      <h2 class="modal__title">모달 타이틀</h2>
+    </div>
+
+    <div class="modal__body">
+      <p>모달 내용이 여기에 표시됩니다.</p>
+    </div>
+
+    <div class="modal__footer">
+      <button class="modal__button modal__button--primary" data-close="true">
+        확인
+      </button>
+      <button class="modal__button modal__button--secondary" data-close="true">
+        닫기
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* 모달 닫기 기능 (오버레이/닫기버튼) */
+  document.addEventListener("click", (e) => {
+    const modal = document.getElementById("global-modal");
+
+    // data-close 속성이 있으면 모달 닫기
+    if (e.target.dataset.close !== undefined) {
+      modal.classList.remove("is-active");
+      document.body.classList.remove("no-scroll");
+    }
+  });
+
+  /* 전역 모달 열기 함수 globalThis에 등록하여 어디서든 호출 가능 */
+  globalThis.openModal = function (contentHTML) {
+    const modal = document.getElementById("global-modal");
+    const body = modal.querySelector(".modal__body");
+
+    // 전달받은 내용이 있으면 모달 본문을 교체
+    if (contentHTML) body.innerHTML = contentHTML;
+
+    modal.classList.add("is-active");
+    document.body.classList.add("no-scroll");
+  };
+</script>
