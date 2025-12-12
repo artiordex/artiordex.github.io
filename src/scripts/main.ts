@@ -8,7 +8,7 @@ import "@components/carousel";
 import "@components/modal";
 
 // styles
-import "@scss/main.scss";
+import "@/scss/main.scss";
 
 // sections
 import { renderAbout } from "@sections/about";
