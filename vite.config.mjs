@@ -2,15 +2,16 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 
 export default defineConfig(({ command }) => {
-  // Github Pages 대응 (artiordex.github.io → repo name이 곧 base URL)
   const isProd = command === "build";
+
+  // GitHub Pages (repo-name 방식)
   const base = isProd ? "/artiordex.github.io/" : "/";
 
   return {
     base,
 
-    root: ".", // 프로젝트 루트
-    publicDir: "assets", // 정적 리소스 위치
+    root: ".",
+    publicDir: "assets",
 
     resolve: {
       alias: {
@@ -19,6 +20,14 @@ export default defineConfig(({ command }) => {
         "@scss": resolve(__dirname, "src/scss"),
         "@sections": resolve(__dirname, "src/sections"),
         "@data": resolve(__dirname, "src/data"),
+      },
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/scss/abstracts/variables" as *;`
+        },
       },
     },
 
@@ -34,17 +43,11 @@ export default defineConfig(({ command }) => {
           entryFileNames: "js/[name].js",
           chunkFileNames: "js/[name].js",
           assetFileNames: (assetInfo) => {
-            if (assetInfo.name.endsWith(".css")) return "css/[name][extname]";
+            if (assetInfo.name.endsWith(".css")) {
+              return "css/[name][extname]";
+            }
             return "assets/[name]-[hash][extname]";
           },
-        },
-      },
-    },
-
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@/scss/abstracts/variables" as *;`
         },
       },
     },

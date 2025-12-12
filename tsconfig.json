@@ -3,9 +3,21 @@
     "target": "es2022",
     "module": "es2022",
     "lib": ["es2022", "dom", "dom.iterable"],
-    "moduleResolution": "node",
+
+    "moduleResolution": "bundler",
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@ts/*": ["src/ts/*"],
+      "@data/*": ["src/data/*"],
+      "@sections/*": ["src/ts/sections/*"],
+      "@scss/*": ["src/scss/*"]
+    },
+
     "rootDir": "src/ts",
     "outDir": "dist/js",
+
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
@@ -16,5 +28,5 @@
 
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/ts/**/*.ts"]
+  "include": ["src/ts/**/*.ts", "src/data/**/*.json"]
 }
