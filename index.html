@@ -24,12 +24,19 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
   />
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 
 <body>
+  <!-- 헤더 -->
   <div id="layout-header"></div>
+
+  <!-- 앵커 네비게이션 -->
   <div id="layout-nav"></div>
 
+  <!-- 메인 컨텐츠 -->
   <main id="app">
     <section id="about"></section>
     <section id="portfolio"></section>
@@ -39,10 +46,18 @@
     <section id="contact"></section>
   </main>
 
+  <!-- 푸터 -->
   <div id="layout-footer"></div>
-  <div id="modal-area"></div>
 
-  <!-- ✅ Vite 개발 엔트리 (이게 핵심) -->
+  <!-- EmailJS 초기화 -->
+  <script>
+    (function () {
+      emailjs.init("YOUR_PUBLIC_KEY"); 
+      // 예: emailjs.init("public_k_abcd1234");
+    })();
+  </script>
+
+  <!-- 메인 스크립트 -->
   <script type="module" src="/src/scripts/main.ts"></script>
 </body>
 </html>

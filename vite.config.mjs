@@ -5,13 +5,9 @@ export default defineConfig(({ command }) => {
   const isProd = command === "build";
 
   return {
-    // GitHub Pages: https://username.github.io/artiordex/
-    // base: isProd ? "/artiordex/" : "/",
     base : "/",
-
     root: ".",
     publicDir: "assets",
-
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),

@@ -1,9 +1,10 @@
 // main.ts
 
 // components
-import "@components/header";
+import { initHeader } from "@components/header";
+import { initAnchorNav } from "@components/anchorNav";
+import { initFooter } from "@components/footer";
 import "@components/scrollActive";
-import "@components/anchorNav";
 import "@components/carousel";
 import "@components/modal";
 
@@ -23,6 +24,9 @@ import { attachRevealObserver } from "@utils/revealObserver";
 import { updateActiveNav } from "@components/scrollActive";
 
 document.addEventListener("DOMContentLoaded", () => {
+  initHeader();
+  initAnchorNav();
+  initFooter();
   renderAbout();
   renderPortfolio();
   renderCompany();

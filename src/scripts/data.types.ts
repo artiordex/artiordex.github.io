@@ -7,7 +7,7 @@
 // 1. ABOUT.JSON
 // ============================================
 
-export interface AboutSocialLink {
+export interface SocialLink {
   platform: string;
   url: string;
   icon: string;
@@ -20,7 +20,7 @@ export interface AboutProfile {
   profileImage: string;
   backgroundImage?: string;
   highlights?: string[];      // profile 내부에 있을 수도 있음
-  socialLinks?: AboutSocialLink[];  // profile 내부에 있을 수도 있음
+  socialLinks?: SocialLink[];  // profile 내부에 있을 수도 있음
 }
 
 export interface AboutSkillsCore {
@@ -50,7 +50,6 @@ export interface AboutData {
   highlights: string[];
   skills: AboutSkills;
   certifications: AboutCertification[];
-  socialLinks: AboutSocialLink[];
 }
 
 // ============================================

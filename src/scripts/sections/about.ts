@@ -4,36 +4,31 @@
  */
 
 import aboutDataJson from "@/data/about.json";
-import type { AboutData } from "@/scripts/data.types";
+import socialDataJson from "@/data/social.json";
+
+import type { AboutData, SocialLink } from "@/scripts/data.types";
 
 const aboutData = aboutDataJson as AboutData;
+const socialData = socialDataJson as { socialLinks: SocialLink[] };
 
 export function renderAbout(): void {
   const root = document.getElementById("about");
   if (!root) return;
 
-  // 전체 HTML 구조 생성
   root.innerHTML = `
     <!-- 슬라이드 1: 프로필 소개 -->
     <div class="carousel-slide active" id="about-slide-profile">
       <div class="hero-inner">
         <div id="profile-section">
-          <!-- 아바타 -->
           <div class="hero-avatar">
             <div id="profile-image" class="hero-avatar__image"></div>
           </div>
-          
-          <!-- 이름 / 직함 -->
+
           <h1 id="profile-name" class="hero-title"></h1>
           <p id="profile-title" class="hero-subtitle"></p>
-          
-          <!-- 자기소개 텍스트 -->
+
           <div id="profile-description" class="hero-description"></div>
-          
-          <!-- 하이라이트 태그들 -->
           <div id="profile-highlights" class="hero-tags"></div>
-          
-          <!-- 소셜 아이콘 링크 -->
           <div id="social-links" class="hero-socials"></div>
         </div>
       </div>
@@ -69,52 +64,39 @@ export function renderAbout(): void {
 
     <!-- 인디케이터 -->
     <div class="carousel-indicators">
-      <button class="carousel-indicator active" type="button" aria-label="슬라이드 1"></button>
-      <button class="carousel-indicator" type="button" aria-label="슬라이드 2"></button>
-      <button class="carousel-indicator" type="button" aria-label="슬라이드 3"></button>
+      <button class="carousel-indicator active" type="button"></button>
+      <button class="carousel-indicator" type="button"></button>
+      <button class="carousel-indicator" type="button"></button>
     </div>
   `;
 
-  // 데이터 렌더링
   renderProfileData();
   renderSkills();
   renderCertifications();
-
-  // 캐러셀 초기화
   initializeCarousel();
 }
 
-/**
- * 프로필 데이터 렌더링
- */
+/* =========================
+   프로필 렌더링
+========================= */
 function renderProfileData(): void {
   const profile = aboutData.profile;
   const highlights = aboutData.highlights || [];
-  const socials = aboutData.socialLinks || [];
+  const socials = socialData.socialLinks || [];
 
-  // 프로필 이미지
   const elImg = document.getElementById("profile-image") as HTMLElement | null;
-  if (elImg && profile.profileImage) {
-    elImg.style.backgroundImage = `url('${profile.profileImage}')`;
-  }
+  if (elImg) elImg.style.backgroundImage = `url('${profile.profileImage}')`;
 
-  // 이름과 직함
-  const elName = document.getElementById("profile-name");
-  const elTitle = document.getElementById("profile-title");
-  if (elName) elName.textContent = profile.name;
-  if (elTitle) elTitle.textContent = profile.title;
+  document.getElementById("profile-name")!.textContent = profile.name;
+  document.getElementById("profile-title")!.textContent = profile.title;
 
-  // 설명
   const elDesc = document.getElementById("profile-description");
   if (elDesc) {
-    if (Array.isArray(profile.description)) {
-      elDesc.innerHTML = profile.description.map(p => `<p>${p}</p>`).join("");
-    } else {
-      elDesc.innerHTML = `<p>${profile.description}</p>`;
-    }
+    elDesc.innerHTML = Array.isArray(profile.description)
+      ? profile.description.map(p => `<p>${p}</p>`).join("")
+      : `<p>${profile.description}</p>`;
   }
 
-  // 하이라이트 태그
   const elHighlights = document.getElementById("profile-highlights");
   if (elHighlights) {
     const variants = ["hero-tag--primary", "hero-tag--secondary", "hero-tag--purple", "hero-tag--green"];
@@ -123,114 +105,100 @@ function renderProfileData(): void {
       .join("");
   }
 
-  // 소셜 링크
   const elSocials = document.getElementById("social-links");
   if (elSocials) {
     elSocials.innerHTML = socials
       .map(s => `
-        <a href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.platform}">
+        <a href="${s.url}"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="${s.platform}"
+           title="${s.platform}">
           <i class="${s.icon}"></i>
         </a>
-      `).join("");
+      `)
+      .join("");
   }
 }
 
-/**
- * 스킬 렌더링
- */
+/* =========================
+   스킬 렌더링
+========================= */
 function renderSkills(): void {
   const skills = aboutData.skills?.core || [];
   const elSkills = document.getElementById("skills-core");
-  
-  if (elSkills) {
-    elSkills.innerHTML = skills
-      .map(skill => `
-        <div class="skill-item">
-          <div class="skill-header">
-            <span class="skill-name">${skill.name}</span>
-            <span class="skill-percent">${skill.level}%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="progress-bar" data-width="${skill.level}%"></div>
-          </div>
-        </div>
-      `).join("");
 
-    // Progress bar 애니메이션
-    requestAnimationFrame(() => {
-      document.querySelectorAll<HTMLElement>(".progress-bar").forEach(bar => {
-        const w = bar.dataset.width || "0%";
-        bar.style.width = w;
-      });
+  if (!elSkills) return;
+
+  elSkills.innerHTML = skills
+    .map(skill => `
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">${skill.name}</span>
+          <span class="skill-percent">${skill.level}%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="progress-bar" data-width="${skill.level}%"></div>
+        </div>
+      </div>
+    `)
+    .join("");
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll<HTMLElement>(".progress-bar").forEach(bar => {
+      bar.style.width = bar.dataset.width || "0%";
     });
-  }
+  });
 }
 
-/**
- * 자격증 렌더링
- */
+/* =========================
+   자격증 렌더링
+========================= */
 function renderCertifications(): void {
-  const certifications = aboutData.certifications || [];
   const elCert = document.getElementById("certifications-list");
-  
-  if (elCert) {
-    const variants = ["hero-cert-item--primary", "hero-cert-item--secondary", "hero-cert-item--purple", "hero-cert-item--green"];
-    elCert.innerHTML = certifications
-      .map((cert, i) => `
-        <div class="hero-cert-item ${variants[i % 4]}">
-          <i class="ri-award-line"></i>
-          <div class="hero-cert-item__info">
-            <div class="hero-cert-item__title">${cert.name}</div>
-            <div class="hero-cert-item__org">${cert.issuer} · ${cert.year}</div>
-          </div>
+  if (!elCert) return;
+
+  const variants = ["hero-cert-item--primary", "hero-cert-item--secondary", "hero-cert-item--purple", "hero-cert-item--green"];
+
+  elCert.innerHTML = aboutData.certifications
+    .map((cert, i) => `
+      <div class="hero-cert-item ${variants[i % 4]}">
+        <i class="ri-award-line"></i>
+        <div class="hero-cert-item__info">
+          <div class="hero-cert-item__title">${cert.name}</div>
+          <div class="hero-cert-item__org">${cert.issuer} · ${cert.year}</div>
         </div>
-      `).join("");
-  }
+      </div>
+    `)
+    .join("");
 }
 
-/**
- * 캐러셀 초기화
- */
+/* =========================
+   캐러셀
+========================= */
 function initializeCarousel(): void {
   const slides = document.querySelectorAll<HTMLElement>(".carousel-slide");
   const indicators = document.querySelectorAll<HTMLElement>(".carousel-indicator");
-  const prevBtn = document.querySelector<HTMLElement>(".carousel-nav.prev");
-  const nextBtn = document.querySelector<HTMLElement>(".carousel-nav.next");
+  let current = 0;
 
-  let currentIndex = 0;
+  const show = (i: number) => {
+    slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+    indicators.forEach((d, idx) => d.classList.toggle("active", idx === i));
+    current = i;
+  };
 
-  function showSlide(index: number): void {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
-    });
-    indicators.forEach((indicator, i) => {
-      indicator.classList.toggle("active", i === index);
-    });
-    currentIndex = index;
-  }
+  document.querySelector(".carousel-nav.prev")?.addEventListener("click", () =>
+    show((current - 1 + slides.length) % slides.length)
+  );
 
-  function nextSlide(): void {
-    showSlide((currentIndex + 1) % slides.length);
-  }
+  document.querySelector(".carousel-nav.next")?.addEventListener("click", () =>
+    show((current + 1) % slides.length)
+  );
 
-  function prevSlide(): void {
-    showSlide((currentIndex - 1 + slides.length) % slides.length);
-  }
+  indicators.forEach((d, i) => d.addEventListener("click", () => show(i)));
 
-  // 이벤트 리스너
-  prevBtn?.addEventListener("click", prevSlide);
-  nextBtn?.addEventListener("click", nextSlide);
-
-  indicators.forEach((indicator, i) => {
-    indicator.addEventListener("click", () => showSlide(i));
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft") show((current - 1 + slides.length) % slides.length);
+    if (e.key === "ArrowRight") show((current + 1) % slides.length);
   });
-
-  // 키보드 네비게이션
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") prevSlide();
-    if (e.key === "ArrowRight") nextSlide();
-  });
-
-  // 자동 슬라이드 (옵션)
-  // setInterval(nextSlide, 5000);
 }

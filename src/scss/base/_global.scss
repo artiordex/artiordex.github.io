@@ -2,7 +2,8 @@
 
 /* 전체 문서 기본값 (Typography, Box-Sizing 등) */
 html {
-  scroll-behavior: smooth; // 섹션 이동 부드럽게
+  scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -12,6 +13,32 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  // Flexbox 레이아웃으로 푸터 하단 고정
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  
+  // 헤더가 fixed인 경우 상단 여백
+  padding-top: 72px; // 헤더 실제 높이에 맞게 조정
+  
+  @media (max-width: 768px) {
+    padding-top: 60px; // 모바일 헤더 높이
+  }
+}
+
+// 메인 콘텐츠 영역이 남은 공간 차지
+#app,
+main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+// 푸터는 항상 하단에
+.footer {
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 *, *::before, *::after {
@@ -20,8 +47,14 @@ body {
 
 /* 공통 레이아웃 규칙 */
 section {
-  padding: 80px 0; // 모든 섹션에 기본 여백
+  padding: 80px 0;
   position: relative;
+  min-height: 400px;
+  
+  @media (max-width: 768px) {
+    padding: 60px 0;
+    min-height: 300px;
+  }
 }
 
 .container {
@@ -41,6 +74,7 @@ section {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: $gray-900;
+  margin: 0 0 1rem 0;
 }
 
 h1 { font-size: $font-size-4xl; }
@@ -92,6 +126,23 @@ a {
   border-radius: $radius-full;
 }
 
+// Flexbox 유틸리티
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
 /* 버튼, 카드 등 UI 요소가 기본적으로 필요로 하는 공통 클래스 */
 .btn {
   display: inline-flex;
@@ -104,9 +155,11 @@ a {
   cursor: pointer;
   font-weight: 500;
   transition: 0.25s;
+  border: none;
 
   &:hover {
     background: $primary-dark;
+    transform: translateY(-2px);
   }
 }
 

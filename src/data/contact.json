@@ -13,43 +13,20 @@
     },
     "phone": {
       "label": "전화번호",
-      "value": "+82-10-1234-5678",
+      "value": "+82-10-2589-3152",
       "icon": "ri-phone-line"
     },
     "location": {
       "label": "위치",
-      "value": "Seoul, South Korea",
+      "value": "Gwangmyeong-si, Gyeonggi-do, South Korea",
       "icon": "ri-map-pin-line"
     },
     "hours": {
       "label": "업무 시간",
-      "value": "월–금 · 09:00–18:00",
+      "value": "월-토 · 09:00 - 22:00",
       "icon": "ri-time-line"
     }
   },
-
-  "socialLinks": [
-    {
-      "platform": "GitHub",
-      "url": "https://github.com/artiordex",
-      "icon": "ri-github-fill"
-    },
-    {
-      "platform": "LinkedIn",
-      "url": "https://www.linkedin.com/in/artiordex",
-      "icon": "ri-linkedin-box-fill"
-    },
-    {
-      "platform": "Instagram",
-      "url": "https://instagram.com",
-      "icon": "ri-instagram-line"
-    },
-    {
-      "platform": "YouTube",
-      "url": "https://youtube.com",
-      "icon": "ri-youtube-fill"
-    }
-  ],
 
   "form": {
     "title": "문의하기",

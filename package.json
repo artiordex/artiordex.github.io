@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "description": "Portfolio website built with HTML, SCSS, TypeScript, and GitHub Pages",
-
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-
   "author": "SHIWOO MIN",
   "license": "MIT",
-
   "devDependencies": {
     "sass": "^1.70.0",
     "typescript": "^5.3.3",
     "vite": "^7.2.7"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "nodemailer": "^7.0.11"
   }
 }

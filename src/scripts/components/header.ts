@@ -1,167 +1,267 @@
 /**
  * header.ts
- * 최소 기능 헤더 컴포넌트
- * - JSON 기반 네비게이션 생성
- * - 스크롤 스파이로 현재 섹션 하이라이트
+ * - 헤더 마크업을 TS에서 직접 생성
+ * - /data/sections.json 단일 소스 사용
+ * - 스크롤 시 숨김/표시 기능 추가
  */
 
-// 타입 정의
 export interface HeaderSection {
   id: string;
   label: string;
+  icon?: string;
 }
 
 export interface HeaderConfig {
-  headerId: string;     // 헤더 요소 ID
-  navListId: string;    // 네비게이션 리스트 UL ID
-  dataPath: string;     // JSON 경로
-  activeClass: string;  // 활성 클래스명
-  linkClass: string;    // 링크 공통 클래스명
-  spyThreshold: number; // 스크롤 스파이 threshold
+  mountId: string;
+  navListId: string;
+  dataPath: string;
+  activeClass: string;
+  linkClass: string;
+  spyThreshold: number;
+  hideOnScrollDown: boolean;
+  scrollThreshold: number;
 }
 
-// 기본 설정
 const DEFAULT_CONFIG: HeaderConfig = {
-  headerId: "main-header",
+  mountId: "layout-header",
   navListId: "header-nav-list",
-  dataPath: "./data/sections.json",
+  dataPath: "/data/sections.json",
   activeClass: "active",
   linkClass: "header-link",
-  spyThreshold: 0.5
+  spyThreshold: 0.5,
+  hideOnScrollDown: true,
+  scrollThreshold: 100 // 스크롤 감지 민감도
 };
 
-// Header 클래스
 class Header {
   private config: HeaderConfig;
   private sections: HeaderSection[] = [];
-  private headerEl: HTMLElement | null = null;
   private navListEl: HTMLElement | null = null;
+  private headerEl: HTMLElement | null = null;
   private links: HTMLElement[] = [];
   private observer: IntersectionObserver | null = null;
+  private lastScrollY: number = 0;
+  private ticking: boolean = false;
 
   constructor(config: Partial<HeaderConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };
   }
 
-  // 초기화
   public async init(): Promise<void> {
-    this.cacheElements();
-    if (!this.navListEl) return;
-
+    this.renderSkeleton();
     await this.loadSections();
+
+    if (this.sections.length === 0) {
+      console.warn("[Header] sections.json is empty or missing");
+      return;
+    }
+
     this.renderNav();
     this.setupScrollSpy();
-
-    console.log("Header initialized (simple mode)");
-  }
-
-  // DOM 요소 캐싱
-  private cacheElements(): void {
-    this.headerEl = document.getElementById(this.config.headerId);
-    this.navListEl = document.getElementById(this.config.navListId);
-  }
-
-  // JSON 또는 기본 섹션 로드
-  private async loadSections(): Promise<void> {
-    try {
-      const res = await fetch(this.config.dataPath);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      this.sections = data.sections || [];
-    } catch {
-      console.warn("JSON 로드 실패 → 기본 섹션 사용");
-      this.sections = this.getDefaultSections();
+    this.bindClickEvents();
+    
+    if (this.config.hideOnScrollDown) {
+      this.setupScrollHide();
     }
   }
 
-  // 기본 섹션
-  private getDefaultSections(): HeaderSection[] {
-    return [
-      { id: "about", label: "소개" },
-      { id: "portfolio", label: "포트폴리오" },
-      { id: "consulting", label: "컨설팅" },
-      { id: "company", label: "창업가 소개" },
-      { id: "links", label: "링크" },
-      { id: "contact", label: "연락처" }
-    ];
+  private renderSkeleton(): void {
+    const mount = document.getElementById(this.config.mountId);
+    if (!mount) {
+      console.error(`[Header] Mount element not found: #${this.config.mountId}`);
+      return;
+    }
+
+    mount.innerHTML = `
+      <header id="main-header" class="header">
+        <div class="header-inner">
+          <div class="logo">민시우 - 디지털 전환 개발자</div>
+          <nav>
+            <ul id="${this.config.navListId}"></ul>
+          </nav>
+        </div>
+      </header>
+    `;
+
+    this.headerEl = document.getElementById("main-header");
+    this.navListEl = document.getElementById(this.config.navListId);
   }
 
-  // 네비게이션 렌더링
+  private async loadSections(): Promise<void> {
+    try {
+      const res = await fetch(this.config.dataPath);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      this.sections = data.sections ?? [];
+      console.log("[Header] Loaded sections:", this.sections);
+    } catch (err) {
+      console.error("[Header] Failed to load sections.json", err);
+      this.sections = [];
+    }
+  }
+
   private renderNav(): void {
     if (!this.navListEl) return;
-
-    this.navListEl.innerHTML = "";
-
-    this.sections.forEach((section) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <a href="#${section.id}"
-          class="${this.config.linkClass}"
-          data-section="${section.id}">
-          ${section.label}
-        </a>
-      `;
-      this.navListEl!.appendChild(li);
-    });
-
+    this.navListEl.innerHTML = this.sections
+      .map(
+        (s) => `
+        <li>
+          <a href="#${s.id}"
+            class="${this.config.linkClass}"
+            data-section="${s.id}">
+            ${s.icon ? `<i class="${s.icon}"></i>` : ''}
+            <span>${s.label}</span>
+          </a>
+        </li>
+      `
+      )
+      .join("");
     this.links = [...this.navListEl.querySelectorAll<HTMLElement>("a")];
   }
 
-  // 스크롤 스파이 설정
-  private setupScrollSpy(): void {
-    const sectionEls = document.querySelectorAll<HTMLElement>("section[id]");
-    if (sectionEls.length === 0) return;
-
-    this.observer?.disconnect();
-
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const id = entry.target.id;
-          this.updateActiveLink(id);
-        });
-      },
-      { threshold: this.config.spyThreshold }
-    );
-
-    sectionEls.forEach((sec) => this.observer!.observe(sec));
-  }
-
-  // active 처리
-  private updateActiveLink(id: string): void {
+  private bindClickEvents(): void {
     this.links.forEach((link) => {
-      const target = link as HTMLElement;
-      const sectionId = target.dataset.section;
-      target.classList.toggle(this.config.activeClass, sectionId === id);
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = link.dataset.section;
+        if (!id) return;
+
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        // 헤더 높이를 고려한 스크롤
+        const headerHeight = this.headerEl?.offsetHeight || 72;
+        const targetPosition = section.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth"
+        });
+      });
     });
   }
 
-  // destroy
+  private setupScrollSpy(): void {
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    if (!sections.length) return;
+    
+    this.observer?.disconnect();
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.setActive(entry.target.id);
+          }
+        });
+      },
+      { 
+        threshold: this.config.spyThreshold,
+        rootMargin: "-20% 0px -60% 0px"
+      }
+    );
+    sections.forEach((s) => this.observer!.observe(s));
+  }
+
+  private setActive(id: string): void {
+    this.links.forEach((link) => {
+      link.classList.toggle(
+        this.config.activeClass,
+        link.dataset.section === id
+      );
+    });
+  }
+
+  private setupScrollHide(): void {
+    if (!this.headerEl) return;
+
+    this.headerEl.classList.add("header--visible"); // 초기 표시
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        const currentY = window.scrollY;
+
+        // 최상단: 항상 보이기
+        if (currentY <= 0) {
+          this.headerEl!.classList.remove("header--hidden");
+          this.headerEl!.classList.add("header--visible");
+          this.lastScrollY = currentY;
+          return;
+        }
+
+        // 아래로 스크롤 → 숨김
+        if (currentY > this.lastScrollY) {
+          this.headerEl!.classList.add("header--hidden");
+          this.headerEl!.classList.remove("header--visible");
+        }
+        // 위로 스크롤 → 표시
+        else {
+          this.headerEl!.classList.remove("header--hidden");
+          this.headerEl!.classList.add("header--visible");
+        }
+
+        this.lastScrollY = currentY;
+      },
+      { passive: true }
+    );
+  }
+
+  private updateHeaderVisibility(): void {
+    if (!this.headerEl) return;
+
+    const currentScrollY = window.scrollY;
+    
+    // 스크롤이 최상단일 때는 항상 표시
+    if (currentScrollY <= 0) {
+      this.headerEl.classList.remove("header--hidden");
+      this.headerEl.classList.add("header--visible");
+      this.lastScrollY = currentScrollY;
+      return;
+    }
+
+    // 스크롤 방향 감지
+    const scrollDelta = currentScrollY - this.lastScrollY;
+    
+    if (Math.abs(scrollDelta) < this.config.scrollThreshold) {
+      // 작은 움직임은 무시
+      return;
+    }
+
+    if (scrollDelta > 0 && currentScrollY > this.config.scrollThreshold) {
+      // 아래로 스크롤 - 헤더 숨김
+      this.headerEl.classList.add("header--hidden");
+      this.headerEl.classList.remove("header--visible");
+    } else {
+      // 위로 스크롤 - 헤더 표시
+      this.headerEl.classList.remove("header--hidden");
+      this.headerEl.classList.add("header--visible");
+    }
+
+    this.lastScrollY = currentScrollY;
+  }
+
   public destroy(): void {
     this.observer?.disconnect();
     this.observer = null;
-    console.log("Header destroyed (simple)");
+    window.removeEventListener("scroll", this.updateHeaderVisibility);
   }
 }
 
-// Export & 자동 초기화
-let headerInstance: Header | null = null;
-
-export function initHeader(config?: Partial<HeaderConfig>): Header {
-  if (!headerInstance) {
-    headerInstance = new Header(config);
-    headerInstance.init();
+// SPA singleton
+let instance: Header | null = null;
+export async function initHeader(config?: Partial<HeaderConfig>): Promise<Header> {
+  if (!instance) {
+    instance = new Header(config);
+    await instance.init();
   }
-  return headerInstance;
+  return instance;
 }
 
-export function getHeader(): Header | null {
-  return headerInstance;
+export function destroyHeader(): void {
+  instance?.destroy();
+  instance = null;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  initHeader();
-});
 
 export { Header };

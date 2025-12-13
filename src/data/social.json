@@ -1,24 +1,49 @@
 {
   "socialLinks": [
     {
-      "label": "GitHub",
+      "platform": "GitHub",
       "url": "https://github.com/artiordex",
       "icon": "ri-github-fill"
     },
     {
-      "label": "Instagram",
-      "url": "https://instagram.com/artiordex",
-      "icon": "ri-instagram-line"
+      "platform": "Gmail",
+      "url": "mailto:artiordex@gmail.com",
+      "icon": "ri-mail-fill"
     },
     {
-      "label": "LinkedIn",
+      "platform": "LinkedIn",
       "url": "https://www.linkedin.com/in/shiwoo-min-a493aa263/",
       "icon": "ri-linkedin-fill"
     },
     {
-      "label": "YouTube",
+      "platform": "Instagram",
+      "url": "https://instagram.com/artiordex",
+      "icon": "ri-instagram-line"
+    },
+    {
+      "platform": "Threads",
+      "url": "https://www.threads.net/@artiordex",
+      "icon": "ri-threads-fill"
+    },
+    {
+      "platform": "Strava",
+      "url": "https://www.strava.com/athletes/artiordex",
+      "icon": "ri-run-line"
+    },
+    {
+      "platform": "YouTube",
       "url": "https://youtube.com/@artiordex",
       "icon": "ri-youtube-fill"
+    },
+    {
+      "platform": "Slack",
+      "url": "https://slack.com/artiordex-invite",
+      "icon": "ri-slack-fill"
+    },
+    {
+      "platform": "Discord",
+      "url": "https://discord.gg/artiordex",
+      "icon": "ri-discord-fill"
     }
   ]
 }

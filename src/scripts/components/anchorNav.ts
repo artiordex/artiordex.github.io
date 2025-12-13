@@ -1,6 +1,8 @@
 /**
  * anchorNav.ts
- * 앵커 네비게이션 컴포넌트
+ * - 사이드 앵커 네비게이션 SPA 컴포넌트
+ * - /data/sections.json 단일 소스
+ * - DOM 생성 + 스크롤 + 스크롤스파이 전부 담당
  */
 
 export interface NavSection {
@@ -10,276 +12,226 @@ export interface NavSection {
 }
 
 export interface AnchorNavConfig {
-  dataPath: string;
-  desktopNavId: string;
-  mobileNavId: string;
-  headerNavSelector: string;
-  scrollOffset: number;
-  spyOffset: number;
+  mountId: string;        // layout-nav
+  dataPath: string;       // sections.json
   activeClass: string;
   scrollBehavior: ScrollBehavior;
-}
-
-interface NavElements {
-  desktopNav: HTMLElement | null;
-  mobileNav: HTMLElement | null;
-  headerNav: HTMLElement | null;
-  sections: NodeListOf<HTMLElement>;
+  observerThreshold: number;
 }
 
 const DEFAULT_CONFIG: AnchorNavConfig = {
-  dataPath: "./data/sections.json",
-  desktopNavId: "side-nav",
-  mobileNavId: "mobile-nav",
-  headerNavSelector: "header nav",
-  scrollOffset: 80,
-  spyOffset: 150,
+  mountId: "layout-nav",
+  dataPath: "/data/sections.json",
   activeClass: "active",
-  scrollBehavior: "smooth"
+  scrollBehavior: "smooth",
+  observerThreshold: 0.5
 };
 
 class AnchorNav {
-  private readonly config: AnchorNavConfig;
+  private config: AnchorNavConfig;
   private sections: NavSection[] = [];
-  private elements: NavElements | null = null;
-  private currentSection = "";
-  private isScrolling = false;
+  private navListEl: HTMLElement | null = null;
+  private mobileNavListEl: HTMLElement | null = null;
+  private links: HTMLElement[] = [];
+  private mobileLinks: HTMLElement[] = [];
+  private observer: IntersectionObserver | null = null;
 
   constructor(config: Partial<AnchorNavConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };
   }
 
-  // 초기화
   public async init(): Promise<void> {
-    try {
-      await this.loadSections();
-    } catch (error) {
-      console.warn("JSON 로드 실패, 기본 섹션 사용");
-      this.sections = this.getFallbackSections();
+    console.log('[AnchorNav] Initializing...');
+    
+    this.renderSkeleton();
+    await this.loadSections();
+
+    console.log('[AnchorNav] Loaded sections:', this.sections);
+
+    if (this.sections.length === 0) {
+      console.warn("[AnchorNav] sections.json empty");
+      return;
     }
 
-    this.cacheElements();
-    this.renderDesktopNav();
-    this.renderMobileNav();
-    this.renderHeaderNav();
-    this.bindEvents();
-    this.updateActiveSection();
+    this.renderNav();
+    this.bindClickEvents();
+    this.setupScrollSpy();
+    
+    console.log('[AnchorNav] Initialization complete');
   }
 
-  // JSON 섹션 데이터 로드
+  // DOM 전체 생성 (PC + Mobile)
+  private renderSkeleton(): void {
+    const mount = document.getElementById(this.config.mountId);
+    if (!mount) {
+      console.error(`[AnchorNav] Mount element not found: #${this.config.mountId}`);
+      return;
+    }
+
+    mount.innerHTML = `
+      <!-- PC 사이드 네비게이션 -->
+      <nav id="side-nav" class="side-nav">
+        <ul id="side-nav-list"></ul>
+      </nav>
+      
+      <!-- 모바일 하단 네비게이션 -->
+      <nav id="mobile-nav" class="mobile-nav">
+        <ul id="mobile-nav-list"></ul>
+      </nav>
+    `;
+
+    this.navListEl = document.getElementById("side-nav-list");
+    this.mobileNavListEl = document.getElementById("mobile-nav-list");
+  }
+
+  // JSON 로드
   private async loadSections(): Promise<void> {
-    const res = await fetch(this.config.dataPath);
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    this.sections = data.sections ?? [];
-  }
-
-  // 기본 섹션(폴백)
-  private getFallbackSections(): NavSection[] {
-    return [
-      { id: "about", label: "소개", icon: "ri-user-line" },
-      { id: "portfolio", label: "포트폴리오", icon: "ri-briefcase-line" },
-      { id: "consulting", label: "컨설팅", icon: "ri-lightbulb-line" },
-      { id: "company", label: "창업가 소개", icon: "ri-building-line" },
-      { id: "links", label: "링크", icon: "ri-links-line" },
-      { id: "contact", label: "연락처", icon: "ri-mail-line" }
-    ];
-  }
-
-  // DOM 요소 캐싱
-  private cacheElements(): void {
-    this.elements = {
-      desktopNav: document.getElementById(this.config.desktopNavId),
-      mobileNav: document.getElementById(this.config.mobileNavId),
-      headerNav: document.querySelector(this.config.headerNavSelector),
-      sections: document.querySelectorAll("section[id]")
-    };
-  }
-
-  // 데스크톱 네비 렌더링
-  private renderDesktopNav(): void {
-    if (!this.elements?.desktopNav) return;
-
-    const container =
-      this.elements.desktopNav.querySelector(".flex.flex-col") ?? this.elements.desktopNav;
-
-    container.innerHTML = this.sections.map((s) => this.createDesktopNavItem(s)).join("");
-  }
-
-  // 데스크톱 아이템 생성
-  private createDesktopNavItem(section: NavSection): string {
-    return `
-      <a href="#${section.id}" 
-        class="side-nav-link group flex items-center justify-center w-10 h-10 rounded-full"
-        data-section="${section.id}">
-        <i class="${section.icon} text-gray-600"></i>
-      </a>
-    `;
-  }
-
-  // 모바일 네비 렌더링
-  private renderMobileNav(): void {
-    if (!this.elements?.mobileNav) return;
-
-    const container =
-      this.elements.mobileNav.querySelector(".flex.justify-around") ?? this.elements.mobileNav;
-
-    container.innerHTML = this.sections.map((s) => this.createMobileNavItem(s)).join("");
-  }
-
-  // 모바일 네비 아이템 생성
-  private createMobileNavItem(section: NavSection): string {
-    return `
-      <a href="#${section.id}" 
-        class="mobile-nav-link flex items-center justify-center w-10 h-10 rounded-full"
-        data-section="${section.id}">
-        <i class="${section.icon} text-gray-600"></i>
-      </a>
-    `;
-  }
-
-  // 헤더 네비 렌더링
-  private renderHeaderNav(): void {
-    if (!this.elements?.headerNav) return;
-
-    this.elements.headerNav.innerHTML = this.sections
-      .map(
-        (s) => `
-      <a href="#${s.id}" class="header-nav-link" data-section="${s.id}">
-        ${s.label}
-      </a>`
-      )
-      .join("");
-  }
-
-  // 이벤트 바인딩
-  private bindEvents(): void {
-    this.bindNavClickEvents();
-    this.bindScrollSpy();
-    this.bindKeyboardNavigation();
-  }
-
-  // 클릭 이벤트
-  private bindNavClickEvents(): void {
-    document.querySelectorAll("[data-section]").forEach((el) => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = (el as HTMLElement).dataset.section;
-        if (id) this.scrollToSection(id);
-      });
-    });
-  }
-
-  // 섹션 이동
-  private scrollToSection(id: string): void {
-    const section = document.getElementById(id);
-    if (!section) return;
-
-    this.isScrolling = true;
-
-    window.scrollTo({
-      top: section.offsetTop - this.config.scrollOffset,
-      behavior: this.config.scrollBehavior
-    });
-
-    setTimeout(() => {
-      this.isScrolling = false;
-      this.setActiveSection(id);
-    }, 400);
-
-    history.replaceState(null, "", `#${id}`);
-  }
-
-  // 스크롤 스파이
-  private bindScrollSpy(): void {
-    let ticking = false;
-
-    window.addEventListener("scroll", () => {
-      if (ticking || this.isScrolling) return;
-
-      ticking = true;
-      requestAnimationFrame(() => {
-        this.updateActiveSection();
-        ticking = false;
-      });
-    });
-  }
-
-  // 현재 활성 섹션 업데이트
-  private updateActiveSection(): void {
-    if (!this.elements?.sections) return;
-
-    const scrollY = window.scrollY + this.config.spyOffset;
-    let target = "";
-
-    this.elements.sections.forEach((sec) => {
-      const top = sec.offsetTop;
-      const bottom = top + sec.offsetHeight;
-
-      if (scrollY >= top && scrollY < bottom) {
-        target = sec.id;
+    try {
+      const res = await fetch(this.config.dataPath);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-    });
 
-    // 페이지 하단 → 마지막 섹션 활성화
-    if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 10) {
-      target = this.sections.at(-1)?.id ?? "";
-    }
-
-    if (target && target !== this.currentSection) {
-      this.setActiveSection(target);
+      const data = await res.json();
+      this.sections = data.sections ?? [];
+    } catch (err) {
+      console.error("[AnchorNav] Failed to load sections.json", err);
+      this.sections = [];
     }
   }
 
-  // active 클래스 적용
-  private setActiveSection(id: string): void {
-    this.currentSection = id;
+  // 네비게이션 렌더링 (PC + Mobile)
+  private renderNav(): void {
+    // PC 네비게이션
+    if (this.navListEl) {
+      this.navListEl.innerHTML = this.sections
+        .map(
+          (s) => `
+          <li>
+            <a href="#${s.id}"
+               class="side-nav-link"
+               data-section="${s.id}"
+               aria-label="${s.label}"
+               title="${s.label}">
+              <i class="${s.icon}"></i>
+            </a>
+          </li>
+        `
+        )
+        .join("");
+      
+      this.links = [...this.navListEl.querySelectorAll<HTMLElement>("a")];
+    }
 
-    document.querySelectorAll("[data-section]").forEach((el) => {
-      const htmlEl = el as HTMLElement;
+    // 모바일 네비게이션
+    if (this.mobileNavListEl) {
+      this.mobileNavListEl.innerHTML = this.sections
+        .map(
+          (s) => `
+          <li>
+            <a href="#${s.id}"
+               class="mobile-nav-link"
+               data-section="${s.id}"
+               aria-label="${s.label}">
+              <i class="${s.icon}"></i>
+            </a>
+          </li>
+        `
+        )
+        .join("");
+      
+      this.mobileLinks = [...this.mobileNavListEl.querySelectorAll<HTMLElement>("a")];
+    }
+  }
 
-      htmlEl.classList.toggle(
-        this.config.activeClass,
-        htmlEl.dataset.section === id
-      );
+  // 클릭 → 부드러운 스크롤
+  private bindClickEvents(): void {
+    const allLinks = [...this.links, ...this.mobileLinks];
+    
+    allLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = link.dataset.section;
+        if (!id) return;
+
+        const section = document.getElementById(id);
+        if (!section) {
+          console.warn(`[AnchorNav] Section not found: #${id}`);
+          return;
+        }
+
+        // 헤더 높이를 고려한 스크롤
+        const headerHeight = 80; // 헤더 높이
+        const targetPosition = section.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: this.config.scrollBehavior
+        });
+      });
     });
   }
 
-  // 키보드 네비게이션
-  private bindKeyboardNavigation(): void {
-    document.addEventListener("keydown", (e) => {
-      if (!e.altKey) return;
+  // IntersectionObserver 기반 스크롤 스파이
+  private setupScrollSpy(): void {
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    if (!sections.length) {
+      console.warn("[AnchorNav] No sections found for scroll spy");
+      return;
+    }
 
-      const index = Number.parseInt(e.key, 10) - 1;
-      const section = this.sections.at(index);
+    this.observer?.disconnect();
 
-      if (section) this.scrollToSection(section.id);
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            this.setActive(id);
+          }
+        });
+      },
+      { 
+        threshold: this.config.observerThreshold,
+        rootMargin: "-80px 0px -40% 0px" // 헤더 높이와 뷰포트 고려
+      }
+    );
+
+    sections.forEach((sec) => this.observer!.observe(sec));
+  }
+
+  private setActive(id: string): void {
+    const allLinks = [...this.links, ...this.mobileLinks];
+    
+    allLinks.forEach((link) => {
+      const isActive = link.dataset.section === id;
+      link.classList.toggle(this.config.activeClass, isActive);
     });
   }
 
-  // cleanup
   public destroy(): void {
+    this.observer?.disconnect();
+    this.observer = null;
+    this.links = [];
+    this.mobileLinks = [];
     this.sections = [];
-    this.elements = null;
   }
 }
 
-// 싱글톤
-let anchorNavInstance: AnchorNav | null = null;
+// SPA singleton
+let instance: AnchorNav | null = null;
 
-export function initAnchorNav(config?: Partial<AnchorNavConfig>): AnchorNav {
-  if (!anchorNavInstance) {
-    anchorNavInstance = new AnchorNav(config);
-    anchorNavInstance.init();
+export async function initAnchorNav(config?: Partial<AnchorNavConfig>): Promise<AnchorNav> {
+  if (!instance) {
+    instance = new AnchorNav(config);
+    await instance.init();
   }
-  return anchorNavInstance;
+  return instance;
 }
 
-export function getAnchorNav(): AnchorNav | null {
-  return anchorNavInstance;
+export function destroyAnchorNav(): void {
+  instance?.destroy();
+  instance = null;
 }
 
 export { AnchorNav };

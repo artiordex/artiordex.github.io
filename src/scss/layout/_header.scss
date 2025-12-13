@@ -4,56 +4,136 @@
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   width: 100%;
-  padding: 16px 32px;
-  z-index: 999;
-  transition: all 0.35s ease;
+  padding: 16px 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
 
-  &.solid {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  /* 숨김/표시 상태 */
+  &--hidden {
+    transform: translateY(-100%);
+    box-shadow: none;
   }
 
-  &.hide {
-    transform: translateY(-100%);
+  &--visible {
+    transform: translateY(0);
   }
 
   .header-inner {
     max-width: 1280px;
     margin: 0 auto;
+    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
+    width: 100%;
   }
 
   .logo {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    flex-shrink: 0; /* ✅ 네비 밀림 방지 */
+
+    &:hover {
+      color: #8B5CF6;
+    }
   }
 
-  nav ul {
-    display: flex;
-    gap: 24px;
+  nav {
+    flex-shrink: 0; /* ✅ 로고에 밀려 사라지는 현상 방지 */
+
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap; /* ✅ 한 줄 유지 */
+    }
+
+    li {
+      margin: 0;
+    }
   }
 
   .header-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.95rem;
-    color: #444;
+    color: #666;
     text-decoration: none;
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-radius: 6px;
-    transition: 0.25s;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 18px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    span {
+      font-weight: 500;
+    }
 
     &:hover {
-      background: rgba(139, 92, 246, 0.15);
+      background: rgba(139, 92, 246, 0.08);
       color: #8B5CF6;
+
+      i {
+        opacity: 1;
+      }
     }
 
     &.active {
-      background: #8B5CF6;
-      color: white;
+      background: rgba(139, 92, 246, 0.12);
+      color: #8B5CF6;
+      font-weight: 600;
+
+      i {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px 0;
+
+    .header-inner {
+      padding: 0 16px;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+    }
+
+    nav ul {
+      gap: 4px;
+    }
+
+    .header-link {
+      padding: 6px 8px;
+      font-size: 0.9rem;
+
+      span {
+        display: none;
+      }
+
+      i {
+        font-size: 20px;
+      }
     }
   }
 }

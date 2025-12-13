@@ -1,8 +1,8 @@
 {
   "profile": {
     "name": "민시우",
-    "title": "Full-Stack · DevOps · AI · Cloud Automation 전문가",
-    "description": "AI와 자동화를 중심으로 디지털 전환을 선도하는 풀스택·클라우드 엔지니어입니다. 비즈니스 목표에 맞춘 기술 전략, 안정적인 시스템 구축, 자동화 기반 운영 최적화를 통해 기업의 성장을 돕습니다.",
+    "title": "Full-Stack · DevOps · AI Agent Engineer",
+    "description": "AI와 자동화를 중심으로 디지털 전환을 선도하는 풀스택·AI 에이전트 엔지니어입니다. 비즈니스 목표에 맞춘 기술 전략, 안정적인 시스템 구축, 자동화 기반 운영 최적화를 통해 기업의 성장을 돕습니다.",
     "profileImage": "/assets/images/profile.jpg",
     "backgroundImage": "/assets/images/hero-bg.jpg"
   },
@@ -23,6 +23,7 @@
       { "name": "Cloud Architecture", "level": 88 },
       { "name": "System Design", "level": 86 }
     ],
+
     "techStack": {
       "frontend": ["React", "Next.js", "TypeScript", "TailwindCSS", "Vite"],
       "backend": ["Node.js", "Express", "NestJS", "FastAPI", "PostgreSQL", "Redis"],
@@ -44,32 +45,58 @@
       "year": 2023
     },
     {
-      "name": "Kubernetes CKA",
+      "name": "Certified Kubernetes Administrator (CKA)",
       "issuer": "Linux Foundation",
       "year": 2022
+    },
+    {
+      "name": "Docker Certified Associate (DCA)",
+      "issuer": "Docker, Inc.",
+      "year": 2022
+    },
+    {
+      "name": "Terraform Associate",
+      "issuer": "HashiCorp",
+      "year": 2023
+    },
+    {
+      "name": "AWS Cloud Practitioner",
+      "issuer": "Amazon Web Services",
+      "year": 2021
+    },
+    {
+      "name": "Google IT Automation with Python",
+      "issuer": "Google",
+      "year": 2021
+    },
+    {
+      "name": "Linux Essentials",
+      "issuer": "Linux Professional Institute (LPI)",
+    
+    "year": 2020
     }
   ],
 
   "socialLinks": [
     {
-      "platform": "GitHub",
+      "label": "GitHub",
       "url": "https://github.com/artiordex",
       "icon": "ri-github-fill"
     },
     {
-      "platform": "LinkedIn",
-      "url": "https://www.linkedin.com/in/artiordex",
-      "icon": "ri-linkedin-box-fill"
-    },
-    {
-      "platform": "Instagram",
-      "url": "https://instagram.com",
+      "label": "Instagram",
+      "url": "https://instagram.com/artiordex",
       "icon": "ri-instagram-line"
     },
     {
-      "platform": "Blog",
-      "url": "https://artiordex.dev",
-      "icon": "ri-book-open-line"
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/shiwoo-min-a493aa263/",
+      "icon": "ri-linkedin-fill"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://youtube.com/@artiordex",
+      "icon": "ri-youtube-fill"
     }
   ]
 }
