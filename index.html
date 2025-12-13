@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>민시우 - 디지털 전환 개발자</title>
 
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon/favicon_io/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon_io/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/favicon/favicon_io/apple-touch-icon.png">
+
+  <!-- PWA / Android -->
+  <link rel="manifest" href="/favicon/favicon_io/site.webmanifest">
+
   <!-- Fonts / CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,15 +57,12 @@
 
   <!-- 푸터 -->
   <div id="layout-footer"></div>
-
-  <!-- EmailJS 초기화 -->
-  <script>
-    (function () {
-      emailjs.init("YOUR_PUBLIC_KEY"); 
-      // 예: emailjs.init("public_k_abcd1234");
-    })();
-  </script>
-
+  
+  <!-- Back to Top 버튼 -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="ri-arrow-up-line"></i>
+  </button>
+  
   <!-- 메인 스크립트 -->
   <script type="module" src="/src/scripts/main.ts"></script>
 </body>

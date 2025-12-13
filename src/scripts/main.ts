@@ -1,9 +1,8 @@
-// main.ts
-
 // components
 import { initHeader } from "@components/header";
 import { initAnchorNav } from "@components/anchorNav";
 import { initFooter } from "@components/footer";
+import { initBackToTop } from "@components/backToTop";
 import "@components/scrollActive";
 import "@components/carousel";
 import "@components/modal";
@@ -24,15 +23,21 @@ import { attachRevealObserver } from "@utils/revealObserver";
 import { updateActiveNav } from "@components/scrollActive";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // layout
   initHeader();
   initAnchorNav();
   initFooter();
+
+  // sections render
   renderAbout();
   renderPortfolio();
   renderCompany();
   renderConsulting();
   renderLinks();
   renderContact();
+
+  // ui helpers
   attachRevealObserver();
   updateActiveNav();
+  initBackToTop(); 
 });

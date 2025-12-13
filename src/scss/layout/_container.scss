@@ -10,26 +10,19 @@
 // Body Layout
 body {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;              // height → min-height (콘텐츠가 길어질 수 있음)
   background: $bg-body;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Pretendard", sans-serif;
+  font-family: $font-main;        // 변수 사용
 }
 
 // Main App Container
 .app-container {
   width: 100%;
-  max-width: $max-width;
-  height: 90vh;
+  max-width: $container-xl;       // $max-width → $container-xl로 변경
+  min-height: 100vh;              // 화면 전체 높이
+  margin: 0 auto;                 // 가운데 정렬
   background: $bg-white;
-  border-radius: $radius-lg;
-  padding: $padding-lg;
-  overflow: hidden;
-  box-shadow: $shadow-soft;
-  display: flex;
-  flex-direction: column;
+  overflow-x: hidden;             // 가로 스크롤 방지
 
   // 내부 스크롤 콘텐츠
   .content-box {
@@ -39,12 +32,25 @@ body {
   }
 }
 
+// Container Utility Classes (컨테이너 유틸리티)
+.container {
+  width: 100%;
+  max-width: $container-xl;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+
+  &--sm { max-width: $container-sm; }
+  &--md { max-width: $container-md; }
+  &--lg { max-width: $container-lg; }
+  &--xl { max-width: $container-xl; }
+  &--2xl { max-width: $container-2xl; }
+  &--full { max-width: 100%; padding: 0; }
+}
+
 // Mobile Responsive
-@media (max-width: 600px) {
+@media (max-width: $bp-md) {
   .app-container {
     max-width: 100%;
-    height: 92vh;
     padding: $padding-md;
-    border-radius: $radius-md;
   }
 }

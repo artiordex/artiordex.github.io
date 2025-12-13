@@ -1,29 +1,46 @@
-/* :: 5.0 Backtotop CSS */
+@use "../abstracts/variables" as *;
 
-#scrollUp {
-    position: fixed;
-    right: 40px;
-    font-size: 20px;
-    line-height: 40px;
-    width: 40px;
-    height: 40px;
-    bottom: 40px;
-    background-color: $primary;
-    color: $white;
-    text-align: center;
-    @include transition-duration(500ms);
-    border-radius: 50%;
-    @include box-shadow($box-shadow);
-    z-index: 15962536;
+.back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 60;
 
-    @media #{$breakpoint-xs} {
-        right: 20px;
-        bottom: 20px;
-    }
+  i {
+    font-size: 1.25rem;
+  }
 
-    &:focus,
-    &:hover {
-        background-color: $dark;
-        color: $white;
-    }
+  &:hover {
+    background: $primary;
+    color: #fff;
+    transform: translateY(0) scale(1.05);
+    box-shadow: 0 15px 40px rgba($primary-rgb, 0.35);
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* 모바일 하단 네비와 겹침 방지 */
+  @media (max-width: 1024px) {
+    bottom: 5.5rem;
+  }
 }

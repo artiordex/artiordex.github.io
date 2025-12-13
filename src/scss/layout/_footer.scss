@@ -1,62 +1,87 @@
 @use "../abstracts/variables" as *;
 
-// 푸터 컨테이너 (TypeScript가 생성하는 부분)
+// -----------------------------------------------------------------------------
+// Footer Container (TypeScript mount point)
+// -----------------------------------------------------------------------------
 #layout-footer {
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
+// -----------------------------------------------------------------------------
+// Footer
+// -----------------------------------------------------------------------------
 .footer {
   width: 100%;
   min-width: 100%;
   margin: 0;
-  padding: 24px 0;
   background: #ffffff;
   color: #666666;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  
-  // 부모 요소의 패딩/마진 무시
+
+  // 컨테이너 폭 무시하고 전체 너비로 확장
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
   padding-left: calc(50vw - 50%);
   padding-right: calc(50vw - 50%);
 
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  // ---------------------------------------------------------------------------
+  // Inner Layout
+  // ---------------------------------------------------------------------------
   .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
   }
 
+  // ---------------------------------------------------------------------------
+  // Copyright
+  // ---------------------------------------------------------------------------
   .footer-copy {
-    font-size: 0.875rem;
     margin: 0;
-    color: #666666;
+    font-size: 0.875rem;
     font-weight: 400;
+    line-height: 1.4;
+    color: #666666;
   }
 
+  // ---------------------------------------------------------------------------
+  // Social Links
+  // ---------------------------------------------------------------------------
   .footer-social {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
 
   .social-link {
-    color: #666666;
-    font-size: 20px;
-    transition: color 0.2s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 32px;
     height: 32px;
     border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    color: #666666;
     background: rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+
+    transition: color 0.2s ease,
+                background-color 0.2s ease,
+                transform 0.2s ease;
 
     i {
       line-height: 1;
@@ -69,23 +94,29 @@
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Mobile Layout
+  // ---------------------------------------------------------------------------
   @media (max-width: 768px) {
-    padding: 20px 0;
+    padding-top: 20px;
+
+    // 하단 고정 UI(back-to-top, mobile-nav)와 겹침 방지
+    padding-bottom: 96px;
 
     .footer-inner {
       flex-direction: column;
       gap: 16px;
-      text-align: center;
       padding: 0 16px;
-    }
-
-    .footer-copy {
-      font-size: 0.8125rem;
-      order: 2;
+      text-align: center;
     }
 
     .footer-social {
       order: 1;
+    }
+
+    .footer-copy {
+      order: 2;
+      font-size: 0.8125rem;
     }
   }
 }

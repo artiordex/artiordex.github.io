@@ -1,0 +1,68 @@
+/**
+ * -----------------------------------------------------------------------------
+ * Prism.js Theme Customization
+ * - Code syntax highlighting
+ * - Scope limited to pre > code
+ * -----------------------------------------------------------------------------
+ */
+
+/* 기본 배경 */
+pre[class*="language-"] {
+  background: #0f172a; // slate-900
+  color: #e5e7eb;      // gray-200
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* 인라인 코드 */
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* 토큰 색상 */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b;
+}
+
+.token.punctuation {
+  color: #cbd5f5;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f472b6;
+}
+
+.token.boolean,
+.token.number {
+  color: #fb7185;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #4ade80;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #38bdf8;
+}
+
+.token.function,
+.token.class-name {
+  color: #facc15;
+}
