@@ -42,7 +42,7 @@
     cursor: pointer;
     transition: color 0.2s ease;
 
-    flex-shrink: 0; /* ✅ 네비 밀림 방지 */
+    flex-shrink: 0; 
 
     &:hover {
       color: #8B5CF6;
@@ -50,8 +50,6 @@
   }
 
   nav {
-    flex-shrink: 0; /* ✅ 로고에 밀려 사라지는 현상 방지 */
-
     ul {
       display: flex;
       align-items: center;
@@ -59,7 +57,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      white-space: nowrap; /* ✅ 한 줄 유지 */
+      white-space: nowrap; 
     }
 
     li {

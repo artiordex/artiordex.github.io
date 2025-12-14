@@ -14,17 +14,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  // Flexbox 레이아웃으로 푸터 하단 고정
   min-height: 100vh;
   margin: 0;
   display: flex;
   flex-direction: column;
   
   // 헤더가 fixed인 경우 상단 여백
-  padding-top: 72px; // 헤더 실제 높이에 맞게 조정
+  padding-top: 72px;
   
   @media (max-width: 768px) {
-    padding-top: 60px; // 모바일 헤더 높이
+    padding-top: 60px;
   }
 }
 
@@ -45,24 +44,100 @@ main {
   box-sizing: border-box;
 }
 
-/* 공통 레이아웃 규칙 */
+/* SECTION */
+// section 태그 기본 스타일
 section {
-  padding: 80px 0;
+  margin: 0;
+  padding: 0;
   position: relative;
-  min-height: 400px;
+  scroll-margin-top: 72px;         
   
   @media (max-width: 768px) {
-    padding: 60px 0;
-    min-height: 300px;
+    scroll-margin-top: 60px;      
   }
 }
 
-.container {
-  width: min(1200px, 90%);
-  margin: 0 auto;
+// .section 클래스
+.section {
+  margin: 0;
+  padding: 0;
+  scroll-margin-top: 72px;
+  
+  @media (max-width: 768px) {
+    scroll-margin-top: 60px;
+  }
 }
 
-/* Glass UI 공통 클래스 */
+// 배경 타입
+.section--white {
+  background: #fff;
+}
+
+.section--light {
+  background: $gray-50;
+}
+
+.section--gradient {
+  background: linear-gradient(135deg, #eff6ff, #f5f3ff 40%, #ecfeff);
+}
+
+// 풀스크린 섹션 (100vh)
+.section--fullscreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+// 섹션 내부 컨테이너
+.section__inner,
+.section > .container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;                 
+}
+
+// 섹션 헤더
+.section__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-top: 3rem;
+}
+
+.section__title {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 800;
+  color: $gray-900;
+  margin-bottom: 1.25rem;
+}
+
+.section__subtitle {
+  font-size: 1.25rem;
+  color: $gray-600;
+  max-width: 48rem;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Container 시스템 */
+
+.container {
+  width: 100%;
+  max-width: $container-xl;          // 1280px
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  &--sm { max-width: $container-sm; }
+  &--md { max-width: $container-md; }
+  &--lg { max-width: $container-lg; }
+  &--xl { max-width: $container-xl; }
+  &--2xl { max-width: $container-2xl; }
+  &--full { max-width: 100%; padding: 0; }
+}
+
+/* ============================================
+   Glass UI 공통 클래스
+   ============================================ */
+
 .glass {
   background: $glass-bg;
   -webkit-backdrop-filter: blur(14px);
@@ -70,7 +145,10 @@ section {
   border-radius: $radius-lg;
 }
 
-/* 타이포그래피 기본 */
+/* ============================================
+   타이포그래피 기본
+   ============================================ */
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: $gray-900;
@@ -81,7 +159,10 @@ h1 { font-size: $font-size-4xl; }
 h2 { font-size: $font-size-3xl; }
 h3 { font-size: $font-size-2xl; }
 
-/* 링크 스타일 */
+/* ============================================
+   링크 스타일
+   ============================================ */
+
 a {
   color: $primary;
   text-decoration: none;
@@ -92,14 +173,14 @@ a {
   }
 }
 
-/* Utility Classes (자주 쓰이는 기능들) */
+/* ============================================
+   Utility Classes
+   ============================================ */
 
-// 숨김 처리
 .hidden {
   display: none !important;
 }
 
-// 페이드 인 애니메이션
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -111,22 +192,18 @@ a {
   }
 }
 
-// 텍스트 중앙 정렬
 .text-center {
   text-align: center;
 }
 
-// 기본 섀도우
 .shadow {
   box-shadow: $shadow-md;
 }
 
-// 원형
 .rounded-full {
   border-radius: $radius-full;
 }
 
-// Flexbox 유틸리티
 .flex {
   display: flex;
 }
@@ -143,7 +220,10 @@ a {
   justify-content: space-between;
 }
 
-/* 버튼, 카드 등 UI 요소가 기본적으로 필요로 하는 공통 클래스 */
+/* ============================================
+   버튼, 카드 공통 UI
+   ============================================ */
+
 .btn {
   display: inline-flex;
   align-items: center;

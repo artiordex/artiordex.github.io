@@ -1,90 +1,357 @@
 {
-  "pageTitle": "전문 컨설팅 서비스",
+  "pageTitle": "포트폴리오",
   "intro": {
-    "title": "전문 컨설팅 서비스",
-    "subtitle": "디지털 전환부터 AI 구축까지, 비즈니스 성장을 위한 맞춤형 솔루션을 제공합니다"
+    "title": "혁신적인 디지털 전환 포트폴리오",
+    "subtitle": "성공적인 프로젝트를 통해 입증된 우리의 전문성과 창의성을 확인해보세요"
   },
-
-  "services": [
-    {
-      "id": "strategy",
-      "title": "전략 컨설팅",
-      "description": "비즈니스 목표에 맞는 디지털 전환 전략을 수립하고 실행 로드맵을 제시합니다",
-      "icon": "ri-lightbulb-line",
-      "color": "primary",
-      "delay": 1,
-      "features": [
-        "현황 분석 및 진단",
-        "전략 수립 및 설계",
-        "실행 계획 수립"
-      ]
-    },
-    {
-      "id": "digital",
-      "title": "디지털 전환",
-      "description": "클라우드 마이그레이션부터 업무 프로세스 디지털화까지 완전한 전환을 지원합니다",
-      "icon": "ri-rocket-line",
-      "color": "secondary",
-      "delay": 2,
-      "features": [
-        "클라우드 마이그레이션",
-        "프로세스 자동화",
-        "데이터 통합 관리"
-      ]
-    },
-    {
-      "id": "ai",
-      "title": "AI 구축",
-      "description": "머신러닝과 AI 기술을 활용하여 비즈니스 인사이트와 자동화 솔루션을 구현합니다",
-      "icon": "ri-cpu-line",
-      "color": "purple",
-      "delay": 3,
-      "features": [
-        "AI 모델 개발",
-        "데이터 분석 시스템",
-        "예측 분석 구현"
-      ]
-    }
+  "filters": [
+    { "id": "all", "label": "전체" },
+    { "id": "web", "label": "웹 개발" },
+    { "id": "mobile", "label": "모바일 앱" },
+    { "id": "ai", "label": "AI/ML" },
+    { "id": "iot", "label": "IoT" },
+    { "id": "fintech", "label": "핀테크" }
   ],
-
-  "process": {
-    "title": "컨설팅 프로세스",
-    "steps": [
-      {
-        "id": "consult",
-        "label": "상담",
-        "description": "요구사항 분석 및 목표 설정",
-        "icon": "ri-chat-3-line",
-        "color": "primary"
-      },
-      {
-        "id": "analysis",
-        "label": "분석",
-        "description": "현황 진단 및 개선점 도출",
-        "icon": "ri-search-line",
-        "color": "secondary"
-      },
-      {
-        "id": "proposal",
-        "label": "제안",
-        "description": "맞춤형 솔루션 설계",
-        "icon": "ri-file-text-line",
-        "color": "purple"
-      },
-      {
-        "id": "implementation",
-        "label": "구축",
-        "description": "시스템 개발 및 구현",
-        "icon": "ri-tools-line",
-        "color": "green"
-      },
-      {
-        "id": "maintenance",
-        "label": "유지보수",
-        "description": "지속적인 모니터링 및 개선",
-        "icon": "ri-customer-service-line",
-        "color": "orange"
-      }
-    ]
-  }
+  "projects": [
+    {
+      "id": "proj001",
+      "category": "web",
+      "title": "스마트 이커머스 플랫폼",
+      "summary": "AI 기반 상품 추천 시스템을 도입한 차세대 온라인 쇼핑몰",
+      "thumbnail": "https://readdy.ai/api/search-image?query=modern%20e-commerce%20platform%20interface%20with%20clean%20design%20shopping%20cart%20and%20product%20displays%20on%20white%20background%20minimalist%20style&width=400&height=300&seq=proj001&orientation=landscape",
+      "icon": "ri-shopping-cart-line",
+      "tags": ["React", "Node.js", "MongoDB"],
+      "badges": [
+        { "label": "혁신적", "color": "blue" },
+        { "label": "사용자 친화적", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=modern%20e-commerce%20platform%20interface&width=800&height=600&seq=proj001",
+      "description": "AI 기반 상품 추천 알고리즘과 개인화된 쇼핑 경험을 제공하는 차세대 이커머스 플랫폼입니다.",
+      "features": ["AI 상품 추천", "실시간 재고 관리", "다국어 지원", "반응형 디자인"],
+      "techStack": ["React", "Node.js", "MongoDB", "Redis", "AWS"]
+    },
+    {
+      "id": "proj002",
+      "category": "mobile",
+      "title": "디지털 뱅킹 솔루션",
+      "summary": "생체인증과 블록체인 기술을 활용한 안전한 모바일 뱅킹 앱",
+      "thumbnail": "https://readdy.ai/api/search-image?query=mobile%20banking%20application%20interface%20with%20financial%20charts%20and%20secure%20payment%20features%20clean%20modern%20design%20white%20background&width=400&height=300&seq=proj002&orientation=landscape",
+      "icon": "ri-bank-line",
+      "tags": ["Flutter", "Blockchain", "Firebase"],
+      "badges": [
+        { "label": "보안 중심", "color": "red" },
+        { "label": "신뢰성", "color": "blue" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=mobile%20banking%20application%20interface&width=800&height=600&seq=proj002",
+      "description": "생체인증과 블록체인 기술을 결합한 차세대 모바일 뱅킹 솔루션입니다.",
+      "features": ["생체인증 로그인", "블록체인 거래", "실시간 알림", "다중 계좌 관리"],
+      "techStack": ["Flutter", "Dart", "Firebase", "Blockchain", "Biometric API"]
+    },
+    {
+      "id": "proj003",
+      "category": "web",
+      "title": "의료진 관리 시스템",
+      "summary": "병원 내 환자 정보와 진료 일정을 통합 관리하는 클라우드 시스템",
+      "thumbnail": "https://readdy.ai/api/search-image?query=healthcare%20management%20system%20dashboard%20with%20patient%20data%20medical%20charts%20and%20appointment%20scheduling%20clean%20white%20interface&width=400&height=300&seq=proj003&orientation=landscape",
+      "icon": "ri-hospital-line",
+      "tags": ["Vue.js", "Python", "PostgreSQL"],
+      "badges": [
+        { "label": "효율적", "color": "green" },
+        { "label": "전문적", "color": "purple" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=healthcare%20management%20system%20dashboard&width=800&height=600&seq=proj003",
+      "description": "병원 운영 효율을 극대화하는 통합 의료 관리 시스템입니다.",
+      "features": ["환자 정보 관리", "진료 일정 관리", "전자 처방전", "통계 대시보드"],
+      "techStack": ["Vue.js", "Python", "Django", "PostgreSQL", "Docker"]
+    },
+    {
+      "id": "proj004",
+      "category": "ai",
+      "title": "온라인 학습 플랫폼",
+      "summary": "개인 맞춤형 학습 경로를 제공하는 AI 기반 교육 솔루션",
+      "thumbnail": "https://readdy.ai/api/search-image?query=educational%20learning%20platform%20with%20interactive%20courses%20video%20lessons%20and%20progress%20tracking%20modern%20interface%20white%20background&width=400&height=300&seq=proj004&orientation=landscape",
+      "icon": "ri-graduation-cap-line",
+      "tags": ["Angular", "Machine Learning", "AWS"],
+      "badges": [
+        { "label": "창의적", "color": "yellow" },
+        { "label": "맞춤형", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=educational%20learning%20platform&width=800&height=600&seq=proj004",
+      "description": "AI가 학습자의 수준과 성향을 분석하여 최적의 학습 경로를 제시합니다.",
+      "features": ["AI 학습 추천", "실시간 진도 추적", "인터랙티브 퀴즈", "화상 강의"],
+      "techStack": ["Angular", "TensorFlow", "Python", "AWS", "WebRTC"]
+    },
+    {
+      "id": "proj005",
+      "category": "iot",
+      "title": "스마트 물류 관리",
+      "summary": "IoT 센서와 GPS를 활용한 실시간 배송 추적 시스템",
+      "thumbnail": "https://readdy.ai/api/search-image?query=logistics%20tracking%20system%20with%20delivery%20routes%20warehouse%20management%20and%20real-time%20monitoring%20dashboard%20clean%20interface&width=400&height=300&seq=proj005&orientation=landscape",
+      "icon": "ri-truck-line",
+      "tags": ["IoT", "Spring Boot", "Redis"],
+      "badges": [
+        { "label": "실시간", "color": "blue" },
+        { "label": "정확성", "color": "orange" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=logistics%20tracking%20system&width=800&height=600&seq=proj005",
+      "description": "IoT 기술을 활용한 실시간 물류 추적 및 최적화 시스템입니다.",
+      "features": ["실시간 GPS 추적", "창고 관리", "배송 최적화", "알림 시스템"],
+      "techStack": ["Spring Boot", "Redis", "MQTT", "React", "Google Maps API"]
+    },
+    {
+      "id": "proj006",
+      "category": "web",
+      "title": "소셜 미디어 관리 도구",
+      "summary": "다중 플랫폼 콘텐츠 관리와 분석을 위한 통합 솔루션",
+      "thumbnail": "https://readdy.ai/api/search-image?query=social%20media%20management%20dashboard%20with%20analytics%20engagement%20metrics%20and%20content%20scheduling%20tools%20modern%20clean%20interface&width=400&height=300&seq=proj006&orientation=landscape",
+      "icon": "ri-share-line",
+      "tags": ["React Native", "GraphQL", "Docker"],
+      "badges": [
+        { "label": "트렌디", "color": "pink" },
+        { "label": "통합적", "color": "blue" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=social%20media%20management%20dashboard&width=800&height=600&seq=proj006",
+      "description": "여러 소셜 미디어 플랫폼을 한 곳에서 관리하는 통합 솔루션입니다.",
+      "features": ["다중 플랫폼 관리", "콘텐츠 예약", "분석 대시보드", "팀 협업"],
+      "techStack": ["React Native", "GraphQL", "Node.js", "Docker", "PostgreSQL"]
+    },
+    {
+      "id": "proj007",
+      "category": "web",
+      "title": "부동산 투자 플랫폼",
+      "summary": "VR 기술을 활용한 가상 부동산 투어와 투자 분석 서비스",
+      "thumbnail": "https://readdy.ai/api/search-image?query=real%20estate%20property%20management%20system%20with%20virtual%20tours%20property%20listings%20and%20investment%20analytics%20clean%20modern%20interface&width=400&height=300&seq=proj007&orientation=landscape",
+      "icon": "ri-building-line",
+      "tags": ["VR/AR", "Django", "MySQL"],
+      "badges": [
+        { "label": "몰입감", "color": "purple" },
+        { "label": "투자 지향", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=real%20estate%20property%20management%20system&width=800&height=600&seq=proj007",
+      "description": "VR 기술로 현장 방문 없이 부동산을 체험할 수 있는 혁신적인 플랫폼입니다.",
+      "features": ["VR 부동산 투어", "투자 분석", "시장 동향", "계약 관리"],
+      "techStack": ["Three.js", "Django", "MySQL", "WebXR", "React"]
+    },
+    {
+      "id": "proj008",
+      "category": "mobile",
+      "title": "AI 피트니스 트레이너",
+      "summary": "개인별 운동 패턴 분석과 맞춤형 운동 계획을 제공하는 앱",
+      "thumbnail": "https://readdy.ai/api/search-image?query=fitness%20tracking%20application%20with%20workout%20plans%20health%20metrics%20and%20progress%20monitoring%20clean%20sports%20interface%20white%20background&width=400&height=300&seq=proj008&orientation=landscape",
+      "icon": "ri-heart-pulse-line",
+      "tags": ["Swift", "CoreML", "HealthKit"],
+      "badges": [
+        { "label": "건강 중심", "color": "green" },
+        { "label": "동기 부여", "color": "orange" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=fitness%20tracking%20application&width=800&height=600&seq=proj008",
+      "description": "AI가 사용자의 운동 패턴을 분석하여 최적의 운동 계획을 제시합니다.",
+      "features": ["AI 운동 추천", "건강 데이터 분석", "운동 기록", "목표 설정"],
+      "techStack": ["Swift", "CoreML", "HealthKit", "Firebase", "TensorFlow Lite"]
+    },
+    {
+      "id": "proj009",
+      "category": "mobile",
+      "title": "스마트 푸드 딜리버리",
+      "summary": "AI 추천 알고리즘과 실시간 배송 최적화를 적용한 음식 배달 서비스",
+      "thumbnail": "https://readdy.ai/api/search-image?query=food%20delivery%20application%20with%20restaurant%20listings%20menu%20browsing%20and%20order%20tracking%20modern%20clean%20interface%20white%20background&width=400&height=300&seq=proj009&orientation=landscape",
+      "icon": "ri-restaurant-line",
+      "tags": ["Kotlin", "Microservices", "Kafka"],
+      "badges": [
+        { "label": "편리함", "color": "yellow" },
+        { "label": "신속함", "color": "red" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=food%20delivery%20application&width=800&height=600&seq=proj009",
+      "description": "AI 기반 음식 추천과 실시간 배송 추적이 가능한 푸드 딜리버리 앱입니다.",
+      "features": ["AI 음식 추천", "실시간 배송 추적", "간편 결제", "리뷰 시스템"],
+      "techStack": ["Kotlin", "Spring Boot", "Kafka", "Redis", "PostgreSQL"]
+    },
+    {
+      "id": "proj010",
+      "category": "web",
+      "title": "통합 여행 예약 시스템",
+      "summary": "항공편, 숙박, 액티비티를 한 번에 예약할 수 있는 원스톱 여행 서비스",
+      "thumbnail": "https://readdy.ai/api/search-image?query=travel%20booking%20platform%20with%20destination%20search%20flight%20booking%20and%20hotel%20reservations%20clean%20modern%20interface%20white%20background&width=400&height=300&seq=proj010&orientation=landscape",
+      "icon": "ri-plane-line",
+      "tags": ["Next.js", "Stripe", "Elasticsearch"],
+      "badges": [
+        { "label": "편의성", "color": "blue" },
+        { "label": "통합적", "color": "purple" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=travel%20booking%20platform&width=800&height=600&seq=proj010",
+      "description": "항공, 숙박, 액티비티를 한 번에 예약하는 올인원 여행 플랫폼입니다.",
+      "features": ["통합 검색", "실시간 예약", "여행 일정 관리", "리뷰 시스템"],
+      "techStack": ["Next.js", "Stripe", "Elasticsearch", "PostgreSQL", "Redis"]
+    },
+    {
+      "id": "proj011",
+      "category": "fintech",
+      "title": "암호화폐 거래소",
+      "summary": "고급 보안과 실시간 차트 분석을 제공하는 디지털 자산 거래 플랫폼",
+      "thumbnail": "https://readdy.ai/api/search-image?query=cryptocurrency%20trading%20platform%20with%20market%20charts%20portfolio%20management%20and%20secure%20wallet%20features%20modern%20financial%20interface&width=400&height=300&seq=proj011&orientation=landscape",
+      "icon": "ri-currency-line",
+      "tags": ["WebSocket", "Rust", "Kubernetes"],
+      "badges": [
+        { "label": "보안성", "color": "red" },
+        { "label": "고성능", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=cryptocurrency%20trading%20platform&width=800&height=600&seq=proj011",
+      "description": "고급 보안과 실시간 거래를 지원하는 암호화폐 거래 플랫폼입니다.",
+      "features": ["실시간 거래", "고급 차트", "지갑 관리", "2FA 보안"],
+      "techStack": ["Rust", "WebSocket", "Kubernetes", "Redis", "PostgreSQL"]
+    },
+    {
+      "id": "proj012",
+      "category": "iot",
+      "title": "스마트 홈 컨트롤러",
+      "summary": "음성 인식과 AI 학습을 통한 지능형 가정 자동화 시스템",
+      "thumbnail": "https://readdy.ai/api/search-image?query=smart%20home%20automation%20system%20with%20device%20control%20energy%20monitoring%20and%20security%20features%20modern%20IoT%20interface%20white%20background&width=400&height=300&seq=proj012&orientation=landscape",
+      "icon": "ri-home-wifi-line",
+      "tags": ["Raspberry Pi", "MQTT", "TensorFlow"],
+      "badges": [
+        { "label": "지능적", "color": "blue" },
+        { "label": "에너지 절약", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=smart%20home%20automation%20system&width=800&height=600&seq=proj012",
+      "description": "AI가 생활 패턴을 학습하여 자동으로 가정 환경을 제어합니다.",
+      "features": ["음성 제어", "자동화 규칙", "에너지 모니터링", "보안 시스템"],
+      "techStack": ["Raspberry Pi", "MQTT", "TensorFlow", "React Native", "Node.js"]
+    },
+    {
+      "id": "proj013",
+      "category": "web",
+      "title": "라이브 스트리밍 플랫폼",
+      "summary": "실시간 방송과 인터랙티브 기능을 제공하는 차세대 미디어 서비스",
+      "thumbnail": "https://readdy.ai/api/search-image?query=video%20streaming%20platform%20with%20live%20broadcasts%20content%20library%20and%20interactive%20features%20modern%20entertainment%20interface%20white%20background&width=400&height=300&seq=proj013&orientation=landscape",
+      "icon": "ri-live-line",
+      "tags": ["WebRTC", "FFmpeg", "CDN"],
+      "badges": [
+        { "label": "실시간", "color": "red" },
+        { "label": "인터랙티브", "color": "purple" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=video%20streaming%20platform&width=800&height=600&seq=proj013",
+      "description": "저지연 실시간 스트리밍과 채팅을 지원하는 미디어 플랫폼입니다.",
+      "features": ["실시간 스트리밍", "라이브 채팅", "화질 선택", "녹화 기능"],
+      "techStack": ["WebRTC", "FFmpeg", "Node.js", "Redis", "CDN"]
+    },
+    {
+      "id": "proj014",
+      "category": "web",
+      "title": "프로젝트 관리 도구",
+      "summary": "팀 협업과 일정 관리를 위한 통합 워크스페이스 솔루션",
+      "thumbnail": "https://readdy.ai/api/search-image?query=project%20management%20dashboard%20with%20task%20tracking%20team%20collaboration%20and%20timeline%20visualization%20clean%20business%20interface%20white%20background&width=400&height=300&seq=proj014&orientation=landscape",
+      "icon": "ri-team-line",
+      "tags": ["Svelte", "Socket.io", "MongoDB"],
+      "badges": [
+        { "label": "협업 중심", "color": "blue" },
+        { "label": "생산성", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=project%20management%20dashboard&width=800&height=600&seq=proj014",
+      "description": "팀 협업을 위한 올인원 프로젝트 관리 솔루션입니다.",
+      "features": ["칸반 보드", "간트 차트", "실시간 협업", "타임 트래킹"],
+      "techStack": ["Svelte", "Socket.io", "MongoDB", "Node.js", "Redis"]
+    },
+    {
+      "id": "proj015",
+      "category": "iot",
+      "title": "스마트 농업 모니터링",
+      "summary": "드론과 센서를 활용한 정밀 농업 관리 및 작물 분석 시스템",
+      "thumbnail": "https://readdy.ai/api/search-image?query=agriculture%20monitoring%20system%20with%20crop%20analysis%20weather%20data%20and%20farming%20automation%20tools%20clean%20agricultural%20interface%20white%20background&width=400&height=300&seq=proj015&orientation=landscape",
+      "icon": "ri-plant-line",
+      "tags": ["Computer Vision", "Drone API", "Weather API"],
+      "badges": [
+        { "label": "지속가능", "color": "green" },
+        { "label": "혁신적", "color": "yellow" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=agriculture%20monitoring%20system&width=800&height=600&seq=proj015",
+      "description": "IoT와 AI를 결합한 스마트 농업 관리 시스템입니다.",
+      "features": ["드론 모니터링", "토양 분석", "날씨 예측", "자동 관개"],
+      "techStack": ["Python", "TensorFlow", "MQTT", "React", "PostgreSQL"]
+    },
+    {
+      "id": "proj016",
+      "category": "ai",
+      "title": "AI 음악 스트리밍",
+      "summary": "개인 취향 분석과 감정 기반 음악 추천을 제공하는 스마트 플레이어",
+      "thumbnail": "https://readdy.ai/api/search-image?query=music%20streaming%20application%20with%20playlist%20creation%20audio%20visualization%20and%20social%20sharing%20features%20modern%20entertainment%20interface%20white%20background&width=400&height=300&seq=proj016&orientation=landscape",
+      "icon": "ri-music-line",
+      "tags": ["Web Audio API", "Spotify API", "ML.js"],
+      "badges": [
+        { "label": "감성적", "color": "purple" },
+        { "label": "개인화", "color": "pink" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=music%20streaming%20application&width=800&height=600&seq=proj016",
+      "description": "AI가 감정과 상황에 맞는 음악을 추천하는 스트리밍 서비스입니다.",
+      "features": ["AI 음악 추천", "플레이리스트 생성", "감정 분석", "소셜 공유"],
+      "techStack": ["React", "Web Audio API", "TensorFlow.js", "Node.js", "MongoDB"]
+    },
+    {
+      "id": "proj017",
+      "category": "web",
+      "title": "지능형 재고 관리",
+      "summary": "RFID와 바코드 스캔을 통한 실시간 재고 추적 및 예측 시스템",
+      "thumbnail": "https://readdy.ai/api/search-image?query=inventory%20management%20system%20with%20barcode%20scanning%20stock%20tracking%20and%20warehouse%20optimization%20clean%20business%20interface%20white%20background&width=400&height=300&seq=proj017&orientation=landscape",
+      "icon": "ri-archive-line",
+      "tags": ["RFID", "Barcode Scanner", "Predictive Analytics"],
+      "badges": [
+        { "label": "정확성", "color": "blue" },
+        { "label": "효율성", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=inventory%20management%20system&width=800&height=600&seq=proj017",
+      "description": "AI 기반 재고 예측과 자동 발주를 지원하는 재고 관리 시스템입니다.",
+      "features": ["실시간 재고 추적", "자동 발주", "재고 예측", "리포트 생성"],
+      "techStack": ["React", "Python", "PostgreSQL", "Redis", "TensorFlow"]
+    },
+    {
+      "id": "proj018",
+      "category": "ai",
+      "title": "VR 직업 훈련 시뮬레이터",
+      "summary": "위험한 작업 환경을 안전하게 체험할 수 있는 가상현실 교육 플랫폼",
+      "thumbnail": "https://readdy.ai/api/search-image?query=virtual%20reality%20training%20simulation%20with%20immersive%20learning%20environments%20and%20skill%20assessment%20tools%20modern%20VR%20interface%20white%20background&width=400&height=300&seq=proj018&orientation=landscape",
+      "icon": "ri-vr-box-line",
+      "tags": ["Unity 3D", "Oculus SDK", "Physics Engine"],
+      "badges": [
+        { "label": "몰입형", "color": "purple" },
+        { "label": "안전성", "color": "orange" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=virtual%20reality%20training%20simulation&width=800&height=600&seq=proj018",
+      "description": "VR 기술을 활용한 안전한 직업 훈련 시뮬레이터입니다.",
+      "features": ["VR 시뮬레이션", "실시간 피드백", "진행도 추적", "멀티플레이어"],
+      "techStack": ["Unity 3D", "C#", "Oculus SDK", "Photon", "Firebase"]
+    },
+    {
+      "id": "proj019",
+      "category": "ai",
+      "title": "지능형 고객 서비스 봇",
+      "summary": "자연어 처리와 감정 분석을 통한 24시간 고객 상담 AI 어시스턴트",
+      "thumbnail": "https://readdy.ai/api/search-image?query=customer%20service%20chatbot%20interface%20with%20AI%20conversation%20natural%20language%20processing%20and%20support%20ticket%20management%20clean%20interface%20white%20background&width=400&height=300&seq=proj019&orientation=landscape",
+      "icon": "ri-robot-line",
+      "tags": ["NLP", "Sentiment Analysis", "GPT Integration"],
+      "badges": [
+        { "label": "지능적", "color": "blue" },
+        { "label": "24시간", "color": "green" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=customer%20service%20chatbot%20interface&width=800&height=600&seq=proj019",
+      "description": "GPT 기반의 지능형 고객 상담 챗봇입니다.",
+      "features": ["자연어 이해", "감정 분석", "다국어 지원", "에스컬레이션"],
+      "techStack": ["Python", "OpenAI API", "FastAPI", "Redis", "PostgreSQL"]
+    },
+    {
+      "id": "proj020",
+      "category": "fintech",
+      "title": "사이버 보안 모니터링",
+      "summary": "실시간 위협 탐지와 자동 대응을 제공하는 엔터프라이즈 보안 솔루션",
+      "thumbnail": "https://readdy.ai/api/search-image?query=cybersecurity%20monitoring%20dashboard%20with%20threat%20detection%20network%20analysis%20and%20security%20alerts%20modern%20security%20interface%20white%20background&width=400&height=300&seq=proj020&orientation=landscape",
+      "icon": "ri-shield-check-line",
+      "tags": ["SIEM", "Threat Intelligence", "Incident Response"],
+      "badges": [
+        { "label": "고보안", "color": "red" },
+        { "label": "자동화", "color": "blue" }
+      ],
+      "modalImage": "https://readdy.ai/api/search-image?query=cybersecurity%20monitoring%20dashboard&width=800&height=600&seq=proj020",
+      "description": "AI 기반 실시간 위협 탐지 및 자동 대응 보안 시스템입니다.",
+      "features": ["실시간 위협 탐지", "자동 대응", "로그 분석", "보안 리포트"],
+      "techStack": ["Python", "Elasticsearch", "Kafka", "React", "TensorFlow"]
+    }
+  ]
 }

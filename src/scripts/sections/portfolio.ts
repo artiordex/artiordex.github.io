@@ -1,11 +1,11 @@
 /**
  * portfolio.ts
- * 포트폴리오 섹션 전체 SPA 렌더링 (섹션 + 필터 + 그리드 + 모달)
+ * 포트폴리오 섹션 전체 SPA 렌더링 (히어로 + 필터 + 그리드 + 모달 + CTA)
  */
 
-import portfolioJson from "@data/portfolio.json";
-import type { PortfolioData, PortfolioProject } from "@scripts/data.types";
-import { attachRevealObserver } from "@scripts/utils/reveal";
+import portfolioJson from "@/data/portfolio.json";
+import type { PortfolioData, PortfolioProject, PortfolioBadge } from "@/scripts/data.types";
+import { attachRevealObserver } from "@/scripts/utils/reveal";
 
 const portfolioData = portfolioJson as PortfolioData;
 
@@ -18,36 +18,46 @@ let modalFeaturesEl: HTMLElement | null = null;
 let modalTechEl: HTMLElement | null = null;
 let modalCloseBtn: HTMLElement | null = null;
 
+/* 배지 색상 매핑 */
+const badgeColorMap: Record<string, string> = {
+  blue: "bg-blue-100 text-blue-700",
+  green: "bg-green-100 text-green-700",
+  red: "bg-red-100 text-red-700",
+  yellow: "bg-yellow-100 text-yellow-700",
+  purple: "bg-purple-100 text-purple-700",
+  pink: "bg-pink-100 text-pink-700",
+  orange: "bg-orange-100 text-orange-700"
+};
+
 export function renderPortfolio(): void {
   const root = document.getElementById("portfolio");
   if (!root) return;
 
-  const { intro, filters = [], projects = [] } = portfolioData;
+  const { intro, filters = [], projects = [], cta } = portfolioData;
 
-  /* ===============================
-   * 1. SECTION LAYOUT
-   * =============================== */
   root.innerHTML = `
-    <section class="section section--light">
-      <div class="section__inner">
+    <!-- Hero Section -->
+    ${renderHeroSection(intro)}
 
+    <!-- Portfolio Grid Section -->
+    <div class="section section--white">
+      <div class="section__inner">
         <header class="section__header">
-          <h1 class="section__title animate-fade-in animate-delay-1">
-            ${intro?.title || ""}
-          </h1>
-          <p class="section__subtitle animate-fade-in animate-delay-2">
-            ${intro?.subtitle || ""}
+          <h2 class="section__title animate-fade-in">포트폴리오</h2>
+          <p class="section__subtitle animate-fade-in animate-delay-1">
+            다양한 산업 분야에서 수행한 프로젝트들을 통해 우리의 역량을 확인해보세요
           </p>
         </header>
 
-        <div id="portfolio-filter-buttons"
-             class="filter-buttons animate-fade-in animate-delay-3"></div>
-
+        <div id="portfolio-filter-buttons" class="filter-buttons animate-fade-in animate-delay-2"></div>
         <div id="portfolio-grid"></div>
-
       </div>
-    </section>
+    </div>
 
+    <!-- CTA Section -->
+    ${cta ? renderCTASection(cta) : ""}
+
+    <!-- Modal -->
     ${renderModalTemplate()}
   `;
 
@@ -58,9 +68,52 @@ export function renderPortfolio(): void {
 }
 
 /* ===============================
+ * HERO SECTION
+ * =============================== */
+function renderHeroSection(intro: { title: string; subtitle: string }): string {
+  return `
+    <div class="portfolio-hero">
+      <div class="portfolio-hero__overlay"></div>
+      <div class="portfolio-hero__content">
+        <h1 class="portfolio-hero__title animate-fade-in">${intro.title}</h1>
+        <p class="portfolio-hero__subtitle animate-fade-in animate-delay-1">${intro.subtitle}</p>
+        <button class="portfolio-hero__btn animate-fade-in animate-delay-2" 
+                onclick="document.getElementById('portfolio-grid').scrollIntoView({ behavior: 'smooth' })">
+          프로젝트 둘러보기
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+/* ===============================
+ * CTA SECTION
+ * =============================== */
+function renderCTASection(cta: PortfolioData["cta"]): string {
+  if (!cta) return "";
+  
+  return `
+    <div class="portfolio-cta">
+      <div class="portfolio-cta__inner">
+        <h2 class="portfolio-cta__title animate-fade-in">${cta.title}</h2>
+        <p class="portfolio-cta__subtitle animate-fade-in animate-delay-1">${cta.subtitle}</p>
+        <div class="portfolio-cta__buttons animate-fade-in animate-delay-2">
+          <a href="${cta.primaryButton.link}" class="portfolio-cta__btn portfolio-cta__btn--primary">
+            ${cta.primaryButton.label}
+          </a>
+          <a href="${cta.secondaryButton.link}" class="portfolio-cta__btn portfolio-cta__btn--secondary">
+            ${cta.secondaryButton.label}
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ===============================
  * FILTER BUTTONS
  * =============================== */
-function renderFilterButtons(filters: any[], projects: PortfolioProject[]): void {
+function renderFilterButtons(filters: { id: string; label: string }[], projects: PortfolioProject[]): void {
   const container = document.getElementById("portfolio-filter-buttons");
   if (!container) return;
 
@@ -76,10 +129,7 @@ function renderFilterButtons(filters: any[], projects: PortfolioProject[]): void
     if (filter.id === "all") btn.classList.add("active");
 
     btn.addEventListener("click", () => {
-      container
-        .querySelectorAll(".filter-btn")
-        .forEach((b) => b.classList.remove("active"));
-
+      container.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderProjects(filter.id, projects);
     });
@@ -91,41 +141,40 @@ function renderFilterButtons(filters: any[], projects: PortfolioProject[]): void
 /* ===============================
  * PROJECT GRID
  * =============================== */
-function renderProjects(
-  filterId: string,
-  projects: PortfolioProject[]
-): void {
+function renderProjects(filterId: string, projects: PortfolioProject[]): void {
   const grid = document.getElementById("portfolio-grid");
   if (!grid) return;
 
   const tagColors = ["primary", "secondary", "purple", "green"];
   grid.innerHTML = "";
 
-  const filtered =
-    filterId === "all"
-      ? projects
-      : projects.filter((p) => p.category === filterId);
+  const filtered = filterId === "all" 
+    ? projects 
+    : projects.filter((p) => p.category === filterId);
 
   filtered.forEach((project, index) => {
     const card = document.createElement("article");
     card.className = `portfolio-item animate-scale-in animate-delay-${(index % 6) + 1}`;
 
     card.innerHTML = `
-      <div class="portfolio-item__image"
-           style="background-image:url('${project.thumbnail}')"></div>
+      <div class="portfolio-item__image" style="background-image:url('${project.thumbnail}')"></div>
 
       <div class="portfolio-item__body">
+        <div class="portfolio-item__header">
+          <span class="portfolio-item__category">${getCategoryLabel(filterId, project.category)}</span>
+          ${project.icon ? `<i class="${project.icon} portfolio-item__icon"></i>` : ""}
+        </div>
+
         <h3 class="portfolio-item__title">${project.title}</h3>
         <p class="portfolio-item__desc">${project.summary}</p>
 
         <div class="portfolio-item__tags">
           ${(project.tags || [])
-            .map(
-              (tag, i) =>
-                `<span class="portfolio-item__tag portfolio-item__tag--${tagColors[i % tagColors.length]}">${tag}</span>`
-            )
+            .map((tag, i) => `<span class="portfolio-item__tag portfolio-item__tag--${tagColors[i % tagColors.length]}">${tag}</span>`)
             .join("")}
         </div>
+
+        ${project.badges ? renderBadges(project.badges) : ""}
 
         <button type="button" class="portfolio-item__link">
           자세히 보기 →
@@ -133,14 +182,36 @@ function renderProjects(
       </div>
     `;
 
-    card
-      .querySelector(".portfolio-item__link")
-      ?.addEventListener("click", () => openModal(project));
-
+    card.querySelector(".portfolio-item__link")?.addEventListener("click", () => openModal(project));
     grid.appendChild(card);
   });
 
   attachRevealObserver();
+}
+
+/* 배지 렌더링 */
+function renderBadges(badges: PortfolioBadge[]): string {
+  return `
+    <div class="portfolio-item__badges">
+      ${badges.map((badge) => `
+        <span class="portfolio-item__badge ${badgeColorMap[badge.color] || "bg-gray-100 text-gray-700"}">
+          ${badge.label}
+        </span>
+      `).join("")}
+    </div>
+  `;
+}
+
+/* 카테고리 라벨 가져오기 */
+function getCategoryLabel(filterId: string, category: string): string {
+  const labels: Record<string, string> = {
+    web: "웹 개발",
+    mobile: "모바일 앱",
+    ai: "AI/ML",
+    iot: "IoT",
+    fintech: "핀테크"
+  };
+  return labels[category] || category;
 }
 
 /* ===============================
@@ -152,10 +223,7 @@ function renderModalTemplate(): string {
       <div class="modal-content" role="dialog" aria-modal="true">
         <div class="modal-header">
           <h2 id="modal-title" class="modal-title"></h2>
-          <button id="modal-close"
-                  class="modal-close"
-                  type="button"
-                  aria-label="포트폴리오 상세 닫기">
+          <button id="modal-close" class="modal-close" type="button" aria-label="닫기">
             <i class="ri-close-line"></i>
           </button>
         </div>
@@ -188,15 +256,11 @@ function initModal(): void {
   modalCloseBtn = document.getElementById("modal-close");
 
   modalCloseBtn?.addEventListener("click", closeModal);
-
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
-
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal?.classList.contains("active")) {
-      closeModal();
-    }
+    if (e.key === "Escape" && modal?.classList.contains("active")) closeModal();
   });
 }
 
@@ -205,10 +269,11 @@ function openModal(project: PortfolioProject): void {
 
   modalTitleEl!.textContent = project.title;
   modalImageEl!.src = project.modalImage || project.thumbnail;
+  modalImageEl!.alt = project.title;
   modalDescEl!.textContent = project.description || "";
 
   modalFeaturesEl!.innerHTML = (project.features || [])
-    .map((f) => `<li>${f}</li>`)
+    .map((f) => `<li><i class="ri-check-line"></i> ${f}</li>`)
     .join("");
 
   modalTechEl!.innerHTML = (project.techStack || [])

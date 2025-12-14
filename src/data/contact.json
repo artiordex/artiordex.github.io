@@ -1,8 +1,9 @@
 {
   "pageTitle": "연락하기",
-  "intro": {
-    "title": "연락처",
-    "subtitle": "프로젝트 문의, 협업 제안, 컨설팅 요청 등 어떤 내용이든 편하게 연락해주세요."
+  "hero": {
+    "title": "함께 이야기해요",
+    "subtitle": "프로젝트 문의, 협업 제안, 컨설팅 요청 등 어떤 내용이든 편하게 연락해주세요",
+    "icon": "ri-chat-smile-3-line"
   },
 
   "contactInfo": {
@@ -28,8 +29,14 @@
     }
   },
 
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com/artiordex", "icon": "ri-github-fill" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/artiordex", "icon": "ri-linkedin-fill" },
+    { "platform": "Instagram", "url": "https://instagram.com/artiordex", "icon": "ri-instagram-line" }
+  ],
+
   "form": {
-    "title": "문의하기",
+    "title": "메시지 보내기",
     "description": "아래 양식을 작성해주시면 빠르게 회신드리겠습니다.",
 
     "fields": [

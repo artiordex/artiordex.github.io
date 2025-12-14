@@ -1,70 +1,162 @@
 {
   "pageTitle": "회사 소개",
-  "intro": {
-    "title": "포트폴리오",
-    "subtitle": "다양한 산업 분야에서 성공적으로 완료한 프로젝트들을 확인해보세요"
+  "hero": {
+    "title": "디지털 전환을 설계하는 개발 파트너",
+    "subtitle": "Artiordex는 지속 가능한 구조와 사람 중심의 기술로 비즈니스의 성장을 함께합니다",
+    "icon": "ri-building-4-line",
+    "cta": {
+      "label": "문의하기",
+      "link": "#contact",
+      "icon": "ri-mail-send-line"
+    }
   },
 
-  "filters": [
-    { "id": "all", "label": "전체" },
-    { "id": "web", "label": "웹 개발" },
-    { "id": "ai", "label": "AI 솔루션" },
-    { "id": "cloud", "label": "클라우드" }
-  ],
+  "services": {
+    "title": "What We Do",
+    "subtitle": "세 가지 핵심 영역을 통해 클라이언트의 디지털 전환을 지원합니다",
+    "items": [
+      {
+        "id": "development",
+        "title": "Artiordex Development Agency",
+        "description": "단순한 개발을 넘어서, 비즈니스 목표와 일치하는 기술 솔루션을 제공합니다.",
+        "icon": "ri-code-line",
+        "color": "blue",
+        "features": [
+          "웹 플랫폼 및 애플리케이션 개발",
+          "MVP 구축 및 프로토타입 개발",
+          "내부 시스템 자동화 솔루션",
+          "기술 기반 문제 해결 컨설팅"
+        ]
+      },
+      {
+        "id": "consulting",
+        "title": "Consulting & Education",
+        "description": "이론과 실무를 결합한 실질적인 컨설팅과 교육을 통해 조직의 역량을 강화합니다.",
+        "icon": "ri-lightbulb-line",
+        "color": "green",
+        "features": [
+          "디지털 전환 전략 컨설팅",
+          "조직 및 프로세스 개선 자문",
+          "개발 및 기술 실무 강의",
+          "맞춤형 교육 프로그램 설계"
+        ]
+      },
+      {
+        "id": "solutions",
+        "title": "Artiordex Solutions",
+        "description": "검증된 솔루션과 혁신적인 연구를 통해 미래 지향적인 서비스를 제공합니다.",
+        "icon": "ri-rocket-line",
+        "color": "purple",
+        "features": [
+          { "name": "ArtiForge", "desc": "솔루션 기반 플랫폼 서비스" },
+          { "name": "ArtiLabs", "desc": "실험적 기술 연구 및 R&D" },
+          { "name": "ArtiFlow", "desc": "워크플로우 자동화 및 운영 최적화" }
+        ]
+      }
+    ]
+  },
 
-  "projects": [
-    {
-      "id": "project1",
-      "category": "web",
-      "title": "이커머스 플랫폼 구축",
-      "summary": "대형 유통업체를 위한 통합 이커머스 솔루션 개발 및 구축",
-      "thumbnail": "/assets/images/project1.jpg",
-      "tags": ["React", "Node.js", "AWS"],
-      "modalImage": "/assets/images/project1-cover.jpg",
-      "description": "대형 유통업체를 위한 통합 이커머스 솔루션을 개발하여 온라인 매출 300% 증가를 달성했습니다. 마이크로서비스 아키텍처를 도입하여 확장성과 안정성을 확보했습니다.",
-      "features": [
-        "실시간 재고 관리 시스템",
-        "AI 기반 상품 추천 엔진",
-        "다중 결제 시스템 통합",
-        "모바일 최적화 반응형 디자인"
-      ],
-      "techStack": ["React", "Node.js", "AWS", "MongoDB"]
-    },
+  "solutions": {
+    "title": "Our Solutions",
+    "subtitle": "Artiordex의 4가지 핵심 솔루션 라인업",
+    "items": [
+      {
+        "id": "artiordex",
+        "name": "Artiordex",
+        "tagline": "Core Platform",
+        "description": "Artiordex의 핵심 개발 플랫폼으로, 모든 솔루션의 기반이 되는 통합 시스템입니다.",
+        "icon": "ri-building-4-line",
+        "color": "blue",
+        "features": ["통합 개발 환경", "프로젝트 관리", "클라이언트 포털", "실시간 협업"]
+      },
+      {
+        "id": "artiforge",
+        "name": "ArtiForge",
+        "tagline": "Platform Service",
+        "description": "솔루션 기반 플랫폼 서비스로, 검증된 템플릿과 모듈을 활용한 빠른 구축을 지원합니다.",
+        "icon": "ri-hammer-line",
+        "color": "orange",
+        "features": ["템플릿 라이브러리", "모듈식 아키텍처", "빠른 배포", "커스터마이징"]
+      },
+      {
+        "id": "artilabs",
+        "name": "ArtiLabs",
+        "tagline": "R&D Innovation",
+        "description": "실험적 기술 연구 및 R&D를 통해 미래 기술을 선도하는 혁신 연구소입니다.",
+        "icon": "ri-flask-line",
+        "color": "purple",
+        "features": ["AI/ML 연구", "신기술 실험", "프로토타입 개발", "기술 리서치"]
+      },
+      {
+        "id": "artiflow",
+        "name": "ArtiFlow",
+        "tagline": "Workflow Automation",
+        "description": "워크플로우 자동화 및 운영 최적화를 통해 업무 효율을 극대화합니다.",
+        "icon": "ri-flow-chart",
+        "color": "green",
+        "features": ["프로세스 자동화", "업무 최적화", "데이터 파이프라인", "모니터링"]
+      }
+    ]
+  },
 
-    {
-      "id": "project2",
-      "category": "ai",
-      "title": "AI 기반 예측 분석 시스템",
-      "summary": "제조업체의 수요 예측 및 재고 최적화를 위한 AI 솔루션",
-      "thumbnail": "/assets/images/project2.jpg",
-      "tags": ["Python", "TensorFlow", "Docker"],
-      "modalImage": "/assets/images/project2-cover.jpg",
-      "description": "AI 기반 예측 분석 시스템으로 제조업체의 수요 예측 정확도를 85%까지 향상시키고 재고 비용을 40% 절감했습니다.",
-      "features": [
-        "수요 예측 정확도 85%",
-        "재고 비용 40% 절감",
-        "생산 계획 최적화",
-        "실시간 데이터 분석"
-      ],
-      "techStack": ["Python", "TensorFlow", "Docker", "Kubernetes"]
-    },
+  "timeline": {
+    "title": "Timeline",
+    "subtitle": "아티올덱스의 성장 여정과 주요 마일스톤",
+    "items": [
+      {
+        "year": "2022",
+        "color": "blue",
+        "description": "개인 프로젝트로 시작된 아이디어가 구체화되기 시작했습니다. 다양한 기술 실험과 프로토타입 개발을 통해 핵심 철학을 정립했습니다."
+      },
+      {
+        "year": "2023",
+        "color": "green",
+        "description": "아티올덱스 브랜드를 공식 론칭하고, 개발 에이전시로서의 첫 번째 클라이언트 프로젝트를 성공적으로 완료했습니다."
+      },
+      {
+        "year": "2024",
+        "color": "orange",
+        "description": "컨설팅과 교육 영역으로 사업을 확장하며, 솔루션 라인업의 기초를 구축했습니다. 다양한 산업 분야의 파트너십을 체결했습니다."
+      },
+      {
+        "year": "2025",
+        "color": "red",
+        "description": "ArtiForge, ArtiLabs, ArtiFlow 솔루션을 고도화하고, 글로벌 시장 진출을 위한 기반을 마련할 계획입니다."
+      }
+    ]
+  },
 
-    {
-      "id": "project3",
-      "category": "cloud",
-      "title": "클라우드 마이그레이션",
-      "summary": "금융 기업 레거시 시스템 AWS 클라우드 이전",
-      "thumbnail": "/assets/images/project3.jpg",
-      "tags": ["AWS", "Kubernetes", "DevOps"],
-      "modalImage": "/assets/images/project3-cover.jpg",
-      "description": "금융 기업의 시스템을 AWS로 완전 이전하여 운영 비용을 절감하고 시스템 가용성 99.9%를 달성했습니다.",
-      "features": [
-        "운영 비용 50% 절감",
-        "99.9% 가용성 확보",
-        "배포 시간 90% 단축",
-        "자동 스케일링 적용"
-      ],
-      "techStack": ["AWS", "Kubernetes", "Terraform", "DevOps"]
-    }
-  ]
+  "vision": {
+    "title": "Vision & Philosophy",
+    "subtitle": "우리가 중요하게 생각하는 가치와 철학",
+    "items": [
+      {
+        "id": "sustainable",
+        "title": "지속 가능한 구조",
+        "description": "빠른 개발보다는 장기적으로 유지보수가 가능하고 확장 가능한 구조를 설계합니다. 오늘의 편의가 내일의 기술 부채가 되지 않도록 합니다.",
+        "icon": "ri-building-line",
+        "color": "blue"
+      },
+      {
+        "id": "human",
+        "title": "사람 중심 사고",
+        "description": "기술은 사람을 위해 존재합니다. 사용자의 경험과 개발자의 생산성, 그리고 비즈니스 목표가 조화롭게 균형을 이루는 솔루션을 추구합니다.",
+        "icon": "ri-user-heart-line",
+        "color": "green"
+      },
+      {
+        "id": "flow",
+        "title": "흐름과 시스템",
+        "description": "개별 기능의 완성도보다는 전체 시스템의 흐름과 연결성을 중시합니다. 부분의 합이 전체보다 큰 시너지를 만들어냅니다.",
+        "icon": "ri-flow-chart",
+        "color": "purple"
+      }
+    ]
+  },
+
+  "closing": {
+    "title": "우리는 프로젝트를 만들지 않습니다.\n구조를 만듭니다.",
+    "subtitle": "아티올덱스와 함께 지속 가능한 디지털 전환을 시작하세요. 단순한 개발 파트너가 아닌, 성장하는 비즈니스 파트너가 되겠습니다.",
+    "email": "contact@artiordex.com"
+  }
 }

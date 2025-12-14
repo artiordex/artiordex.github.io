@@ -1,281 +1,264 @@
 /**
  * company.ts
- * 회사 프로젝트 섹션 렌더링 (전체 HTML 동적 생성)
+ * 회사 소개 섹션 렌더링
+ * - CTA 히어로
+ * - 서비스 소개
+ * - 솔루션 라인업
+ * - 타임라인
+ * - 비전 & 철학
+ * - 클로징 CTA
  */
 
 import companyJson from "@/data/company.json";
-import type { CompanyData, CompanyProject } from "@scripts/data.types";
-import { attachRevealObserver } from "@scripts/utils/reveal";
+import type { 
+  CompanyData, 
+  CompanyService, 
+  CompanySolution, 
+  CompanyTimelineItem, 
+  CompanyVisionItem 
+} from "@/scripts/data.types";
+import { attachRevealObserver } from "@/scripts/utils/reveal";
 
-// JSON → 타입 적용
 const companyData = companyJson as CompanyData;
 
-// 모달 요소들
-let modal: HTMLElement | null;
-let modalTitleEl: HTMLElement | null;
-let modalImageEl: HTMLImageElement | null;
-let modalDescEl: HTMLElement | null;
-let modalFeaturesEl: HTMLElement | null;
-let modalTechEl: HTMLElement | null;
-let modalCloseBtn: HTMLElement | null;
-
-/**
- * 회사 프로젝트 렌더링
- */
 export function renderCompany(): void {
   const root = document.getElementById("company");
   if (!root) return;
 
-  const data = companyData;
-  const intro = data.intro || {};
-  const filters = data.filters || [];
-  const projects = data.projects || [];
+  root.className = "";
 
-  // 전체 HTML 구조 생성
+  const { hero, services, solutions, timeline, vision, closing } = companyData;
+
   root.innerHTML = `
-    <div class="section__inner">
-      <!-- Header Section -->
-      <header class="section__header">
-        <div class="animate-fade-in animate-delay-1">
-          <h1 id="intro-title" class="section__title">${intro.title || ""}</h1>
-          <p id="intro-subtitle" class="section__subtitle">${intro.subtitle || ""}</p>
+    <!-- 히어로 CTA -->
+    ${hero ? renderHero(hero) : ''}
+
+    <!-- 서비스 섹션 -->
+    ${services ? renderServices(services) : ''}
+
+    <!-- 솔루션 섹션 -->
+    ${solutions ? renderSolutions(solutions) : ''}
+
+    <!-- 타임라인 섹션 -->
+    ${timeline ? renderTimeline(timeline) : ''}
+
+    <!-- 비전 섹션 -->
+    ${vision ? renderVision(vision) : ''}
+
+    <!-- 클로징 CTA -->
+    ${closing ? renderClosing(closing) : ''}
+  `;
+
+  attachRevealObserver();
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+function renderHero(hero: CompanyData['hero']): string {
+  if (!hero) return '';
+
+  return `
+    <div class="company-hero">
+      <div class="company-hero__bg"></div>
+      <div class="company-hero__content">
+        <div class="company-hero__icon animate-fade-in">
+          <i class="${hero.icon || 'ri-building-4-line'}"></i>
         </div>
-      </header>
-
-      <!-- Filter Buttons -->
-      <div class="filter-buttons animate-fade-in animate-delay-2" id="filter-buttons"></div>
-
-      <!-- Portfolio Grid -->
-      <div id="portfolio-grid"></div>
+        <h1 class="company-hero__title animate-fade-in animate-delay-1">${hero.title}</h1>
+        <p class="company-hero__subtitle animate-fade-in animate-delay-2">${hero.subtitle}</p>
+        ${hero.cta ? `
+          <a href="${hero.cta.link}" class="company-hero__btn animate-fade-in animate-delay-3">
+            ${hero.cta.icon ? `<i class="${hero.cta.icon}"></i>` : ''}
+            ${hero.cta.label}
+          </a>
+        ` : ''}
+      </div>
     </div>
+  `;
+}
 
-    <!-- Modal -->
-    <div id="modal" class="modal" aria-hidden="true">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="modal-title" class="modal-title">프로젝트 상세</h2>
-          <button
-            id="modal-close"
-            class="modal-close"
-            type="button"
-            aria-label="프로젝트 상세 닫기"
-          >
-            <i class="ri-close-line"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img id="modal-image" class="modal-image" alt="">
-          <p id="modal-description" class="modal-description"></p>
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+function renderServices(services: CompanyData['services']): string {
+  if (!services) return '';
 
-          <h3 class="modal-section-title">주요 기능</h3>
-          <ul id="modal-features" class="modal-features"></ul>
+  return `
+    <div class="section section--light">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title animate-fade-in">${services.title}</h2>
+          <p class="section__subtitle animate-fade-in animate-delay-1">${services.subtitle}</p>
+        </header>
 
-          <h3 class="modal-section-title">기술 스택</h3>
-          <div id="modal-techstack" class="modal-techstack"></div>
+        <div class="company-services">
+          ${services.items.map((item, i) => renderServiceCard(item, i)).join('')}
         </div>
       </div>
     </div>
   `;
-
-  // 필터 버튼 렌더링
-  renderFilterButtons(filters);
-
-  // 프로젝트 렌더링
-  renderProjects(projects);
-
-  // 필터 이벤트 초기화
-  initializeFilters();
-
-  // 모달 초기화
-  initModal();
-
-  // Intersection Observer 적용
-  attachRevealObserver();
 }
 
-/**
- * 필터 버튼 렌더링
- */
-function renderFilterButtons(filters: any[]): void {
-  const filterContainer = document.getElementById("filter-buttons");
-  if (!filterContainer) return;
+function renderServiceCard(service: CompanyService, index: number): string {
+  const isFeatureObject = (f: any): f is { name: string; desc: string } => 
+    typeof f === 'object' && f.name;
 
-  filterContainer.innerHTML = "";
-  
-  filters.forEach(filter => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = filter.label;
-    btn.dataset.filter = filter.id;
-    btn.className = "filter-btn";
-
-    if (filter.id === "all") btn.classList.add("active");
-
-    filterContainer.appendChild(btn);
-  });
-}
-
-/**
- * 프로젝트 카드 렌더링
- */
-function renderProjects(projects: CompanyProject[]): void {
-  const grid = document.getElementById("portfolio-grid");
-  if (!grid) return;
-
-  const tagColors = ["primary", "secondary", "purple", "green"];
-  
-  grid.innerHTML = "";
-
-  projects.forEach((project: CompanyProject, index: number) => {
-    const card = document.createElement("div");
-    card.className = `portfolio-item animate-scale-in animate-delay-${((index % 6) + 1)}`;
-    card.dataset.category = project.category;
-
-    card.innerHTML = `
-      <div class="portfolio-item__image"
-          style="background-image: url('${project.thumbnail}')"></div>
-      <div class="portfolio-item__body">
-        <h3 class="portfolio-item__title">${project.title}</h3>
-        <p class="portfolio-item__desc">${project.summary}</p>
-
-        <div class="portfolio-item__tags">
-          ${(project.tags || [])
-            .map((tag: string, i: number) => {
-              const color = tagColors[i % tagColors.length];
-              return `<span class="portfolio-item__tag portfolio-item__tag--${color}">${tag}</span>`;
-            })
-            .join("")}
-        </div>
-
-        <button class="portfolio-item__link"
-                type="button"
-                data-project-id="${project.id}"
-                aria-label="${project.title} 상세 보기">
-          자세히 보기 →
-        </button>
+  return `
+    <div class="company-service-card animate-fade-in animate-delay-${index + 1}">
+      <div class="company-service-card__icon company-service-card__icon--${service.color}">
+        <i class="${service.icon}"></i>
       </div>
-    `;
-
-    grid.appendChild(card);
-  });
-
-  // 카드 클릭 이벤트
-  grid.addEventListener("click", (e: Event) => {
-    const target = e.target as HTMLElement;
-    const btn = target.closest(".portfolio-item__link") as HTMLButtonElement;
-    if (!btn) return;
-    
-    const id = btn.dataset.projectId;
-    if (id) openModalById(id);
-  });
+      <h3 class="company-service-card__title">${service.title}</h3>
+      <ul class="company-service-card__list">
+        ${service.features.map(f => `
+          <li>
+            <span class="company-service-card__bullet company-service-card__bullet--${service.color}"></span>
+            ${isFeatureObject(f) ? `<strong>${f.name}:</strong> ${f.desc}` : f}
+          </li>
+        `).join('')}
+      </ul>
+      <p class="company-service-card__desc">${service.description}</p>
+    </div>
+  `;
 }
 
-/**
- * 필터 이벤트 초기화
- */
-function initializeFilters(): void {
-  const filterButtons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
-  const items = document.querySelectorAll<HTMLElement>(".portfolio-item");
+/* ============================================
+   SOLUTIONS SECTION
+   ============================================ */
+function renderSolutions(solutions: CompanyData['solutions']): string {
+  if (!solutions) return '';
 
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filterButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+  return `
+    <div class="section section--white">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title animate-fade-in">${solutions.title}</h2>
+          <p class="section__subtitle animate-fade-in animate-delay-1">${solutions.subtitle}</p>
+        </header>
 
-      const filter = btn.dataset.filter;
-
-      items.forEach(item => {
-        if (filter === "all" || item.dataset.category === filter) {
-          item.classList.remove("hidden");
-        } else {
-          item.classList.add("hidden");
-        }
-      });
-    });
-  });
+        <div class="company-solutions">
+          ${solutions.items.map((item, i) => renderSolutionCard(item, i)).join('')}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
-/**
- * 모달 초기화
- */
-function initModal(): void {
-  modal = document.getElementById("modal");
-  modalTitleEl = document.getElementById("modal-title");
-  modalImageEl = document.getElementById("modal-image") as HTMLImageElement;
-  modalDescEl = document.getElementById("modal-description");
-  modalFeaturesEl = document.getElementById("modal-features");
-  modalTechEl = document.getElementById("modal-techstack");
-  modalCloseBtn = document.getElementById("modal-close");
-
-  // 닫기 버튼
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener("click", closeModal);
-  }
-
-  // 오버레이 클릭으로 닫기
-  if (modal) {
-    modal.addEventListener("click", (e: Event) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-  }
-
-  // ESC key로 모달 닫기
-  document.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (e.key === "Escape" && modal?.classList.contains("active")) {
-      closeModal();
-    }
-  });
+function renderSolutionCard(solution: CompanySolution, index: number): string {
+  return `
+    <div class="company-solution-card animate-fade-in animate-delay-${index + 1}">
+      <div class="company-solution-card__header">
+        <div class="company-solution-card__icon company-solution-card__icon--${solution.color}">
+          <i class="${solution.icon}"></i>
+        </div>
+        <div class="company-solution-card__info">
+          <h3 class="company-solution-card__name">${solution.name}</h3>
+          <span class="company-solution-card__tagline">${solution.tagline}</span>
+        </div>
+      </div>
+      <p class="company-solution-card__desc">${solution.description}</p>
+      <div class="company-solution-card__features">
+        ${solution.features.map(f => `
+          <span class="company-solution-card__feature">${f}</span>
+        `).join('')}
+      </div>
+    </div>
+  `;
 }
 
-/**
- * 모달 열기
- */
-function openModalById(id: string): void {
-  const project = companyData.projects.find(p => p.id === id);
-  if (!project || !modal) return;
+/* ============================================
+   TIMELINE SECTION
+   ============================================ */
+function renderTimeline(timeline: CompanyData['timeline']): string {
+  if (!timeline) return '';
 
-  if (modalTitleEl) modalTitleEl.textContent = project.title || "";
-  if (modalImageEl) {
-    modalImageEl.src = project.modalImage || project.thumbnail || "";
-    modalImageEl.alt = project.title || "프로젝트 상세 이미지";
-  }
-  if (modalDescEl) modalDescEl.textContent = project.description || "";
+  return `
+    <div class="section section--light">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title animate-fade-in">${timeline.title}</h2>
+          <p class="section__subtitle animate-fade-in animate-delay-1">${timeline.subtitle}</p>
+        </header>
 
-  // Features
-  if (modalFeaturesEl) {
-    modalFeaturesEl.innerHTML = (project.features || [])
-      .map((f: string) => `<li>${f}</li>`)
-      .join("");
-  }
-
-  // Tech Stack
-  if (modalTechEl) {
-    modalTechEl.innerHTML = (project.techStack || [])
-      .map((t: string) => `<span class="modal-tech-tag">${t}</span>`)
-      .join("");
-  }
-
-  modal.classList.add("active");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+        <div class="company-timeline">
+          <div class="company-timeline__line"></div>
+          <div class="company-timeline__items">
+            ${timeline.items.map((item, i) => renderTimelineItem(item, i)).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
-/**
- * 모달 닫기
- */
-function closeModal(): void {
-  if (!modal) return;
-  
-  modal.classList.remove("active");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
+function renderTimelineItem(item: CompanyTimelineItem, index: number): string {
+  return `
+    <div class="company-timeline-item animate-fade-in animate-delay-${index + 1}">
+      <div class="company-timeline-item__marker company-timeline-item__marker--${item.color}">
+        <span>${item.year.slice(-2)}</span>
+      </div>
+      <div class="company-timeline-item__card">
+        <h3 class="company-timeline-item__year">${item.year}</h3>
+        <p class="company-timeline-item__desc">${item.description}</p>
+      </div>
+    </div>
+  `;
 }
 
-/**
- * 외부에서 사용할 수 있는 모달 오픈 함수
- */
-export function openModal(project: CompanyProject): void {
-  openModalById(project.id);
+/* ============================================
+   VISION SECTION
+   ============================================ */
+function renderVision(vision: CompanyData['vision']): string {
+  if (!vision) return '';
+
+  return `
+    <div class="section section--white">
+      <div class="section__inner">
+        <header class="section__header">
+          <h2 class="section__title animate-fade-in">${vision.title}</h2>
+          <p class="section__subtitle animate-fade-in animate-delay-1">${vision.subtitle}</p>
+        </header>
+
+        <div class="company-vision">
+          ${vision.items.map((item, i) => renderVisionCard(item, i)).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderVisionCard(item: CompanyVisionItem, index: number): string {
+  return `
+    <div class="company-vision-card animate-fade-in animate-delay-${index + 1}">
+      <div class="company-vision-card__icon company-vision-card__icon--${item.color}">
+        <i class="${item.icon}"></i>
+      </div>
+      <h3 class="company-vision-card__title">${item.title}</h3>
+      <p class="company-vision-card__desc">${item.description}</p>
+    </div>
+  `;
+}
+
+/* ============================================
+   CLOSING SECTION
+   ============================================ */
+function renderClosing(closing: CompanyData['closing']): string {
+  if (!closing) return '';
+
+  const lines = closing.title.split('\n');
+
+  return `
+    <div class="company-closing">
+      <div class="company-closing__inner">
+        <h2 class="company-closing__title animate-fade-in">
+          ${lines.map(line => `<span>${line}</span>`).join('<br>')}
+        </h2>
+        <p class="company-closing__subtitle animate-fade-in animate-delay-1">${closing.subtitle}</p>
+        <a href="mailto:${closing.email}" class="company-closing__email animate-fade-in animate-delay-2">
+          ${closing.email}
+        </a>
+      </div>
+    </div>
+  `;
 }

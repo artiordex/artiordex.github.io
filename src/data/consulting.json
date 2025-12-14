@@ -1,69 +1,180 @@
 {
-  "pageTitle": "창업가로서의 신념",
-  "intro": {
-    "title": "창업가로서의 신념",
-    "subtitle": "기술의 본질은 사람을 돕는 것이며, 혁신은 본질을 더 명확하게 드러낼 뿐입니다. 저는 기술 중심의 창업가로서 문제를 해결하고, 더 나은 방향으로 움직이는 변화를 만들어갑니다."
+  "header": {
+    "title": "아티올덱스(Artioldex) 컨설팅 & 교육",
+    "slogan": "기술로 만드는 차별화된 비즈니스 경험",
+    "description": "혁신적인 개발 에이전시부터 전문 기술 컨설팅, 실무 중심 교육까지 원스톱으로 제공합니다. 검증된 전문성과 최신 기술 트렌드를 바탕으로 귀하의 디지털 전환을 성공적으로 이끌어갑니다."
   },
-
-  "visionCards": [
+  "problems": [
     {
-      "id": "innovation",
-      "title": "기술로 변화 만들기",
-      "description": "기술은 단순한 도구가 아니라 문제를 해결하는 사고 방식입니다. 복잡한 비즈니스 문제를 기술적 관점에서 재정의하고, 가장 효율적인 해결책을 찾는 데 집중합니다.",
-      "icon": "ri-lightbulb-flash-line",
-      "color": "primary",
-      "delay": 1
+      "icon": "ri-repeat-2-line",
+      "problem": "반복 업무로 인한 생산성 저하와 인력 낭비",
+      "outcome": "자동화를 통한 80% 업무시간 단축과 핵심업무 집중"
     },
     {
-      "id": "future",
-      "title": "AI 혁신의 선도",
-      "description": "AI는 지금 이 순간에도 비즈니스의 형태를 재창조하고 있습니다. 저는 AI 기술을 단순한 자동화가 아니라 '새로운 가능성의 확장'으로 바라보고, 실질적인 비즈니스 가치로 연결합니다.",
-      "icon": "ri-brain-line",
-      "color": "purple",
-      "delay": 2
+      "icon": "ri-links-line",
+      "problem": "부서간 데이터 단절로 인한 의사결정 지연",
+      "outcome": "통합 데이터 플랫폼으로 실시간 협업체계 구축"
     },
     {
-      "id": "experience",
-      "title": "15년의 현장 경험",
-      "description": "제조, 물류, 금융, 스타트업 등 다양한 산업에서 쌓아온 경험은 문제의 본질을 이해하는 데 큰 자산이 됩니다. 기술은 산업을 이해할 때 가장 강력해집니다.",
-      "icon": "ri-timer-2-line",
-      "color": "secondary",
-      "delay": 3
+      "icon": "ri-file-paper-line",
+      "problem": "수작업 보고서 작성으로 인한 오류와 지연",
+      "outcome": "자동 리포팅 시스템으로 정확하고 신속한 보고체계"
     },
     {
-      "id": "collaboration",
-      "title": "함께 성장하는 협업",
-      "description": "좋은 팀은 함께 성장하며, 좋은 협업은 서로의 전문성을 더욱 명확하게 만듭니다. 저는 기술과 비즈니스의 간극을 잇는 다리 역할을 합니다.",
-      "icon": "ri-team-line",
-      "color": "green",
-      "delay": 4
+      "icon": "ri-bug-line",
+      "problem": "품질 관리 부재로 인한 고객 불만과 재작업",
+      "outcome": "체계적 QA 프로세스로 품질 향상과 비용 절감"
+    },
+    {
+      "icon": "ri-settings-3-line",
+      "problem": "레거시 시스템 커스터마이징의 높은 난이도와 리스크",
+      "outcome": "단계적 모던화를 통한 안전하고 효율적인 시스템 전환"
+    },
+    {
+      "icon": "ri-rocket-line",
+      "problem": "배포 및 운영 불안정으로 인한 서비스 중단 위험",
+      "outcome": "DevOps 체계 구축으로 99.9% 안정성과 빠른 배포"
     }
   ],
-
-  "principles": {
-    "title": "창업가의 세 가지 원칙",
-    "items": [
-      {
-        "id": "innovationMindset",
-        "title": "혁신적 사고",
-        "description": "혁신은 거창한 기술에서 시작되지 않습니다. 작은 관찰과 날카로운 질문에서 출발하며, 저는 이를 반복적으로 실천합니다.",
-        "icon": "ri-focus-2-line",
-        "color": "primary"
-      },
-      {
-        "id": "qualityAssurance",
-        "title": "품질 중심의 실행",
-        "description": "빠른 개발이 목표가 아닙니다. 유지보수할 수 있고, 확장 가능하며, 신뢰할 수 있는 시스템을 만드는 것이 진짜 품질입니다.",
-        "icon": "ri-shield-check-line",
-        "color": "secondary"
-      },
-      {
-        "id": "continuousGrowth",
-        "title": "지속 가능한 성장",
-        "description": "기술 성장과 비즈니스 성장은 함께 가야 합니다. 장기적인 관점에서 의미 있는 성장을 설계합니다.",
-        "icon": "ri-line-chart-line",
-        "color": "purple"
-      }
-    ]
-  }
+  "services": [
+    {
+      "icon": "ri-robot-line",
+      "title": "DX 프로세스 분석 & 자동화 설계",
+      "description": "업무 프로세스를 분석하여 RPA, 스크립트, AI를 활용한 최적의 자동화 솔루션을 설계하고 구현합니다.",
+      "deliverables": [
+        "현재 업무 프로세스 분석 보고서",
+        "자동화 가능 영역 식별 및 ROI 분석",
+        "RPA/스크립트 설계서 및 구현",
+        "AI 적용 방안 및 PoC 개발",
+        "자동화 운영 가이드 및 교육"
+      ]
+    },
+    {
+      "icon": "ri-dashboard-line",
+      "title": "업무 시스템 구축",
+      "description": "업무 효율성 향상을 위한 맞춤형 웹 시스템, 내부 도구, 실시간 대시보드를 구축합니다.",
+      "deliverables": [
+        "요구사항 정의서 및 시스템 설계",
+        "사용자 인터페이스(UI/UX) 설계",
+        "웹 애플리케이션 개발 및 구축",
+        "실시간 모니터링 대시보드",
+        "시스템 운영 매뉴얼 및 교육"
+      ]
+    },
+    {
+      "icon": "ri-bar-chart-line",
+      "title": "데이터 파이프라인 & 지표화",
+      "description": "데이터 수집부터 분석까지 전 과정을 자동화하고 핵심 KPI를 실시간으로 모니터링할 수 있는 체계를 구축합니다.",
+      "deliverables": [
+        "데이터 아키텍처 설계 및 구축",
+        "ETL 파이프라인 개발",
+        "KPI 정의 및 지표 설계",
+        "자동화된 리포팅 시스템",
+        "데이터 거버넌스 가이드"
+      ]
+    },
+    {
+      "icon": "ri-settings-4-line",
+      "title": "ERP/레거시 커스터마이징",
+      "description": "기존 ERP 및 레거시 시스템의 요구사항을 분석하여 안전하고 효율적인 커스터마이징을 진행합니다.",
+      "deliverables": [
+        "현행 시스템 분석 및 진단",
+        "커스터마이징 요구사항 정의",
+        "시스템 설계 및 개발 계획",
+        "단계별 구현 및 테스트",
+        "마이그레이션 및 운영 이관"
+      ]
+    },
+    {
+      "icon": "ri-cloud-line",
+      "title": "DevOps/배포 운영 체계 구축",
+      "description": "CI/CD 파이프라인 구축부터 모니터링, 장애 대응까지 안정적인 운영 체계를 완성합니다.",
+      "deliverables": [
+        "DevOps 전략 및 로드맵 수립",
+        "CI/CD 파이프라인 구축",
+        "인프라 자동화 및 IaC 구현",
+        "모니터링 및 알람 시스템",
+        "장애 대응 프로세스 및 교육"
+      ]
+    },
+    {
+      "icon": "ri-brain-line",
+      "title": "AI 도입 컨설팅",
+      "description": "사내 GPT 활용부터 AI 에이전트 개발까지 기업 맞춤형 AI 솔루션 도입을 지원합니다.",
+      "deliverables": [
+        "AI 도입 전략 및 로드맵",
+        "사내 GPT 구축 및 Fine-tuning",
+        "AI 에이전트 PoC 개발",
+        "지식베이스 구축 및 연동",
+        "AI 거버넌스 및 운영 가이드"
+      ]
+    }
+  ],
+  "techStack": [
+    { "name": "React", "icon": "ri-reactjs-line" },
+    { "name": "Node.js", "icon": "ri-nodejs-line" },
+    { "name": "TypeScript", "icon": "ri-code-line" },
+    { "name": "Python", "icon": "ri-code-s-slash-line" },
+    { "name": "AWS", "icon": "ri-cloud-line" },
+    { "name": "Docker", "icon": "ri-container-line" },
+    { "name": "MongoDB", "icon": "ri-database-2-line" },
+    { "name": "GraphQL", "icon": "ri-share-line" }
+  ],
+  "process": [
+    {
+      "title": "디스커버리",
+      "description": "현황 파악, 비즈니스 목표 정의, 제약사항 분석을 통해 프로젝트의 방향성을 설정합니다.",
+      "duration": "1-2주",
+      "deliverables": [
+        "현황 분석 보고서",
+        "비즈니스 목표 정의서",
+        "제약사항 및 리스크 분석",
+        "이해관계자 맵핑"
+      ]
+    },
+    {
+      "title": "진단 및 설계",
+      "description": "As-Is/To-Be 분석, 우선순위 설정, 기술 아키텍처 설계를 진행합니다.",
+      "duration": "1-2주",
+      "deliverables": [
+        "As-Is/To-Be 분석서",
+        "기술 아키텍처 설계",
+        "우선순위 매트릭스",
+        "프로젝트 로드맵"
+      ]
+    },
+    {
+      "title": "PoC/빠른 실험",
+      "description": "2-10일 단위의 빠른 실험을 통해 핵심 가설을 검증하고 리스크를 최소화합니다.",
+      "duration": "2-10일",
+      "deliverables": [
+        "PoC 프로토타입",
+        "검증 결과 보고서",
+        "기술적 실현 가능성 검토",
+        "성능 테스트 결과"
+      ]
+    },
+    {
+      "title": "구현/MVP",
+      "description": "핵심 기능 우선으로 MVP를 구현하며 운영 관점을 고려한 개발을 진행합니다.",
+      "duration": "4-12주",
+      "deliverables": [
+        "MVP 시스템 구축",
+        "핵심 기능 구현",
+        "사용자 테스트 결과",
+        "운영 매뉴얼"
+      ]
+    },
+    {
+      "title": "운영/고도화",
+      "description": "지속적 모니터링, 개선 루프 운영, 문서화를 통해 시스템을 안정적으로 운영합니다.",
+      "duration": "지속적",
+      "deliverables": [
+        "모니터링 대시보드",
+        "운영 프로세스 문서",
+        "개선 계획서",
+        "기술 지원 체계"
+      ]
+    }
+  ]
 }

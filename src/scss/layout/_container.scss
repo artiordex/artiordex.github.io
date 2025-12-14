@@ -10,9 +10,9 @@
 // Body Layout
 body {
   width: 100%;
-  min-height: 100vh;              // height → min-height (콘텐츠가 길어질 수 있음)
+  min-height: 100vh;              
   background: $bg-body;
-  font-family: $font-main;        // 변수 사용
+  font-family: $font-main;       
 }
 
 // Main App Container

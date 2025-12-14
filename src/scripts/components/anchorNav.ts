@@ -250,10 +250,10 @@ class AnchorNav {
   // ---------------------------------------------------------------------------
 
   /**
-   * 네비게이션 링크 클릭 이벤트 바인딩
-   * - 기본 앵커 동작 방지
-   * - 헤더 높이를 고려한 부드러운 스크롤 구현
-   */
+ * 네비게이션 링크 클릭 이벤트 바인딩
+ * - 기본 앵커 동작 방지
+ * - 헤더가 숨겨지는 구조이므로 오프셋 없이 정확한 위치로 이동
+ */
   private bindClickEvents(): void {
     // PC + 모바일 링크 모두 합침
     const allLinks = [...this.links, ...this.mobileLinks];
@@ -274,13 +274,9 @@ class AnchorNav {
           return;
         }
 
-        // 헤더 높이를 고려한 스크롤 위치 계산
-        const headerHeight = 80; // 헤더 높이 (px)
-        const targetPosition = section.offsetTop - headerHeight;
-        
-        // 부드러운 스크롤로 이동
+        // ★ 헤더 오프셋 제거 - 정확한 위치로 이동
         window.scrollTo({
-          top: targetPosition,
+          top: section.offsetTop,
           behavior: this.config.scrollBehavior
         });
       });

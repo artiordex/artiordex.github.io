@@ -4,39 +4,99 @@
  */
 
 // ============================================
-// 1. ABOUT.JSON
+// 1. ABOUT.JSON (Revised)
 // ============================================
 
+export interface AboutMeta {
+  lang: string;
+  version: number;
+  updatedAt: string; // "YYYY-MM-DD"
+}
+
+// --------------------
+// Common
+// --------------------
 export interface SocialLink {
   platform: string;
   url: string;
   icon: string;
 }
 
+export interface KvRow {
+  k: string;
+  v: string;
+}
+
+// --------------------
+// Profile (slide-1)
+// --------------------
 export interface AboutProfile {
   name: string;
   title: string;
-  description: string;
+
+  /** 슬라이드처럼 문단 배열을 지원합니다. */
+  description: string[];
+
   profileImage: string;
   backgroundImage?: string;
-  highlights?: string[];      // profile 내부에 있을 수도 있음
-  socialLinks?: SocialLink[];  // profile 내부에 있을 수도 있음
+
+  /** profile_strengths의 keywords와 매칭됩니다. */
+  keywords?: string[];
+
+  /** 필요하면 profile 내부 하이라이트/소셜을 둡니다. */
+  highlights?: string[];
+  socialLinks?: SocialLink[];
 }
 
-export interface AboutSkillsCore {
+export interface AboutStrengthBlock {
+  title: string;
+  description: string[];
+}
+
+// --------------------
+// Timeline (slide-2)
+// --------------------
+export interface AboutTimelineItem {
+  year: string; // "2019"
+  title: string;
+  description: string[];
+}
+
+export interface AboutTimelinePortrait {
+  title: string;
+  portraitImage: string;
+  timeline: AboutTimelineItem[];
+}
+
+// --------------------
+// Competency (slide-3)
+// --------------------
+export interface AboutCompetency {
   name: string;
-  level: number;
+  summary: string;
+  evidence: string[];
+  result: string;
 }
 
-export interface AboutSkills {
-  core: AboutSkillsCore[];
-  techStack: {
-    frontend: string[];
-    backend: string[];
-    ai: string[];
-    cloud: string[];
-    tools: string[];
-  };
+export interface BrandingQuote {
+  lines: string[];
+  highlight: string;
+}
+
+export interface AboutCoreCompetencySection {
+  title: string;
+  competencies: AboutCompetency[];
+  summaryKeywords?: string[];
+  brandingQuote?: BrandingQuote;
+}
+
+// --------------------
+// Education & Certifications (slide-4)
+// --------------------
+export interface AboutEducation {
+  degree: string;
+  school: string;
+  period: string;
 }
 
 export interface AboutCertification {
@@ -45,33 +105,117 @@ export interface AboutCertification {
   year: number;
 }
 
-export interface AboutData {
-  profile: AboutProfile;
-  highlights: string[];
-  skills: AboutSkills;
+export interface AboutEducationCertificationsSection {
+  title: string;
+  education: AboutEducation[];
   certifications: AboutCertification[];
 }
 
-// ============================================
-// 2. PORTFOLIO.JSON (컨설팅 서비스)
-// ============================================
-
-export interface PortfolioService {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
-  delay?: number;
-  features: string[];
+// --------------------
+// Persona (slide-5)
+// --------------------
+export interface AboutPersonaHeader {
+  name: string;
+  bio: string;
 }
 
-export interface PortfolioProcessStep {
-  id: string;
-  label: string;
-  description: string;
+export interface AboutPersonaBadge {
+  label: string; // "FE 35%"
+  key: string;   // "fe"
+}
+
+export interface AboutPersonaCard {
+  title: string;
   icon: string;
-  color: string;
+  items: string[];
+}
+
+export interface AboutPersonaSection {
+  title: string;
+  header: AboutPersonaHeader;
+  badges: AboutPersonaBadge[];
+  tools?: string[];
+  table: KvRow[];
+  cards: AboutPersonaCard[];
+}
+
+// --------------------
+// Summary (slide-6)
+// --------------------
+export interface AboutSummarySectionItem {
+  title: string;
+  text: string;
+}
+
+export interface AboutSummarySection {
+  title: string;
+  sections: AboutSummarySectionItem[];
+}
+
+// --------------------
+// Skills (기존 유지 + 확장 가능)
+// --------------------
+export interface AboutSkillsCore {
+  name: string;
+  level: number; // 0~100 권장입니다.
+}
+
+export interface AboutSkills {
+  core: AboutSkillsCore[];
+
+  techStack: {
+    frontend: string[];
+    backend: string[];
+    ai: string[];
+    cloud: string[];
+    tools: string[];
+  };
+
+  /** slide-5 배지(비중)를 그대로 쓰고 싶을 때 옵션입니다. */
+  distribution?: AboutPersonaBadge[];
+}
+
+// --------------------
+// Root
+// --------------------
+export interface AboutData {
+  meta: AboutMeta;
+
+  // slide-1
+  profile: AboutProfile;
+  strengths?: AboutStrengthBlock[];
+
+  // slide-2
+  timelinePortrait?: AboutTimelinePortrait;
+
+  // slide-3
+  coreCompetency?: AboutCoreCompetencySection;
+
+  // slide-4
+  educationCertifications?: AboutEducationCertificationsSection;
+
+  // slide-5
+  persona?: AboutPersonaSection;
+
+  // slide-6
+  summary?: AboutSummarySection;
+
+  // 기존 about.json 호환용
+  highlights?: string[];
+
+  // 기존 Skills/Certifications를 루트에 두는 구조도 유지
+  skills?: AboutSkills;
+  certifications?: AboutCertification[];
+}
+
+
+// ============================================
+// 2. PORTFOLIO.JSON (포트폴리오 프로젝트)
+// ============================================
+
+export interface PortfolioBadge {
+  label: string;
+  color: string;  // "blue" | "green" | "red" | "yellow" | "purple" | "pink" | "orange"
 }
 
 export interface PortfolioFilter {
@@ -85,11 +229,26 @@ export interface PortfolioProject {
   title: string;
   summary: string;
   thumbnail: string;
+  icon?: string;
   tags: string[];
+  badges?: PortfolioBadge[];
   modalImage?: string;
   description?: string;
   features?: string[];
   techStack?: string[];
+}
+
+export interface PortfolioCTA {
+  title: string;
+  subtitle: string;
+  primaryButton: {
+    label: string;
+    link: string;
+  };
+  secondaryButton: {
+    label: string;
+    link: string;
+  };
 }
 
 export interface PortfolioData {
@@ -98,111 +257,156 @@ export interface PortfolioData {
     title: string;
     subtitle: string;
   };
-  services: PortfolioService[];
-  process: {
-    title: string;
-    steps: PortfolioProcessStep[];
-  };
-  // 필터와 프로젝트가 있을 경우 (company.json 스타일)
-  filters?: PortfolioFilter[];
-  projects?: PortfolioProject[];
+  filters: PortfolioFilter[];
+  projects: PortfolioProject[];
+  cta?: PortfolioCTA;
 }
 
 // ============================================
-// 3. COMPANY.JSON (회사 포트폴리오)
+// 3. COMPANY.JSON (회사 소개)
 // ============================================
 
-export interface CompanyFilter {
-  id: string;
-  label: string;
-}
-
-export interface CompanyProject {
-  id: string;
-  category: string;
+export interface CompanyHero {
   title: string;
-  summary: string;
-  thumbnail: string;
-  tags: string[];
-  modalImage?: string;
-  description?: string;
-  features?: string[];
-  techStack?: string[];
+  subtitle: string;
+  icon?: string;
+  cta?: {
+    label: string;
+    link: string;
+    icon?: string;
+  };
+}
+
+export interface CompanyServiceFeature {
+  name?: string;
+  desc?: string;
+}
+
+export interface CompanyService {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  features: (string | CompanyServiceFeature)[];
+}
+
+export interface CompanyServicesSection {
+  title: string;
+  subtitle: string;
+  items: CompanyService[];
+}
+
+export interface CompanySolution {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  icon: string;
+  color: string;
+  features: string[];
+}
+
+export interface CompanySolutionsSection {
+  title: string;
+  subtitle: string;
+  items: CompanySolution[];
+}
+
+export interface CompanyTimelineItem {
+  year: string;
+  color: string;
+  description: string;
+}
+
+export interface CompanyTimelineSection {
+  title: string;
+  subtitle: string;
+  items: CompanyTimelineItem[];
+}
+
+export interface CompanyVisionItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
+export interface CompanyVisionSection {
+  title: string;
+  subtitle: string;
+  items: CompanyVisionItem[];
+}
+
+export interface CompanyClosing {
+  title: string;
+  subtitle: string;
+  email: string;
 }
 
 export interface CompanyData {
   pageTitle: string;
-  intro: {
-    title: string;
-    subtitle: string;
-  };
-  filters: CompanyFilter[];
-  projects: CompanyProject[];
+  hero?: CompanyHero;
+  services?: CompanyServicesSection;
+  solutions?: CompanySolutionsSection;
+  timeline?: CompanyTimelineSection;
+  vision?: CompanyVisionSection;
+  closing?: CompanyClosing;
 }
 
 // ============================================
-// 4. CONSULTING.JSON (창업가 신념)
+// 4. CONSULTING.JSON (기술 컨설팅 서비스)
 // ============================================
-export interface ConsultingServiceCategory {
-  id: string;
+
+export interface ConsultingHeader {
+  title: string;
+  slogan: string;
+  description: string;
+}
+
+export interface ConsultingProblem {
+  icon: string;
+  problem: string;
+  outcome: string;
+}
+
+export interface ConsultingService {
+  icon: string;
   title: string;
   description: string;
+  deliverables: string[];
+}
+
+export interface ConsultingTechItem {
+  name: string;
   icon: string;
-  color: "primary" | "secondary" | "purple" | "green";
-  delay?: number;
-  items: string[];
 }
 
 export interface ConsultingProcessStep {
-  id: string;
   title: string;
   description: string;
-  icon: string;
-  delay?: number;
-}
-
-export interface ConsultingProcess {
-  title: string;
-  steps: ConsultingProcessStep[];
-}
-
-export interface VisionCard {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
-  delay?: number;
-}
-
-export interface PrincipleItem {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
-}
-
-export interface PrinciplesBlock {
-  title: string;
-  items: PrincipleItem[];
+  duration: string;
+  deliverables: string[];
 }
 
 export interface ConsultingData {
-  pageTitle: string;
-  intro: {
-    title: string;
-    subtitle: string;
-  };
-  serviceCategories: ConsultingServiceCategory[];
-  process: ConsultingProcess;                    
-  visionCards: VisionCard[];
-  principles: PrinciplesBlock;
+  header: ConsultingHeader;
+  problems: ConsultingProblem[];
+  services: ConsultingService[];
+  techStack: ConsultingTechItem[];
+  process: ConsultingProcessStep[];
 }
 
 // ============================================
 // 5. CONTACT.JSON
 // ============================================
+
+export interface ContactHero {
+  title: string;
+  subtitle: string;
+  icon?: string;
+}
 
 export interface ContactInfoItem {
   label: string;
@@ -245,50 +449,53 @@ export interface ContactSocialLink {
 
 export interface ContactPageData {
   pageTitle: string;
-  intro: {
-    title: string;
-    subtitle: string;
-  };
+  hero?: ContactHero;
+  intro?: ContactHero;  // 하위 호환
   contactInfo: ContactInfoBlock;
-  socialLinks: ContactSocialLink[];
+  socialLinks?: ContactSocialLink[];
   form: ContactFormConfig;
-  // 레거시 호환 (기존 코드용)
-  title?: string;
-  subtitle?: string;
-  items?: {
-    icon: string;
-    label: string;
-    value: string;
-    color: string;
-  }[];
 }
 
 // ============================================
 // 6. LINKS.JSON
 // ============================================
 
-export interface LinksIntro {
+export interface LinksHero {
   title: string;
   subtitle: string;
+  icon?: string;
 }
 
 export interface LinkItem {
   label: string;
+  description?: string;
   url: string;
   icon: string;
   color: string;
-  description?: string;
 }
 
 export interface LinksCategory {
   id: string | number;
   title: string;
+  icon?: string;
   links: LinkItem[];
 }
 
+export interface LinksCTA {
+  title: string;
+  subtitle: string;
+  button: {
+    label: string;
+    link: string;
+    icon?: string;
+  };
+}
+
 export interface LinksData {
-  intro?: LinksIntro;
+  hero?: LinksHero;
+  intro?: LinksHero;  // 하위 호환
   categories: LinksCategory[];
+  cta?: LinksCTA;
 }
 
 // ============================================
