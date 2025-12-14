@@ -13,7 +13,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
 
-  /* 숨김/표시 상태 */
+  /* ===============================
+     숨김 / 표시 상태
+     =============================== */
   &--hidden {
     transform: translateY(-100%);
     box-shadow: none;
@@ -23,6 +25,9 @@
     transform: translateY(0);
   }
 
+  /* ===============================
+     Layout
+     =============================== */
   .header-inner {
     max-width: 1280px;
     margin: 0 auto;
@@ -34,6 +39,9 @@
     width: 100%;
   }
 
+  /* ===============================
+     Logo
+     =============================== */
   .logo {
     font-size: 1.25rem;
     font-weight: 700;
@@ -41,15 +49,19 @@
     white-space: nowrap;
     cursor: pointer;
     transition: color 0.2s ease;
-
-    flex-shrink: 0; 
+    flex-shrink: 0;
 
     &:hover {
       color: #8B5CF6;
     }
   }
 
+  /* ===============================
+     Navigation
+     =============================== */
   nav {
+    flex-shrink: 0;
+
     ul {
       display: flex;
       align-items: center;
@@ -57,7 +69,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      white-space: nowrap; 
+      white-space: nowrap;
     }
 
     li {
@@ -106,23 +118,82 @@
     }
   }
 
+  /* ===============================
+     Language Select (Custom)
+     =============================== */
+  .header-lang {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  #lang-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding: 6px 32px 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    color: #333;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    /* 커스텀 화살표 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+
+    &:hover {
+      border-color: #8B5CF6;
+      background-color: #fafafa;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #8B5CF6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+      background-color: #ffffff;
+    }
+
+    &:active {
+      transform: translateY(0.5px);
+    }
+  }
+
+  #lang-select option {
+    color: #333;
+    font-size: 0.85rem;
+  }
+
+  /* ===============================
+     Responsive (Mobile)
+     =============================== */
   @media (max-width: 768px) {
-    padding: 12px 0;
+    padding: 8px 0;
 
     .header-inner {
-      padding: 0 16px;
+      padding: 0 15px;
     }
 
     .logo {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     nav ul {
-      gap: 4px;
+      gap: 1px;
     }
 
     .header-link {
-      padding: 6px 8px;
+      padding: 6px 6px;
       font-size: 0.9rem;
 
       span {
@@ -133,5 +204,34 @@
         font-size: 20px;
       }
     }
+
+    #lang-select {
+      padding: 2px 28px 4px 5px;
+      font-size: 0.8rem;
+    }
   }
 }
+
+#lang-select {
+  color: transparent;        // 글씨 숨김
+  text-shadow: 0 0 0 transparent;
+  caret-color: transparent;  // 커서 숨김
+
+  /* 국기랑 겹치지 않게 */
+  padding-left: 32px;
+}
+
+#lang-select option {
+  padding-left: 32px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-size: 18px 12px;
+}
+
+#lang-select option[data-flag="ko"] { background-image: url("https://flagcdn.com/w20/kr.png"); }
+#lang-select option[data-flag="en"] { background-image: url("https://flagcdn.com/w20/us.png"); }
+#lang-select option[data-flag="ja"] { background-image: url("https://flagcdn.com/w20/jp.png"); }
+#lang-select option[data-flag="vi"] { background-image: url("https://flagcdn.com/w20/vn.png"); }
+#lang-select option[data-flag="de"] { background-image: url("https://flagcdn.com/w20/de.png"); }
+#lang-select option[data-flag="es"] { background-image: url("https://flagcdn.com/w20/es.png"); }
+#lang-select option[data-flag="zh"] { background-image: url("https://flagcdn.com/w20/cn.png"); }

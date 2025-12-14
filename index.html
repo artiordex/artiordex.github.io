@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>민시우 - 디지털 전환 개발자</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon/favicon_io/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon_io/favicon-16x16.png">
-  <link rel="apple-touch-icon" href="/favicon/favicon_io/apple-touch-icon.png">
+  <link rel="icon" href="/favicon/favicon_io/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon_io/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon_io/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/favicon/favicon_io/apple-touch-icon.png" />
 
-  <!-- PWA / Android -->
-  <link rel="manifest" href="/favicon/favicon_io/site.webmanifest">
+  <!-- PWA -->
+  <link rel="manifest" href="/favicon/favicon_io/site.webmanifest" />
 
   <!-- Fonts / CDN -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
@@ -36,9 +36,44 @@
 
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <!-- Google Translate -->
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: "ko",
+          autoDisplay: false
+        },
+        "google_translate_element"
+      );
+    }
+  </script>
+
+  <!-- Google Translate Script -->
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+
+  <!-- Google Translate UI 숨김 -->
+  <style>
+    /* 상단 번역 배너 제거 */
+    .goog-te-banner-frame.skiptranslate {
+      display: none !important;
+    }
+    body {
+      top: 0 !important;
+    }
+
+    /* Google 기본 UI 숨김 */
+    #google_translate_element {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Google Translate Mount (hidden) -->
+  <div id="google_translate_element"></div>
+
   <!-- 헤더 -->
   <div id="layout-header"></div>
 
@@ -57,12 +92,12 @@
 
   <!-- 푸터 -->
   <div id="layout-footer"></div>
-  
-  <!-- Back to Top 버튼 -->
+
+  <!-- Back to Top -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <i class="ri-arrow-up-line"></i>
   </button>
-  
+
   <!-- 메인 스크립트 -->
   <script type="module" src="/src/scripts/main.ts"></script>
 </body>

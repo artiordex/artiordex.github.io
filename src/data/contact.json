@@ -1,5 +1,5 @@
 {
-  "pageTitle": "연락하기",
+  "pageTitle": "연락처",
   "hero": {
     "title": "함께 이야기해요",
     "subtitle": "프로젝트 문의, 협업 제안, 컨설팅 요청 등 어떤 내용이든 편하게 연락해주세요",
@@ -30,9 +30,9 @@
   },
 
   "socialLinks": [
-    { "platform": "GitHub", "url": "https://github.com/artiordex", "icon": "ri-github-fill" },
-    { "platform": "LinkedIn", "url": "https://linkedin.com/in/artiordex", "icon": "ri-linkedin-fill" },
-    { "platform": "Instagram", "url": "https://instagram.com/artiordex", "icon": "ri-instagram-line" }
+    { "platform": "Slack", "url": "https://slack.com/artiordex", "icon": "ri-slack-fill" },
+    { "platform": "KaKaoTalk", "url": "https://kakao.com/artiordex", "icon": "ri-kakao-talk-fill" },
+    { "platform": "Discord", "url": "https://discord.com/artiordex", "icon": "ri-discord-line" }
   ],
 
   "form": {

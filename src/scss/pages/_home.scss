@@ -5,10 +5,6 @@
    HERO / ABOUT 섹션 (캐러셀 포함)
    메인 히어로 영역의 스타일 정의
    ============================================ */
-/* ============================================
-   HERO / ABOUT 섹션 (캐러셀 포함)
-   - about.ts(AboutCarousel) 구조: .carousel-container + translateX 방식
-   ============================================ */
 
 /* 1) 캐러셀 전체 래퍼 */
 .hero-carousel {
@@ -374,6 +370,7 @@
   padding: 4rem;
   border-radius: $radius-3xl;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);

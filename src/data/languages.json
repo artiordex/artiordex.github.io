@@ -1,0 +1,40 @@
+{
+  "default": "ko",
+  "languages": [
+    {
+      "code": "ko",
+      "label": "KR",
+      "name": "한국어"
+    },
+    {
+      "code": "en",
+      "label": "EN",
+      "name": "English"
+    },
+    {
+      "code": "ja",
+      "label": "JP",
+      "name": "日本語"
+    },
+    {
+      "code": "vi",
+      "label": "VN",
+      "name": "Tiếng Việt"
+    },
+    {
+      "code": "de",
+      "label": "DE",
+      "name": "Deutsch"
+    },
+    {
+      "code": "es",
+      "label": "ES",
+      "name": "Español"
+    },
+    {
+      "code": "zh",
+      "label": "ZH",
+      "name": "中文"
+    }
+  ]
+}

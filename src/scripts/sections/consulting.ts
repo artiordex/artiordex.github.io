@@ -185,6 +185,6 @@ export function renderConsulting(): void {
   // Reveal 애니메이션
   attachRevealObserver();
 
-  console.log("✅ consulting section rendered");
+  console.log("consulting section rendered");
   console.groupEnd();
 }
