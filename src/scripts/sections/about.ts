@@ -67,7 +67,7 @@ export function renderAbout(): void {
       </button>
 
       <!-- 인디케이터(about.scss: .indicator 사용) -->
-      <div class="carousel-indicators" id="indicators">
+      <div class="carousel-indicators carousel-indicators--numbered" id="indicators">
         ${slides
           .map(
             (_, i) =>

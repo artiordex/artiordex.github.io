@@ -9,13 +9,13 @@
       "id": "slide-1",
       "type": "profile_strengths",
       "profile": {
-        "name": "민시우",
+        "name": "Shiwoo Min",
         "title": "Full-Stack · DevOps · AI Agent Engineer",
         "description": [
           "AI와 자동화를 중심으로 디지털 전환을 선도하는 풀스택·AI 에이전트 엔지니어입니다.",
           "비즈니스 목표에 맞춘 기술 전략, 안정적인 시스템 구축, 자동화 기반 운영 최적화를 통해 기업의 성장을 돕습니다."
         ],
-        "profileImage": "/assets/images/profile.jpg",
+        "profileImage": "/assets/images/sample.png",
         "backgroundImage": "/assets/images/hero-bg.jpg"
       },
       "keywords": ["React", "TypeScript", "Node.js", "Python", "PostgreSQL", "AWS", "Docker", "CI/CD", "RAG", "AI Agent"],
