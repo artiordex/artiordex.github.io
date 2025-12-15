@@ -1,14 +1,11 @@
 /**
- * about.ts
- * About 섹션 렌더링 통합 모듈 (about.json + social.json 기반)
- * - about.json: slides[] 기반 (profile_strengths ~ summary)
- * - social.json: socialLinks[] 기반
- * - 캐러셀: translateX 방식 (.carousel-container)
+ * about.ts - About 섹션 렌더러 및 캐러셀 구현
  */
 
 import aboutDataJson from "@/data/about.json";
 import socialDataJson from "@/data/social.json";
 
+// 데이터 타입 정의
 type SlideType =
   | "profile_strengths"
   | "timeline_portrait"
@@ -33,9 +30,7 @@ export interface SocialLink {
 const aboutData = aboutDataJson as AboutData;
 const socialData = socialDataJson as { socialLinks: SocialLink[] };
 
-/* =========================
-   Public API
-========================= */
+/* Public API */
 export function renderAbout(): void {
   const root = document.getElementById("about");
   if (!root) return;
@@ -80,13 +75,15 @@ export function renderAbout(): void {
 
   // 캐러셀 바인딩
   initializeCarousel();
+  // 아코디언 바인딩
+  initializeAccordion();
+  // 탭 바인딩
+  initializeCompetencyTabs();
 }
 
-/* =========================
-   Slide renderer
-========================= */
+/* 슬라이드 렌더러 */
 function renderSlideHtml(slide: AboutSlide, index: number, socials: SocialLink[]): string {
-  // 첫 슬라이드 배경 (profile_strengths.profile.backgroundImage)
+  // 첫 슬라이드 배경
   const bg =
     index === 0 ? slide?.profile?.backgroundImage ?? slide?.backgroundImage ?? "" : "";
 
@@ -106,6 +103,7 @@ function renderSlideHtml(slide: AboutSlide, index: number, socials: SocialLink[]
   `;
 }
 
+/* 슬라이드 본문 렌더러 */
 function renderSlideBody(slide: AboutSlide, socials: SocialLink[]): string {
   switch (slide.type) {
     case "profile_strengths":
@@ -131,9 +129,7 @@ function renderSlideBody(slide: AboutSlide, socials: SocialLink[]): string {
   }
 }
 
-/* =========================
-   Slide: profile_strengths
-========================= */
+/* Slide: profile_strengths */
 function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): string {
   const profile = slide.profile ?? {};
   const keywords: string[] = Array.isArray(slide.keywords) ? slide.keywords : [];
@@ -147,7 +143,7 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
       ? [profile.description]
       : [];
 
-  const tagVariants = ["hero-tag--primary", "hero-tag--secondary", "hero-tag--purple", "hero-tag--green"];
+  const tagVariants = ["hero-tag--red", "hero-tag--orange", "hero-tag--yellow", "hero-tag--green", "hero-tag--blue", "hero-tag--purple"];
 
   // 소셜 링크(메일/외부 링크 구분)
   const socialHtml = socials
@@ -158,9 +154,9 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
 
       return `
         <a href="${escapeAttr(url)}"
-           ${targetRel}
-           aria-label="${escapeAttr(s.platform ?? "")}"
-           title="${escapeAttr(s.platform ?? "")}">
+          ${targetRel}
+          aria-label="${escapeAttr(s.platform ?? "")}"
+          title="${escapeAttr(s.platform ?? "")}">
           <i class="${escapeAttr(s.icon ?? "")}"></i>
         </a>
       `;
@@ -187,19 +183,20 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
 
       <div class="hero-tags" id="profile-highlights">
         ${keywords
-          .map((k, i) => `<span class="hero-tag ${tagVariants[i % 4]}">${escapeHtml(k)}</span>`)
+          .map(
+            (k) =>
+              `<span class="hero-tag ${
+                tagVariants[Math.floor(Math.random() * tagVariants.length)]
+              }">${escapeHtml(k)}</span>`
+          )
           .join("")}
       </div>
-
       <div class="hero-socials" id="social-links">
         ${socialHtml}
       </div>
     </div>
-
     <div class="hero-skills-card">
       <h3 class="hero-skills-card__title">성격 & 강점</h3>
-
-      <!-- strengths는 기존 progress-bar 대신 텍스트 카드로 표시 -->
       <div class="strengths-list">
         ${strengths
           .map(
@@ -220,31 +217,33 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
   `;
 }
 
-/* =========================
-   Slide: timeline_portrait
-========================= */
+/* Slide: timeline_portrait (아코디언 버전) */
 function renderTimelinePortrait(slide: AboutSlide): string {
   const title = slide.title ?? "주요 연혁";
   const portraitImage = slide.portraitImage ?? "";
   const timeline: Array<{ year?: string; title?: string; description?: string[] }> = Array.isArray(slide.timeline)
     ? slide.timeline
     : [];
-
+  
   return `
     <div class="hero-skills-card">
       <h3 class="hero-skills-card__title">${escapeHtml(title)}</h3>
-
-      <div class="timeline-list" style="display:flex; flex-direction:column; gap:1rem;">
+      <div class="timeline-accordion">
         ${timeline
           .map(
-            (t) => `
-            <div class="timeline-item" style="padding:0.75rem 0; border-bottom:1px solid rgba(0,0,0,0.06);">
-              <div style="font-weight:800; margin-bottom:0.25rem;">${escapeHtml(t.year ?? "")}</div>
-              <div style="font-weight:700; margin-bottom:0.4rem;">${escapeHtml(t.title ?? "")}</div>
-              <div style="line-height:1.7;">
-                ${(Array.isArray(t.description) ? t.description : [])
-                  .map((d) => `<div>${escapeHtml(d)}</div>`)
-                  .join("")}
+            (t, idx) => `
+            <div class="accordion-item ${idx === 0 ? 'active' : ''}">
+              <button class="accordion-header" type="button" aria-expanded="${idx === 0 ? 'true' : 'false'}">
+                <span class="accordion-year">${escapeHtml(t.year ?? "")}</span>
+                <span class="accordion-title">${escapeHtml(t.title ?? "")}</span>
+                <i class="ri-arrow-down-s-line accordion-icon"></i>
+              </button>
+              <div class="accordion-content" ${idx === 0 ? 'style="max-height: 500px;"' : ''}>
+                <div class="accordion-body">
+                  ${(Array.isArray(t.description) ? t.description : [])
+                    .map((d) => `<div>${escapeHtml(d)}</div>`)
+                    .join("")}
+                </div>
               </div>
             </div>
           `
@@ -252,20 +251,17 @@ function renderTimelinePortrait(slide: AboutSlide): string {
           .join("")}
       </div>
     </div>
-
-    <div class="hero-skills-card" style="display:flex; align-items:center; justify-content:center;">
+    <div class="timeline-portrait-wrapper">
       <img
         src="${escapeAttr(portraitImage)}"
         alt="${escapeAttr(String(title))} 인물 이미지"
-        style="width:100%; max-width:420px; border-radius:16px; display:block;"
+        class="timeline-portrait-image"
       />
     </div>
   `;
 }
 
-/* =========================
-   Slide: core_competency
-========================= */
+/* Slide: core_competency (탭 버전) */
 function renderCoreCompetency(slide: AboutSlide): string {
   const title = slide.title ?? "자기소개서 핵심역량";
   const competencies: Array<{
@@ -282,19 +278,36 @@ function renderCoreCompetency(slide: AboutSlide): string {
     <div class="hero-skills-card" style="grid-column:1/-1;">
       <h3 class="hero-skills-card__title">${escapeHtml(title)}</h3>
 
-      <div class="competency-list" style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
+      <!-- 탭 헤더 -->
+      <div class="competency-tabs">
         ${competencies
           .map(
-            (c) => `
-            <div class="competency-item" style="border:1px solid rgba(0,0,0,0.06); border-radius:16px; padding:1rem;">
-              <div style="font-weight:800; margin-bottom:0.5rem;">${escapeHtml(c.name ?? "")}</div>
-              <div style="opacity:0.9; line-height:1.7; margin-bottom:0.75rem;">${escapeHtml(c.summary ?? "")}</div>
-              <div style="line-height:1.7; margin-bottom:0.75rem;">
+            (c, idx) => `
+            <button 
+              class="competency-tab ${idx === 0 ? 'active' : ''}" 
+              type="button"
+              data-tab="${idx}"
+            >
+              ${escapeHtml(c.name ?? "")}
+            </button>
+          `
+          )
+          .join("")}
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div class="competency-tab-contents">
+        ${competencies
+          .map(
+            (c, idx) => `
+            <div class="competency-tab-content ${idx === 0 ? 'active' : ''}" data-tab-content="${idx}">
+              <div class="competency-summary">${escapeHtml(c.summary ?? "")}</div>
+              <div class="competency-evidence">
                 ${(Array.isArray(c.evidence) ? c.evidence : [])
                   .map((e) => `<div>• ${escapeHtml(e)}</div>`)
                   .join("")}
               </div>
-              <div style="font-weight:700;">${escapeHtml(c.result ?? "")}</div>
+              <div class="competency-result">${escapeHtml(c.result ?? "")}</div>
             </div>
           `
           )
@@ -304,9 +317,9 @@ function renderCoreCompetency(slide: AboutSlide): string {
       ${
         summaryKeywords.length
           ? `
-        <div style="margin-top:1.5rem;">
-          <div style="font-weight:700; margin-bottom:0.75rem;">핵심 키워드</div>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+        <div class="competency-keywords">
+          <div class="competency-keywords__title">핵심 키워드</div>
+          <div class="competency-keywords__list">
             ${summaryKeywords
               .map((k) => `<span class="hero-tag hero-tag--primary">${escapeHtml(k)}</span>`)
               .join("")}
@@ -319,13 +332,9 @@ function renderCoreCompetency(slide: AboutSlide): string {
       ${
         quote
           ? `
-        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid rgba(0,0,0,0.06);">
-          <div style="line-height:1.8;">
-            ${(Array.isArray(quote.lines) ? quote.lines : [])
-              .map((l: string) => `<div>${escapeHtml(l)}</div>`)
-              .join("")}
-            <div style="font-weight:900; margin-top:0.5rem;">${escapeHtml(quote.highlight ?? "")}</div>
-          </div>
+        <div class="competency-quote">
+          <span class="competency-quote__line">${escapeHtml(Array.isArray(quote.lines) ? quote.lines.join(' ') : quote.lines ?? '')}</span>
+          <span class="competency-quote__highlight">${escapeHtml(quote.highlight ?? "")}</span>
         </div>
       `
           : ""
@@ -338,26 +347,81 @@ function renderCoreCompetency(slide: AboutSlide): string {
    Slide: education_certifications
 ========================= */
 function renderEducationCertifications(slide: AboutSlide): string {
-  const title = slide.title ?? "학력 · 자격";
-  const education: Array<{ degree?: string; school?: string; period?: string }> = Array.isArray(slide.education)
+  const education: Array<{ degree?: string; school?: string; period?: string; year?: number | string }> = Array.isArray(slide.education)
     ? slide.education
     : [];
   const certifications: Array<{ name?: string; issuer?: string; year?: number | string }> = Array.isArray(slide.certifications)
     ? slide.certifications
     : [];
 
+  // period에서 연도 추출 (예: "2019-2023" → "2023", "2019 - 2023" → "2023", "—" → "—")
+  const extractYear = (period?: string): string => {
+    if (!period || period === '—' || period === '-') return '—';
+    // 끝 연도 추출 (하이픈 뒤의 숫자)
+    const match = period.match(/(\d{4})\s*$/);
+    if (match) return match[1];
+    // 시작 연도만 있는 경우
+    const startMatch = period.match(/^(\d{4})/);
+    if (startMatch) return startMatch[1];
+    return '—';
+  };
+
+  // 학력을 연도별로 그룹화
+  const educationByYear = education.reduce((acc, edu) => {
+    const year = String(edu.year ?? extractYear(edu.period));
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(edu);
+    return acc;
+  }, {} as Record<string, typeof education>);
+
+  // 자격을 연도별로 그룹화
+  const certsByYear = certifications.reduce((acc, cert) => {
+    const year = String(cert.year ?? '—');
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(cert);
+    return acc;
+  }, {} as Record<string, typeof certifications>);
+
+  // 연도 내림차순 정렬 (숫자로 변환해서 비교)
+  const sortYears = (years: string[]) => {
+    return years.sort((a, b) => {
+      const aNum = parseInt(a, 10);
+      const bNum = parseInt(b, 10);
+      // 둘 다 숫자가 아니면 원래 순서 유지
+      if (isNaN(aNum) && isNaN(bNum)) return 0;
+      // a만 숫자가 아니면 뒤로
+      if (isNaN(aNum)) return 1;
+      // b만 숫자가 아니면 뒤로
+      if (isNaN(bNum)) return -1;
+      // 둘 다 숫자면 내림차순
+      return bNum - aNum;
+    });
+  };
+
+  const eduYears = sortYears(Object.keys(educationByYear));
+  const certYears = sortYears(Object.keys(certsByYear));
+
   return `
     <div class="hero-skills-card">
-      <h3 class="hero-skills-card__title">${escapeHtml(title)} - 학력</h3>
-
-      <div style="display:flex; flex-direction:column; gap:0.75rem;">
-        ${education
+      <h3 class="hero-skills-card__title">학력</h3>
+      <div class="edu-cert-timeline">
+        ${eduYears
           .map(
-            (e) => `
-            <div style="padding:0.75rem 0; border-bottom:1px solid rgba(0,0,0,0.06);">
-              <div style="font-weight:800;">${escapeHtml(e.degree ?? "")}</div>
-              <div style="opacity:0.9;">${escapeHtml(e.school ?? "")}</div>
-              <div style="opacity:0.7; font-size:0.9rem;">${escapeHtml(e.period ?? "")}</div>
+            (year) => `
+            <div class="edu-cert-year-group">
+              <div class="edu-cert-year">${escapeHtml(year)}</div>
+              <div class="edu-cert-items">
+                ${educationByYear[year]
+                  .map(
+                    (e) => `
+                    <div class="edu-cert-item">
+                      <div class="edu-cert-item__title">${escapeHtml(e.degree ?? "")}</div>
+                      <div class="edu-cert-item__sub">${escapeHtml(e.school ?? "")}</div>
+                    </div>
+                  `
+                  )
+                  .join("")}
+              </div>
             </div>
           `
           )
@@ -366,17 +430,27 @@ function renderEducationCertifications(slide: AboutSlide): string {
     </div>
 
     <div class="hero-skills-card">
-      <h3 class="hero-skills-card__title">${escapeHtml(title)} - 자격</h3>
-
-      <div style="display:flex; flex-direction:column; gap:0.75rem;">
-        ${certifications
+      <h3 class="hero-skills-card__title">자격</h3>
+      <div class="edu-cert-timeline">
+        ${certYears
           .map(
-            (c) => `
-            <div style="display:flex; gap:0.75rem; align-items:flex-start; padding:0.75rem 0; border-bottom:1px solid rgba(0,0,0,0.06);">
-              <i class="ri-award-line" style="margin-top:2px;"></i>
-              <div>
-                <div style="font-weight:800;">${escapeHtml(c.name ?? "")}</div>
-                <div style="opacity:0.85;">${escapeHtml(c.issuer ?? "")} · ${escapeHtml(c.year ?? "")}</div>
+            (year) => `
+            <div class="edu-cert-year-group">
+              <div class="edu-cert-year">${escapeHtml(year)}</div>
+              <div class="edu-cert-items">
+                ${certsByYear[year]
+                  .map(
+                    (c) => `
+                    <div class="edu-cert-item">
+                      <i class="ri-award-line edu-cert-item__icon"></i>
+                      <div>
+                        <div class="edu-cert-item__title">${escapeHtml(c.name ?? "")}</div>
+                        <div class="edu-cert-item__sub">${escapeHtml(c.issuer ?? "")}</div>
+                      </div>
+                    </div>
+                  `
+                  )
+                  .join("")}
               </div>
             </div>
           `
@@ -393,65 +467,58 @@ function renderEducationCertifications(slide: AboutSlide): string {
 function renderPersona(slide: AboutSlide): string {
   const header = slide.header ?? {};
   const badges: Array<{ label?: string; key?: string }> = Array.isArray(slide.badges) ? slide.badges : [];
-  const tools: string[] = Array.isArray(slide.tools) ? slide.tools : [];
   const table: Array<{ k?: string; v?: string }> = Array.isArray(slide.table) ? slide.table : [];
   const cards: Array<{ title?: string; icon?: string; items?: string[] }> = Array.isArray(slide.cards) ? slide.cards : [];
 
   return `
-    <div class="hero-skills-card">
-      <h3 class="hero-skills-card__title">${escapeHtml(slide.title ?? "My Persona")}</h3>
-
-      <div style="font-weight:900; font-size:1.4rem; margin-bottom:0.5rem;">
-        ${escapeHtml(header.name ?? "")}
-      </div>
-      <div style="line-height:1.8; opacity:0.9; margin-bottom:1rem;">
-        ${escapeHtml(header.bio ?? "")}
-      </div>
-
-      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-        ${badges
-          .map((b) => `<span class="hero-tag hero-tag--primary">${escapeHtml(b.label ?? "")}</span>`)
-          .join("")}
+    <div class="hero-skills-card persona-card" style="grid-column:1/-1;">
+      <!-- 헤더 섹션 -->
+      <div class="persona-header">
+        <div class="persona-header__info">
+          <h3 class="persona-header__name">${escapeHtml(header.name ?? "")}</h3>
+          <p class="persona-header__bio">${escapeHtml(header.bio ?? "")}</p>
+          <div class="persona-badges">
+            ${badges
+              .map((b) => `<span class="persona-badge">${escapeHtml(b.label ?? "")}</span>`)
+              .join("")}
+          </div>
+        </div>
       </div>
 
-      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-        ${tools.map((ic) => `<span title="${escapeAttr(ic)}"><i class="${escapeAttr(ic)}"></i></span>`).join("")}
+      <!-- 프로필 테이블 (2열) -->
+      <div class="persona-table-wrapper">
+        <table class="persona-table">
+          ${table
+            .map(
+              (r, idx) => `
+              <tr>
+                <td class="persona-table__key">${escapeHtml(r.k ?? "")}</td>
+                <td class="persona-table__value">${escapeHtml(r.v ?? "")}</td>
+              </tr>
+            `
+            )
+            .join("")}
+        </table>
       </div>
-    </div>
 
-    <div class="hero-skills-card">
-      <h3 class="hero-skills-card__title">Profile Table</h3>
-
-      <table style="width:100%; border-collapse:collapse;">
-        ${table
-          .map(
-            (r) => `
-            <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
-              <td style="padding:0.6rem 0; font-weight:800; width:34%;">${escapeHtml(r.k ?? "")}</td>
-              <td style="padding:0.6rem 0; opacity:0.9;">${escapeHtml(r.v ?? "")}</td>
-            </tr>
-          `
-          )
-          .join("")}
-      </table>
-
+      <!-- 카드 그리드 (4열) -->
       ${
         cards.length
           ? `
-        <div style="margin-top:1.25rem; display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="persona-cards">
           ${cards
             .map(
               (c) => `
-              <div style="border:1px solid rgba(0,0,0,0.06); border-radius:16px; padding:1rem;">
-                <div style="display:flex; align-items:center; gap:0.5rem; font-weight:900; margin-bottom:0.5rem;">
+              <div class="persona-mini-card">
+                <div class="persona-mini-card__header">
                   <i class="${escapeAttr(c.icon ?? "")}"></i>
                   <span>${escapeHtml(c.title ?? "")}</span>
                 </div>
-                <div style="line-height:1.7;">
+                <ul class="persona-mini-card__list">
                   ${(Array.isArray(c.items) ? c.items : [])
-                    .map((it) => `<div>• ${escapeHtml(it)}</div>`)
+                    .map((it) => `<li>${escapeHtml(it)}</li>`)
                     .join("")}
-                </div>
+                </ul>
               </div>
             `
             )
@@ -535,6 +602,65 @@ function initializeCarousel(): void {
   });
 
   update();
+}
+
+/* =========================
+   Accordion behavior
+========================= */
+function initializeAccordion(): void {
+  const accordionItems = document.querySelectorAll<HTMLElement>('.accordion-item');
+  
+  accordionItems.forEach((item) => {
+    const header = item.querySelector<HTMLButtonElement>('.accordion-header');
+    const content = item.querySelector<HTMLElement>('.accordion-content');
+    
+    if (!header || !content) return;
+    
+    header.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // 모든 아코디언 닫기
+      accordionItems.forEach((otherItem) => {
+        otherItem.classList.remove('active');
+        const otherContent = otherItem.querySelector<HTMLElement>('.accordion-content');
+        const otherHeader = otherItem.querySelector<HTMLButtonElement>('.accordion-header');
+        if (otherContent) otherContent.style.maxHeight = '0';
+        if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
+      });
+      
+      // 클릭한 아코디언 토글
+      if (!isActive) {
+        item.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        header.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+}
+
+/* =========================
+   Competency Tabs behavior
+========================= */
+function initializeCompetencyTabs(): void {
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.competency-tab');
+  const contents = document.querySelectorAll<HTMLElement>('.competency-tab-content');
+  
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const tabIndex = tab.dataset.tab;
+      
+      // 모든 탭 비활성화
+      tabs.forEach((t) => t.classList.remove('active'));
+      contents.forEach((c) => c.classList.remove('active'));
+      
+      // 클릭한 탭 활성화
+      tab.classList.add('active');
+      const targetContent = document.querySelector<HTMLElement>(`.competency-tab-content[data-tab-content="${tabIndex}"]`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
 }
 
 /* =========================
