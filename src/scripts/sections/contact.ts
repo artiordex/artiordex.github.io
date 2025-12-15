@@ -73,7 +73,7 @@ export function renderContact(): void {
                   <div class="contact-social__links">
                     ${socialLinks.map(link => `
                       <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
-                         class="contact-social__link" title="${link.platform}">
+                          class="contact-social__link" title="${link.platform}">
                         <i class="${link.icon}"></i>
                       </a>
                     `).join('')}

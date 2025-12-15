@@ -1,7 +1,6 @@
 /**
  * consulting.ts
  * 컨설팅 섹션 렌더링 (section#consulting 직접 사용)
- * SVG 제거 버전 / 텍스트 아이콘 화살표 사용
  */
 
 import consultingJson from "@/data/consulting.json";
@@ -25,8 +24,8 @@ export function renderConsulting(): void {
   }
 
   const data = consultingData;
-  if (!data?.header) {
-    console.error("❌ data.header is missing");
+  if (!data?.hero) {
+    console.error("❌ data.hero is missing");
     console.groupEnd();
     return;
   }
@@ -45,9 +44,10 @@ export function renderConsulting(): void {
     <section class="hero-section animate-fade-in">
       <div class="container">
         <div class="hero-card animate-scale-in">
-          <h1 class="hero-title">${data.header.title}</h1>
-          <p class="hero-slogan">${data.header.slogan}</p>
-          <p class="hero-description">${data.header.description}</p>
+          ${data.hero.icon ? `<div class="hero-icon"><i class="${data.hero.icon}"></i></div>` : ""}
+          <h1 class="hero-title">${data.hero.title ?? ""}</h1>
+          <p class="hero-subtitle">${data.hero.subtitle ?? ""}</p>
+          ${data.hero.description ? `<p class="hero-description">${data.hero.description}</p>` : ""}
         </div>
       </div>
     </section>
@@ -62,15 +62,15 @@ export function renderConsulting(): void {
 
         <!-- Tabs -->
         <div class="consulting-tabs">
-          <button class="consulting-tab active" data-tab="problems">
+          <button class="consulting-tab active" type="button" data-tab="problems">
             <i class="ri-lightbulb-line"></i>
             <span>무엇을 해결하는가</span>
           </button>
-          <button class="consulting-tab" data-tab="services">
+          <button class="consulting-tab" type="button" data-tab="services">
             <i class="ri-service-line"></i>
             <span>서비스 라인업</span>
           </button>
-          <button class="consulting-tab" data-tab="process">
+          <button class="consulting-tab" type="button" data-tab="process">
             <i class="ri-flow-chart"></i>
             <span>진행 프로세스</span>
           </button>
@@ -130,7 +130,7 @@ export function renderConsulting(): void {
           <div class="consulting-tab-content" data-tab-content="process">
             <div class="process-card">
 
-              <!-- Row 1 -->
+              <!-- Row 1: 1-4 단계 -->
               <div class="process-row">
                 ${process
                   .slice(0, 4)
@@ -138,7 +138,7 @@ export function renderConsulting(): void {
                     (step, i) => `
                     <div class="process-step">
                       <div class="process-step__icon process-step__icon--${i + 1}">
-                        <i class="${step.icon}"></i>
+                        <i class="${step.icon ?? 'ri-checkbox-circle-line'}"></i>
                       </div>
                       <div class="process-step__title">${step.title}</div>
                       <div class="process-step__desc">${step.description}</div>
@@ -152,7 +152,7 @@ export function renderConsulting(): void {
               <!-- Down Arrow -->
               <div class="process-arrow process-arrow--down">↓</div>
 
-              <!-- Row 2 (reverse) -->
+              <!-- Row 2: 5-7 단계 (reverse) -->
               <div class="process-row process-row--reverse">
                 ${process
                   .slice(4)
@@ -160,8 +160,8 @@ export function renderConsulting(): void {
                   .map(
                     (step, i) => `
                     <div class="process-step">
-                      <div class="process-step__icon process-step__icon--${6 - i}">
-                        <i class="${step.icon}"></i>
+                      <div class="process-step__icon process-step__icon--${7 - i}">
+                        <i class="${step.icon ?? 'ri-checkbox-circle-line'}"></i>
                       </div>
                       <div class="process-step__title">${step.title}</div>
                       <div class="process-step__desc">${step.description}</div>
@@ -188,6 +188,7 @@ export function renderConsulting(): void {
   initConsultingTabs();
   attachRevealObserver();
 
+  console.log("consulting section rendered");
   console.groupEnd();
 }
 
@@ -208,9 +209,7 @@ function initConsultingTabs(): void {
 
       tab.classList.add("active");
       document
-        .querySelector(
-          `.consulting-tab-content[data-tab-content="${id}"]`
-        )
+        .querySelector(`.consulting-tab-content[data-tab-content="${id}"]`)
         ?.classList.add("active");
     });
   });

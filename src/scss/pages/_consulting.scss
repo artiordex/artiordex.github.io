@@ -31,26 +31,52 @@
   text-align: center;
 }
 
+.hero-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $primary 0%, #2563eb 100%);
+  border-radius: 50%;
+  box-shadow: 0 12px 30px rgba($primary-rgb, 0.35);
+
+  i {
+    font-size: 2.25rem;
+    color: #fff;
+  }
+
+  @media (max-width: 480px) {
+    width: 64px;
+    height: 64px;
+
+    i {
+      font-size: 1.75rem;
+    }
+  }
+}
+
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
+  color: $gray-900;
+  margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 
-.hero-slogan {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  color: #475569;
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: $primary;
   font-weight: 600;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .hero-description {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  color: #64748b;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  color: $gray-600;
   line-height: 1.7;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
 }
 

@@ -1,12 +1,22 @@
+/**
+ * tsconfig.json - TypeScript 컴파일 및 경로 설정 파일
+ */
 {
   "compilerOptions": {
+    // 최신 JS 문법 기준
     "target": "ESNext",
     "module": "ESNext",
+
+    // 브라우저 환경 라이브러리
     "lib": ["ESNext", "dom", "dom.iterable"],
 
+    // Vite 번들러 기준 모듈 해석
     "moduleResolution": "bundler",
 
+    // 절대 경로 기준점
     "baseUrl": ".",
+
+    // import 경로 alias
     "paths": {
       "@/*": ["src/*"],
       "@scripts/*": ["src/scripts/*"],
@@ -18,16 +28,25 @@
       "@scss/*": ["src/scss/*"]
     },
 
+    // CommonJS 호환
     "esModuleInterop": true,
+
+    // JSON import 허용
     "resolveJsonModule": true,
 
+    // 타입 안정성 강화
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+
+    // 라이브러리 타입 체크 생략
     "skipLibCheck": true,
 
+    // 파일명 대소문자 일관성 유지
     "forceConsistentCasingInFileNames": true
   },
+
+  // 컴파일 대상
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

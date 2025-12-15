@@ -33,17 +33,17 @@ export function renderPortfolio(): void {
   const root = document.getElementById("portfolio");
   if (!root) return;
 
-  const { intro, filters = [], projects = [], cta } = portfolioData;
+  const { hero, filters = [], projects = [], cta } = portfolioData;
 
   root.innerHTML = `
     <!-- Hero Section -->
-    ${renderHeroSection(intro)}
+    ${renderHeroSection(hero)}
 
     <!-- Portfolio Grid Section -->
     <div class="section section--white">
       <div class="section__inner">
         <header class="section__header">
-          <h2 class="section__title animate-fade-in">포트폴리오</h2>
+          <h2 class="section__title animate-fade-in">프로젝트</h2>
           <p class="section__subtitle animate-fade-in animate-delay-1">
             다양한 산업 분야에서 수행한 프로젝트들을 통해 우리의 역량을 확인해보세요
           </p>
@@ -67,16 +67,16 @@ export function renderPortfolio(): void {
   attachRevealObserver();
 }
 
-/* ===============================
- * HERO SECTION
- * =============================== */
-function renderHeroSection(intro: { title: string; subtitle: string }): string {
+/* HERO SECTION */
+function renderHeroSection(hero: PortfolioData["hero"]): string {
+  if (!hero) return "";
+  
   return `
     <div class="portfolio-hero">
-      <div class="portfolio-hero__overlay"></div>
       <div class="portfolio-hero__content">
-        <h1 class="portfolio-hero__title animate-fade-in">${intro.title}</h1>
-        <p class="portfolio-hero__subtitle animate-fade-in animate-delay-1">${intro.subtitle}</p>
+        ${hero.icon ? `<div class="portfolio-hero__icon animate-fade-in"><i class="${hero.icon}"></i></div>` : ""}
+        <h1 class="portfolio-hero__title animate-fade-in">${hero.title}</h1>
+        <p class="portfolio-hero__subtitle animate-fade-in animate-delay-1">${hero.subtitle}</p>
         <button class="portfolio-hero__btn animate-fade-in animate-delay-2" 
                 onclick="document.getElementById('portfolio-grid').scrollIntoView({ behavior: 'smooth' })">
           프로젝트 둘러보기
@@ -86,9 +86,7 @@ function renderHeroSection(intro: { title: string; subtitle: string }): string {
   `;
 }
 
-/* ===============================
- * CTA SECTION
- * =============================== */
+/* CTA SECTION */
 function renderCTASection(cta: PortfolioData["cta"]): string {
   if (!cta) return "";
   
@@ -110,9 +108,7 @@ function renderCTASection(cta: PortfolioData["cta"]): string {
   `;
 }
 
-/* ===============================
- * FILTER BUTTONS
- * =============================== */
+/* FILTER BUTTONS */
 function renderFilterButtons(filters: { id: string; label: string }[], projects: PortfolioProject[]): void {
   const container = document.getElementById("portfolio-filter-buttons");
   if (!container) return;
@@ -138,9 +134,7 @@ function renderFilterButtons(filters: { id: string; label: string }[], projects:
   });
 }
 
-/* ===============================
- * PROJECT GRID
- * =============================== */
+/* PROJECT GRID */
 function renderProjects(filterId: string, projects: PortfolioProject[]): void {
   const grid = document.getElementById("portfolio-grid");
   if (!grid) return;

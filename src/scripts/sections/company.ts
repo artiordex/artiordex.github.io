@@ -1,12 +1,5 @@
 /**
- * company.ts
- * 회사 소개 섹션 렌더링
- * - CTA 히어로
- * - 서비스 소개
- * - 솔루션 라인업
- * - 타임라인
- * - 비전 & 철학
- * - 클로징 CTA
+ * company.ts - 회사 소개 섹션 렌더링
  */
 
 import companyJson from "@/data/company.json";

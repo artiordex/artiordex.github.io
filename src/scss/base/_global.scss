@@ -118,6 +118,233 @@ section {
   line-height: 1.7;
 }
 
+/* ============================================
+   Section Hero (공통)
+   ============================================ */
+
+.section-hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #f1f5f9 0%,
+    #e2e8f0 25%,
+    #cbd5e1 50%,
+    #e2e8f0 75%,
+    #f1f5f9 100%
+  );
+
+  &__content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
+    padding: 4rem 2rem;
+    margin: 0 auto;
+
+    @media (max-width: 480px) {
+      padding: 3rem 1.5rem;
+    }
+  }
+
+  &__icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, $primary 0%, #2563eb 100%);
+    border-radius: 50%;
+    box-shadow: 0 12px 30px rgba($primary-rgb, 0.35);
+
+    i {
+      font-size: 2.25rem;
+      color: #fff;
+    }
+
+    @media (max-width: 480px) {
+      width: 64px;
+      height: 64px;
+
+      i {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
+  &__title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: $primary;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    color: $gray-600;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__btn {
+    margin-top: 1.5rem;
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, $primary 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: $radius-button;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba($primary-rgb, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($primary-rgb, 0.4);
+      color: #fff;
+    }
+  }
+
+  // 배경 변형 - 파란색
+  &--blue {
+    background: linear-gradient(
+      135deg,
+      #3b82f6 0%, 
+      #2563eb 25%, 
+      #1d4ed8 50%, 
+      #3b82f6 75%, 
+      #60a5fa 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+
+    .section-hero__title,
+    .section-hero__subtitle {
+      color: #fff;
+    }
+
+    .section-hero__subtitle {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .section-hero__description {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .section-hero__icon {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+
+    .section-hero__btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      box-shadow: none;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+
+  // 배경 변형 - 보라색
+  &--purple {
+    background: linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #6B8DD6 50%,
+      #8E54E9 75%,
+      #4776E6 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+
+    .section-hero__title,
+    .section-hero__subtitle {
+      color: #fff;
+    }
+
+    .section-hero__subtitle {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .section-hero__description {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .section-hero__icon {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+  }
+
+  // 배경 변형 - 초록색
+  &--green {
+    background: linear-gradient(
+      135deg,
+      #10b981 0%,
+      #059669 25%,
+      #047857 50%,
+      #10b981 75%,
+      #34d399 100%
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+
+    .section-hero__title,
+    .section-hero__subtitle {
+      color: #fff;
+    }
+
+    .section-hero__subtitle {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .section-hero__description {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .section-hero__icon {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Container 시스템 */
 
 .container {

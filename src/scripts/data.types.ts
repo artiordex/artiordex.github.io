@@ -213,6 +213,12 @@ export interface AboutData {
 // 2. PORTFOLIO.JSON (포트폴리오 프로젝트)
 // ============================================
 
+export interface PortfolioHero {
+  title: string;
+  subtitle: string;
+  icon?: string;
+}
+
 export interface PortfolioBadge {
   label: string;
   color: string;  // "blue" | "green" | "red" | "yellow" | "purple" | "pink" | "orange"
@@ -253,7 +259,8 @@ export interface PortfolioCTA {
 
 export interface PortfolioData {
   pageTitle: string;
-  intro: {
+  hero?: PortfolioHero;
+  intro?: {
     title: string;
     subtitle: string;
   };
@@ -359,10 +366,11 @@ export interface CompanyData {
 // 4. CONSULTING.JSON (기술 컨설팅 서비스)
 // ============================================
 
-export interface ConsultingHeader {
+export interface ConsultingHero {
   title: string;
-  slogan: string;
-  description: string;
+  subtitle: string;
+  description?: string;
+  icon?: string;
 }
 
 export interface ConsultingProblem {
@@ -384,16 +392,15 @@ export interface ConsultingTechItem {
 }
 
 export interface ConsultingProcessStep {
-  [x: string]: string;
   title: string;
   description: string;
   duration: string;
-  deliverables: string;
-  icon: string;
+  deliverables: string[];
+  icon?: string;
 }
 
 export interface ConsultingData {
-  header: ConsultingHeader;
+  hero: ConsultingHero;
   problems: ConsultingProblem[];
   services: ConsultingService[];
   techStack: ConsultingTechItem[];

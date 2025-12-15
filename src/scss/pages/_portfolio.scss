@@ -13,60 +13,78 @@
   overflow: hidden;
   background: linear-gradient(
     135deg,
-    #f0f9ff 0%,
-    #e0f2fe 25%,
-    #f8fafc 50%,
-    #dbeafe 75%,
-    #eff6ff 100%
+    #f1f5f9 0%,
+    #e2e8f0 25%,
+    #cbd5e1 50%,
+    #e2e8f0 75%,
+    #f1f5f9 100%
   );
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(99, 102, 241, 0.02) 100%);
-  }
 
   &__content {
     position: relative;
     z-index: 10;
     text-align: center;
-    max-width: 900px;
+    max-width: 800px;
     padding: 4rem 2rem;
   }
 
+  &__icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, $primary 0%, #2563eb 100%);
+    border-radius: 50%;
+    box-shadow: 0 12px 30px rgba($primary-rgb, 0.35);
+
+    i {
+      font-size: 2.25rem;
+      color: #fff;
+    }
+
+    @media (max-width: 480px) {
+      width: 64px;
+      height: 64px;
+
+      i {
+        font-size: 1.75rem;
+      }
+    }
+  }
+
   &__title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 1.5rem;
+    color: $gray-900;
+    margin-bottom: 0.75rem;
     line-height: 1.2;
   }
 
   &__subtitle {
-    font-size: clamp(1.125rem, 2vw, 1.5rem);
-    color: #64748b;
-    margin-bottom: 2.5rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    color: $gray-600;
+    max-width: 600px;
+    margin: 0 auto 2rem;
     line-height: 1.7;
   }
 
   &__btn {
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, $primary 0%, #2563eb 100%);
     color: #fff;
     border: none;
     border-radius: $radius-button;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 15px rgba($primary-rgb, 0.3);
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 8px 25px rgba($primary-rgb, 0.4);
     }
   }
 }

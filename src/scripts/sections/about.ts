@@ -196,7 +196,7 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
       </div>
     </div>
     <div class="hero-skills-card">
-      <h3 class="hero-skills-card__title">성격 & 강점</h3>
+      <h3 class="hero-skills-card__title">실행 원칙</h3>
       <div class="strengths-list">
         ${strengths
           .map(
@@ -205,7 +205,7 @@ function renderProfileStrengths(slide: AboutSlide, socials: SocialLink[]): strin
               <div style="font-weight:700; margin-bottom:0.5rem;">${escapeHtml(st.title ?? "")}</div>
               <div style="color:inherit; line-height:1.7;">
                 ${(Array.isArray(st.description) ? st.description : [])
-                  .map((line) => `<div>• ${escapeHtml(line)}</div>`)
+                  .map((line) => `<div>${escapeHtml(line)}</div>`)
                   .join("")}
               </div>
             </div>
@@ -663,9 +663,7 @@ function initializeCompetencyTabs(): void {
   });
 }
 
-/* =========================
-   Utils
-========================= */
+/* Utils */
 function escapeHtml(input: unknown): string {
   const s = String(input ?? "");
   return s
