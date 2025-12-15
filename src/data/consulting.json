@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "아티올덱스(Artioldex) 컨설팅 & 교육",
+    "title": "컨설팅 & 교육",
     "slogan": "기술로 만드는 차별화된 비즈니스 경험",
     "description": "혁신적인 개발 에이전시부터 전문 기술 컨설팅, 실무 중심 교육까지 원스톱으로 제공합니다. 검증된 전문성과 최신 기술 트렌드를 바탕으로 귀하의 디지털 전환을 성공적으로 이끌어갑니다."
   },
@@ -122,7 +122,32 @@
   ],
   "process": [
     {
+      "title": "킥오프",
+      "icon": "ri-rocket-2-line",
+      "description": "프로젝트 팀 구성, 목표 공유, 커뮤니케이션 채널 및 일정을 확정합니다.",
+      "duration": "1-3일",
+      "deliverables": [
+        "프로젝트 헌장",
+        "팀 구성 및 역할 정의",
+        "커뮤니케이션 계획",
+        "마일스톤 일정"
+      ]
+    },
+    {
+      "title": "컨설팅",
+      "icon": "ri-chat-voice-line",
+      "description": "현황 진단, 요구사항 수집, 이해관계자 인터뷰를 통해 핵심 과제를 도출합니다.",
+      "duration": "1-2주",
+      "deliverables": [
+        "현황 진단 보고서",
+        "요구사항 정의서",
+        "이해관계자 분석",
+        "핵심 과제 도출"
+      ]
+    },
+    {
       "title": "디스커버리",
+      "icon": "ri-search-eye-line",
       "description": "현황 파악, 비즈니스 목표 정의, 제약사항 분석을 통해 프로젝트의 방향성을 설정합니다.",
       "duration": "1-2주",
       "deliverables": [
@@ -134,6 +159,7 @@
     },
     {
       "title": "진단 및 설계",
+      "icon": "ri-draft-line",
       "description": "As-Is/To-Be 분석, 우선순위 설정, 기술 아키텍처 설계를 진행합니다.",
       "duration": "1-2주",
       "deliverables": [
@@ -145,6 +171,7 @@
     },
     {
       "title": "PoC/빠른 실험",
+      "icon": "ri-flask-line",
       "description": "2-10일 단위의 빠른 실험을 통해 핵심 가설을 검증하고 리스크를 최소화합니다.",
       "duration": "2-10일",
       "deliverables": [
@@ -156,6 +183,7 @@
     },
     {
       "title": "구현/MVP",
+      "icon": "ri-code-box-line",
       "description": "핵심 기능 우선으로 MVP를 구현하며 운영 관점을 고려한 개발을 진행합니다.",
       "duration": "4-12주",
       "deliverables": [
@@ -167,6 +195,7 @@
     },
     {
       "title": "운영/고도화",
+      "icon": "ri-line-chart-line",
       "description": "지속적 모니터링, 개선 루프 운영, 문서화를 통해 시스템을 안정적으로 운영합니다.",
       "duration": "지속적",
       "deliverables": [

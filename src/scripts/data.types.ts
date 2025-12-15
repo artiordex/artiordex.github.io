@@ -384,10 +384,12 @@ export interface ConsultingTechItem {
 }
 
 export interface ConsultingProcessStep {
+  [x: string]: string;
   title: string;
   description: string;
   duration: string;
-  deliverables: string[];
+  deliverables: string;
+  icon: string;
 }
 
 export interface ConsultingData {

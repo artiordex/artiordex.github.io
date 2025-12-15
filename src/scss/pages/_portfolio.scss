@@ -11,20 +11,19 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, 
-    #667eea 0%,
-    #764ba2 25%,
-    #6B8DD6 50%,
-    #8E54E9 75%,
-    #4776E6 100%
+  background: linear-gradient(
+    135deg,
+    #f0f9ff 0%,
+    #e0f2fe 25%,
+    #f8fafc 50%,
+    #dbeafe 75%,
+    #eff6ff 100%
   );
-  background-size: 200% 200%;
-  animation: gradientShift 15s ease infinite;
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(99, 102, 241, 0.02) 100%);
   }
 
   &__content {
@@ -38,15 +37,14 @@
   &__title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    color: #fff;
+    color: #1e293b;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
 
   &__subtitle {
     font-size: clamp(1.125rem, 2vw, 1.5rem);
-    color: rgba(255, 255, 255, 0.9);
+    color: #64748b;
     margin-bottom: 2.5rem;
     max-width: 700px;
     margin-left: auto;
@@ -56,22 +54,19 @@
 
   &__btn {
     padding: 1rem 2.5rem;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
     color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.4);
+    border: none;
     border-radius: $radius-button;
     font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.6);
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
     }
   }
 }
@@ -239,7 +234,7 @@
    ============================================ */
 
 .portfolio-cta {
-  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  background: #fff;
   padding: 5rem 1.5rem;
 
   &__inner {
@@ -251,14 +246,13 @@
   &__title {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 700;
-    color: #fff;
+    color: #1e293b;
     margin-bottom: 1rem;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   }
 
   &__subtitle {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #64748b;
     margin-bottom: 2.5rem;
     line-height: 1.7;
   }
@@ -280,23 +274,23 @@
     white-space: nowrap;
 
     &--primary {
-      background: #fff;
-      color: $primary;
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
       &:hover {
-        background: $gray-100;
         transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
       }
     }
 
     &--secondary {
-      background: transparent;
-      color: #fff;
-      border: 2px solid rgba(255, 255, 255, 0.6);
+      background: #fff;
+      color: #3b82f6;
+      border: 2px solid #e2e8f0;
       &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #fff;
+        border-color: #3b82f6;
         transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
       }
     }
   }

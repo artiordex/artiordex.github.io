@@ -44,9 +44,6 @@ export function renderCompany(): void {
 
     <!-- 비전 섹션 -->
     ${vision ? renderVision(vision) : ''}
-
-    <!-- 클로징 CTA -->
-    ${closing ? renderClosing(closing) : ''}
   `;
 
   attachRevealObserver();
@@ -236,29 +233,6 @@ function renderVisionCard(item: CompanyVisionItem, index: number): string {
       </div>
       <h3 class="company-vision-card__title">${item.title}</h3>
       <p class="company-vision-card__desc">${item.description}</p>
-    </div>
-  `;
-}
-
-/* ============================================
-   CLOSING SECTION
-   ============================================ */
-function renderClosing(closing: CompanyData['closing']): string {
-  if (!closing) return '';
-
-  const lines = closing.title.split('\n');
-
-  return `
-    <div class="company-closing">
-      <div class="company-closing__inner">
-        <h2 class="company-closing__title animate-fade-in">
-          ${lines.map(line => `<span>${line}</span>`).join('<br>')}
-        </h2>
-        <p class="company-closing__subtitle animate-fade-in animate-delay-1">${closing.subtitle}</p>
-        <a href="mailto:${closing.email}" class="company-closing__email animate-fade-in animate-delay-2">
-          ${closing.email}
-        </a>
-      </div>
     </div>
   `;
 }
